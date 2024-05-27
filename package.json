@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@wdio/appium-service": "^8.38.0",
+    "@wdio/cli": "^8.38.0",
+    "webdriverio": "^8.38.0"
+  }
+}
