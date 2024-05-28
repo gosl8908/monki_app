@@ -89,7 +89,7 @@ const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   await wait(10000);
 
   // 스크롤 동작 수행
-  await scroll(driver, 500, 2500, 500, 0);
+  await scroll(driver, 500, 2400, 500, 0);
 
   await clickElement(driver, 'android=new UiSelector().text("모두사용")');
   await wait(5000);
@@ -107,9 +107,7 @@ const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   // 스크롤 동작 수행
   await scroll(driver, 500, 1300, 500, 100);
-
   await clickElement(driver, 'android=new UiSelector().text("결제")');
-  await xyclick(driver, 500, 3000);
 
   await wait(5000);
 
