@@ -12,11 +12,11 @@ async function scroll(driver, startX, startY, endX, endY, duration = 1000) {
       id: "finger1",
       parameters: { pointerType: "touch" },
       actions: [
-        { type: "pointerMove", duration: 0, x: startX, y: startY },
-        { type: "pointerDown", button: 0 },
-        { type: "pause", duration: 1000 },
-        { type: "pointerMove", duration, origin: "viewport", x: endX, y: endY },
-        { type: "pointerUp", button: 0 },
+        { type: "pointerMove", duration: 0, x: startX, y: startY }, // 포인트 이동
+        { type: "pointerDown", button: 0 }, // 다운
+        { type: "pause", duration: 1000 }, // 정지
+        { type: "pointerMove", duration, origin: "viewport", x: endX, y: endY }, // 이동 위치
+        { type: "pointerUp", button: 0 }, // 업
       ],
     },
   ]);
