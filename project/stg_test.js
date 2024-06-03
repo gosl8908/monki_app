@@ -23,7 +23,7 @@ const serverUrl = "http://localhost:4723";
   await wait(5 * 1000);
   await clickElement(driver, uiSelectorText("번개"));
   await wait(5 * 1000);
-  await clickElement(driver, uiSelectorText("번개맛집 안양지점"));
+  await clickElement(driver, uiSelectorText("번개매장 안양지점"));
   console.log('검색 성공')
 
   // 대기 10초
@@ -31,7 +31,7 @@ const serverUrl = "http://localhost:4723";
 
   // 메뉴 선택 및 장바구니 담기
   await scroll(driver, 500, 1500, 500, 0);
-  await clickElement(driver, uiSelectorText("비빔면"));
+  await clickElement(driver, uiSelectorText("라면"));
   console.log('메뉴 상세 진입 성공')
 
   // 대기 10초
@@ -39,11 +39,11 @@ const serverUrl = "http://localhost:4723";
 
   // 옵션 선택 및 결제 진행
   await scroll(driver, 500, 1500, 500, 0);
-  await clickElement(driver, uiSelectorText("기본"));
+  await clickElement(driver, uiSelectorText("기본"), { timeout: 30 * 1000 });
   await wait(5 * 1000);
-  await clickElement(driver, uiSelectorText("8,000원 장바구니 담기"));
+  await clickElement(driver, uiSelectorText("4,500원 장바구니 담기"));
   await wait(5 * 1000);
-  await clickElement(driver, uiSelectorText("장바구니 보기"));
+  await clickElement(driver, uiSelectorText("장바구니 보기"), { timeout: 30 * 1000 });
   await wait(5 * 1000);
   await clickElement(driver, uiSelectorText("매장식사 주문"));
   console.log('메뉴 장바구니 담기 성공')
