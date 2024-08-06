@@ -30,10 +30,46 @@ const uiSelectorText = (text) => `android=new UiSelector().text("${text}")`;
 const uiSelectorBtnText = (text) =>
   `android=new UiSelector().className("android.widget.Button").text("${text}")`;
 
+// 유틸리티 함수: 텍스트 입력
+async function inputText(driver, text) {
+  const element = await driver;
+  await element.setValue(text);
+}
+
+// // 유틸리티 함수: 요소를 찾고 값을 입력하는 함수
+// async function enterText(driver, xpath, value, timeout = 5000) {
+//   try {
+//     const element = await driver.$(xpath);
+//     await element.waitForExist({ timeout });
+//     await element.setValue(value);
+//     console.log(`Entered value '${value}' successfully.`);
+//   } catch (error) {
+//     console.error(`Error entering value '${value}': `, error);
+//   }
+// }
+async function enterText(driver, xpath, value, timeout = 5000) {
+  const startTime = Date.now();
+  try {
+    const element = await driver.$(xpath);
+    console.log(`Time to find element: ${Date.now() - startTime}ms`);
+    
+    await element.waitForExist({ timeout });
+    console.log(`Time to wait for element existence: ${Date.now() - startTime}ms`);
+    
+    await element.setValue(value);
+    console.log(`Time to set value: ${Date.now() - startTime}ms`);
+    
+    console.log(`Entered value '${value}' successfully.`);
+  } catch (error) {
+    console.error(`Error entering value '${value}': `, error);
+  }
+}
 module.exports = {
   clickElement,
   scroll,
   wait,
   uiSelectorText,
   uiSelectorBtnText,
+  inputText,
+  enterText,
 };

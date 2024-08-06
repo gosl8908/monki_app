@@ -17,13 +17,22 @@ const serverUrl = "http://localhost:4723";
 
   // 대기 10초
   await wait(10 * 1000);
+  try {
+    // "오늘하루 그만보기" 텍스트가 있는 엘리먼트를 찾고 클릭
+    const eventElement = await driver.findElement(By.androidUIAutomator('new UiSelector().text("오늘하루 그만보기")'));
+    if (eventElement) {
+      await eventElement.click();
+    }
+  } catch (error) {
+    console.log('Element "오늘하루 그만보기" not found, continuing with the next steps');
+  }
 
   // 검색 및 아이템 선택
   await clickElement(driver, uiSelectorText("검색"));
   await wait(5 * 1000);
-  await clickElement(driver, uiSelectorText("먼키"));
+  await clickElement(driver, uiSelectorText("몬키"));
   await wait(5 * 1000);
-  await clickElement(driver, uiSelectorText("먼키 매장"));
+  await clickElement(driver, uiSelectorText("몬키지점"));
   console.log('검색 성공')
 
   // 대기 10초

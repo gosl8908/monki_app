@@ -1,11 +1,13 @@
 const { remote } = require("webdriverio");
 const { options } = require("../config");
+const { loginModule } = require('../module/manager.module.js');
 const {
   clickElement,
   scroll,
   wait,
   uiSelectorText,
   uiSelectorBtnText,
+  enterText,
 } = require("../utils");
 
 // Appium 서버와 디바이스 설정
@@ -15,15 +17,63 @@ const serverUrl = "http://localhost:4723";
 (async () => {
   const driver = await remote(options);
 
-  // 대기 10초
-  await wait(10 * 1000);
-
+  await wait(5 * 1000);
+  
+  const LoginBtnSelector = uiSelectorText("로그인");
+  
+  try {
+    const LoginBtn = await driver.$(LoginBtnSelector);
+    const isDisplayed = await LoginBtn.isDisplayed();
+    
+    if (isDisplayed) {
+      // Perform login using the login module
+      await loginModule.login('hskang@monki.net', 'gotjd0215!');
+    } else {
+      await nextStep();
+    }
+  } catch (error) {
+    await nextStep();  // nextStep() 함수는 다음 스텝을 처리하는 함수입니다.
+  }
+  // 다음 스텝 함수 예시 (구현 필요)
+  async function nextStep() {
+    // 다음 스텝을 처리하는 코드 작성
+    console.log("다음 스텝으로 진행합니다.");
+  }
+  
   // 검색 및 아이템 선택
-  await clickElement(driver, uiSelectorText("검색"));
+  await clickElement(driver, uiSelectorText("검색"), { timeout: 10 * 1000 });
+
   await wait(5 * 1000);
-  await clickElement(driver, uiSelectorText("번개"));
+
+  const StoreText = uiSelectorText("몬키");
+  try {
+    const StoreTextBtn = await driver.$(StoreText);
+    const isDisplayed = await StoreTextBtn.isDisplayed();
+    
+    if (!isDisplayed) {
+      // await enterText(driver, '//android.widget.EditText[@text="음식이나 음식점 이름을 검색해주세요"]', '몬키');
+      await clickElement(driver, uiSelectorText("음식이나 음식점 이름을 검색해주세요"));
+    
+      // const xpath = '//android.widget.FrameLayout[@resource-id="android:id/content"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android/view.ViewGroup/android/view.ViewGroup/android/view.ViewGroup/android/view.ViewGroup/android/view.ViewGroup/android/view.ViewGroup[1]/android.widget.FrameLayout/android/view.ViewGroup/android/view.ViewGroup/android/view.ViewGroup/android/view.ViewGroup/android/view.ViewGroup/android/view.ViewGroup/android/view.ViewGroup[2]/android/view.ViewGroup';
+      // const element = await driver.$(xpath);
+      // await element.click();
+
+    } else {
+      await clickElement(driver, uiSelectorText("몬키"), { timeout: 10 * 1000 });
+      await nextStep();
+    }
+  } catch (error) {
+    await nextStep();  // nextStep() 함수는 다음 스텝을 처리하는 함수입니다.
+  }
+  // 다음 스텝 함수 예시 (구현 필요)
+  async function nextStep() {
+    // 다음 스텝을 처리하는 코드 작성
+    console.log("다음 스텝으로 진행합니다.");
+  }
+
+
   await wait(5 * 1000);
-  await clickElement(driver, uiSelectorText("번개매장 안양지점"));
+  await clickElement(driver, uiSelectorText("몬키지점stg"), { timeout: 10 * 1000 });
   console.log('검색 성공')
 
   // 대기 10초
