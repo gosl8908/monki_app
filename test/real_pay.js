@@ -6,7 +6,7 @@ const {
   wait,
   uiSelectorText,
   uiSelectorBtnText,
-} = require("../utils");
+} = require("../module/utils");
 
 // Appium 서버와 디바이스 설정
 const serverUrl = "http://localhost:4723";

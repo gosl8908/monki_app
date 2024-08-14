@@ -1,5 +1,5 @@
 const { remote } = require("webdriverio");
-const { options } = require("../config");
+const { options } = require("../config.js");
 const { loginModule } = require('../module/manager.module.js');
 const {
   clickElement,
@@ -7,7 +7,7 @@ const {
   wait,
   uiSelectorText,
   enterText,
-} = require("../utils");
+} = require("../module/utils.js");
 
 const serverUrl = "http://localhost:4723";
 const TIMEOUT = 5000; // 전역 타임아웃 값
@@ -28,6 +28,23 @@ async function waitForTextAndClick(driver, text) {
     console.log(`"${text}" 텍스트를 찾고 클릭했습니다.`);
   } catch (error) {
     console.log(`"${text}" 텍스트를 찾지 못했습니다: ${error.message}`);
+  }
+}
+
+async function searchAndSelectItem(driver, searchText, itemText) {
+  await clickElement(driver, uiSelectorText("검색"), { timeout: 10 * 1000 });
+  await wait(5 * 1000);
+
+  const storeTextSelector = uiSelectorText(searchText);
+  try {
+    const storeTextBtn = await driver.$(storeTextSelector);
+    if (!await storeTextBtn.isDisplayed()) {
+      await enterText(driver, '//android.widget.EditText[@text="음식이나 음식점 이름을 검색해주세요"]', searchText);
+    } else {
+      await clickElement(driver, uiSelectorText(itemText), { timeout: 10 * 1000 });
+    }
+  } catch (error) {
+    console.log("주문완료 텍스트가 30초 내에 나타나지 않았습니다.");
   }
 }
 
@@ -55,6 +72,7 @@ async function logout(driver) {
   await wait(2000);
 }
 
+
 async function verifyLogout(driver) {
   const loginTextSelector = uiSelectorText("로그인");
   try {
@@ -74,10 +92,12 @@ async function verifyLogout(driver) {
     await wait(5000);
 
     // 로그인
-    await login(driver, 'hskang@monki.net', 'gotjd0215!');
+    await login(driver, 'hskang@monki.net', 'test123!');
 
     // 주문 완료 확인
     await waitForTextAndClick(driver, "오늘하루 그만보기");
+
+    await searchAndSelectItem(driver, "몬키", "몬키");
 
     // 내 계정 메뉴에서 로그아웃
     await logout(driver);

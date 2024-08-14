@@ -1,5 +1,5 @@
 const { remote } = require("webdriverio");
-const { options } = require("../config");
+const { options } = require("../config.js");
 const { loginModule } = require('../module/manager.module.js');
 const {
   clickElement,
@@ -8,7 +8,7 @@ const {
   uiSelectorText,
   uiSelectorBtnText,
   enterText,
-} = require("../utils");
+} = require("../module/utils.js");
 
 // Appium 서버와 디바이스 설정
 const serverUrl = "http://localhost:4723";

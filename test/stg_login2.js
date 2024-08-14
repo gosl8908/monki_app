@@ -6,7 +6,7 @@ const {
   wait,
   uiSelectorText,
   enterText,
-} = require("../utils");
+} = require("../module/utils");
 
 const serverUrl = "http://localhost:4723";
 

@@ -1,45 +1,56 @@
 const { remote } = require("webdriverio");
 const { options } = require("../config.js");
-const { loginModule } = require('../module/manager.module.js');
 const {
   clickElement,
   scroll,
   wait,
   uiSelectorText,
   uiSelectorBtnText,
+  inputText,
   enterText,
-} = require("../utils.js");
+} = require("../module/utils.js");
 
 const serverUrl = "http://localhost:4723";
 
-async function login(driver) {
-  const loginBtnSelector = uiSelectorText("로그인");
+async function login(driver, email, password) {
   try {
-    const loginBtn = await driver.$(loginBtnSelector);
-    if (await loginBtn.isDisplayed()) {
-      await loginModule.login('hskang@monki.net', 'gotjd0215!');
-    } else {
-      await handleNextStep();
-    }
+  await enterText(driver, '//android.widget.EditText[@text="이메일을 입력해 주세요"]', email);
+  await enterText(driver, '//android.widget.EditText[@text="비밀번호를 입력해 주세요"]', password);
+  await clickElement(driver, uiSelectorText("로그인"));
+}catch (error) {
+  console.error(`로그인 중 오류 발생: ${error.message}`);
+}
+}
+
+async function waitForTextAndClick(driver, text, timeout = 5000) {
+  const selector = uiSelectorText(text);
+  try {
+    const element = await driver.$(selector);
+    await element.waitForExist({ timeout });
+    await element.click();
+    console.log(`"${text}" 텍스트를 찾고 클릭했습니다.`);
   } catch (error) {
-    await handleNextStep();
+    console.log(`"${text}" 텍스트를 찾지 못했습니다: ${error.message}`);
   }
 }
 
 async function searchAndSelectItem(driver, searchText, itemText) {
-  await clickElement(driver, uiSelectorText("검색"), { timeout: 10 * 1000 });
-  await wait(5 * 1000);
-
-  const storeTextSelector = uiSelectorText(searchText);
   try {
+    await clickElement(driver, uiSelectorText("검색"));
+    await wait(5000);
+
+    const storeTextSelector = uiSelectorText(searchText);
     const storeTextBtn = await driver.$(storeTextSelector);
-    if (!await storeTextBtn.isDisplayed()) {
-      await enterText(driver, '//android.widget.EditText[@text="음식이나 음식점 이름을 검색해주세요"]', searchText);
+    
+    if (await storeTextBtn.isDisplayed()) {
+      await clickElement(driver, uiSelectorText(itemText));
     } else {
-      await clickElement(driver, uiSelectorText(itemText), { timeout: 10 * 1000 });
+      await enterText(driver, '//android.widget.EditText[@text="음식이나 음식점 이름을 검색해주세요"]', searchText);
     }
+
     await handleNextStep();
   } catch (error) {
+    console.error(`검색 및 선택 중 오류 발생: ${error.message}`);
     await handleNextStep();
   }
 }
@@ -49,11 +60,25 @@ async function handleNextStep() {
 }
 
 (async () => {
-  const driver = await remote(options);
-
+  let driver;
   try {
+    driver = await remote(options);
+
     await wait(5 * 1000);
-    await login(driver);
+    const loginButtonSelector = uiSelectorText("로그인");
+    const loginButton = await driver.$(loginButtonSelector);
+    if (await loginButton.isDisplayed()) {
+      // 로그인 버튼이 있을 경우 로그인 진행
+      await login(driver, "hskang@monki.net", "test123!");
+      await wait(5 * 1000);
+    }
+    const EventBtnSelector = uiSelectorText("오늘하루 그만보기");
+    const EventBtn = await driver.$(EventBtnSelector);
+    if (await EventBtn.isDisplayed()) {
+        // 로그인 버튼이 있을 경우 로그인 진행
+        await waitForTextAndClick(driver, "오늘하루 그만보기");
+        await wait(5 * 1000);
+    }
     await searchAndSelectItem(driver, "몬키", "몬키");
     await wait(5 * 1000);
     await clickElement(driver, uiSelectorText("몬키지점stg"), { timeout: 10 * 1000 });
@@ -89,8 +114,8 @@ async function handleNextStep() {
     await clickElement(driver, uiSelectorBtnText("결제"));
     await wait(5 * 1000);
 
-    const password = ["9", "4", "0", "5", "1", "3"];
-    for (const digit of password) {
+    const Caedpassword = ["9", "4", "0", "5", "1", "3"];
+    for (const digit of Caedpassword) {
       await clickElement(driver, `android=new UiSelector().className("android.widget.Button").text("${digit}")`);
       await wait(1 * 1000);
     }
@@ -106,7 +131,9 @@ async function handleNextStep() {
   } catch (error) {
     console.error("Error occurred:", error);
   } finally {
-    await driver.deleteSession();
-    console.log("Driver session ended.");
+    if (driver) {
+      await driver.deleteSession();
+      console.log("Driver session ended.");
+    }
   }
 })();

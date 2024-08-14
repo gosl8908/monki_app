@@ -5,7 +5,7 @@ const {
   wait,
   uiSelectorText,
   enterText,
-} = require("../utils");
+} = require("../module/utils");
 
 const TIMEOUT = 5000; // Global timeout value
 
