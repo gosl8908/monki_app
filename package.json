@@ -18,6 +18,14 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "appium-uiautomator2-driver": "^3.7.6"
+    "appium-uiautomator2-driver": "^3.7.6",
+    "chai": "^5.1.1",
+    "eslint": "^9.9.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "lint-staged": "^15.2.9",
+    "mocha": "^10.7.3",
+    "prettier": "^3.3.3",
+    "sinon": "^18.0.0"
   }
 }
