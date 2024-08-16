@@ -24,30 +24,31 @@ const options = {
     capabilities: capabilities,
 };
 
-// 시간 선언
 function getFormattedTime() {
-    const daysOfWeek = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일']; // 숫자 0부터 6까지 요일을 표시하는 배열
+    const now = new Date(); // Move this line to the top
+    const daysOfWeek = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
     const dayOfWeek = daysOfWeek[now.getDay()]; // 요일을 얻어옵니다.
+
     // 한국 표준시(Asia/Seoul)로 시간대를 설정합니다.
     const options = { timeZone: 'Asia/Seoul' };
+
     // 지정된 시간대로 날짜와 시간을 형식화합니다.
     const formattedDate = now.toLocaleString('ko-KR', options);
-    const now = new Date();
+
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, '0');
     const day = String(now.getDate()).padStart(2, '0');
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const seconds = String(now.getSeconds()).padStart(2, '0');
-    return `${year}${month}${day}_${hours}${minutes}${seconds}`;
-    // return {
-    //     Date: `${year}-${month}-${day}`,
-    //     Time: `${hours}:${minutes}:${seconds}`,
-    //     DateLabel: `${year}${month}${day}${hours}${minutes}${seconds}`,
-    //     DateLabelWeek: `${year}-${month}-${day} ${dayOfWeek} ${hours}:${minutes}:${seconds}`,
-    //     EmailTitle: `${year}-${month}-${day} ${dayOfWeek} 자동화 테스트 결과`,
-    // };
-    // }
+
+    return {
+        Date: `${year}-${month}-${day}`,
+        Time: `${hours}:${minutes}:${seconds}`,
+        DateLabel: `${year}${month}${day}_${hours}${minutes}${seconds}`,
+        DateLabelWeek: `${year}-${month}-${day} ${dayOfWeek} ${hours}:${minutes}:${seconds}`,
+        EmailTitle: `${year}-${month}-${day} ${dayOfWeek} 자동화 테스트 결과`,
+    };
 }
 
 module.exports = { options, getFormattedTime };

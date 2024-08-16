@@ -156,3 +156,8 @@ package-lock.json
 # Local History for Visual Studio Code
 ######################
 .history/
+
+######################
+# appium
+######################
+monki_app/screenshot
