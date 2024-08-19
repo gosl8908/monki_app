@@ -6,7 +6,6 @@ const {
     wait,
     uiSelectorText,
     uiSelectorBtnText,
-    inputText,
     enterText,
     pressVolumeButton,
 } = require('../module/utils.js');

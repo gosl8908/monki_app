@@ -1,14 +1,6 @@
 const { remote } = require('webdriverio');
 const { options, getFormattedTime, env } = require('../config.js');
-const {
-    clickElement,
-    scroll,
-    wait,
-    uiSelectorText,
-    uiSelectorBtnText,
-    inputText,
-    enterText,
-} = require('../module/utils.js');
+const { clickElement, scroll, wait, uiSelectorText, uiSelectorBtnText, enterText } = require('../module/utils.js');
 const { loginModule } = require('../module/manager.module.js');
 
 const serverUrl = 'http://localhost:4723';

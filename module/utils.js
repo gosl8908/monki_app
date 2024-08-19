@@ -30,46 +30,22 @@ const uiSelectorText = text => `android=new UiSelector().text("${text}")`;
 const uiSelectorBtnText = text => `android=new UiSelector().className("android.widget.Button").text("${text}")`;
 
 // 텍스트 입력
-async function inputText(driver, selector, text) {
+async function enterText(driver, selector, value, timeout = 5000) {
     try {
         const element = await driver.$(selector);
-        await element.setValue(text);
-    } catch (error) {
-        console.error(`Error inputting text '${text}' into element with selector '${selector}':`, error);
-    }
-}
-
-/* Text 입력 */
-async function enterText(driver, xpath, value, timeout = 5000) {
-    const startTime = Date.now();
-    try {
-        const element = await driver.$(xpath);
-        console.log(`Time to find element: ${Date.now() - startTime}ms`);
-
         await element.waitForExist({ timeout });
-        console.log(`Time to wait for element existence: ${Date.now() - startTime}ms`);
-
         await element.setValue(value);
-        console.log(`Time to set value: ${Date.now() - startTime}ms`);
-
         console.log(`Entered value '${value}' successfully.`);
     } catch (error) {
-        console.error(`Error entering value '${value}': `, error);
+        console.error(`Error entering value '${value}' into element with selector '${selector}':`, error);
     }
 }
 
-// 볼륨 버튼 조작 함수 추가
+// 볼륨 버튼 조작
 async function pressVolumeButton(driver, direction = 'up') {
     try {
-        let action;
-        if (direction.toLowerCase() === 'up') {
-            action = driver.pressKeyCode(24); // 볼륨 업
-        } else if (direction.toLowerCase() === 'down') {
-            action = driver.pressKeyCode(25); // 볼륨 다운
-        } else {
-            throw new Error("Invalid direction. Use 'up' or 'down'.");
-        }
-        await action;
+        const keyCode = direction.toLowerCase() === 'up' ? 24 : 25; // 24: 볼륨 업, 25: 볼륨 다운
+        await driver.pressKeyCode(keyCode);
         console.log(`Volume button '${direction}' pressed successfully.`);
     } catch (error) {
         console.error(`Error pressing volume button '${direction}':`, error);
@@ -82,7 +58,6 @@ module.exports = {
     wait,
     uiSelectorText,
     uiSelectorBtnText,
-    inputText,
     enterText,
     pressVolumeButton, // 볼륨 버튼 함수도 추가
 };
