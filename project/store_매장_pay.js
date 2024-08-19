@@ -9,19 +9,9 @@ const {
     inputText,
     enterText,
 } = require('../module/utils.js');
+const { loginModule } = require('../module/manager.module.js');
 
 const serverUrl = 'http://localhost:4723';
-
-async function login(driver, email, password) {
-    try {
-        await enterText(driver, '//android.widget.EditText[@text="이메일을 입력해 주세요"]', email);
-        await enterText(driver, '//android.widget.EditText[@text="비밀번호를 입력해 주세요"]', password);
-        await clickElement(driver, uiSelectorText('로그인'));
-        console.log(`로그인 완료`);
-    } catch (error) {
-        console.error(`로그인 중 오류 발생: ${error.message}`);
-    }
-}
 
 async function waitForTextAndClick(driver, text, timeout = 5000) {
     try {
@@ -95,12 +85,7 @@ async function completeOrder(driver, passwordDigits) {
         driver = await remote(options);
         await wait(5 * 1000);
 
-        /* 로그인 */
-        const loginButton = await driver.$(uiSelectorText('로그인'));
-        if (await loginButton.isDisplayed()) {
-            await login(driver, env.email, env.password);
-            await wait(5000);
-        }
+        await loginModule.login(driver, env.email, env.password);
 
         /* 배너 확인 */
         const eventBtn = await driver.$(uiSelectorText('오늘하루 그만보기'));

@@ -12,6 +12,7 @@ const {
     enterText,
     pressVolumeButton,
 } = require('../module/utils.js');
+const { loginModule } = require('../module/manager.module.js');
 
 const serverUrl = 'http://localhost:4723';
 
@@ -19,7 +20,9 @@ const serverUrl = 'http://localhost:4723';
     let driver;
     try {
         driver = await remote(options);
-        await clickElement(driver, uiSelectorText('My먼키'));
+        await wait(5 * 1000);
+
+        await loginModule.login(driver, env.email, env.password);
     } catch (error) {
         console.error('Error occurred:', error);
     } finally {
