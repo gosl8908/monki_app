@@ -146,8 +146,7 @@ async function completeOrder(driver, passwordDigits) {
         await clickElement(driver, uiSelectorText('결제하기'));
 
         /* 카드 입력 & 주문완료 확인 */
-        const cardPassword = ['9', '4', '0', '5', '1', '3'];
-        await completeOrder(driver, cardPassword);
+        await completeOrder(driver, env.cardPassword);
 
         /* 주문취소 */
         await clickElement(driver, uiSelectorText('주문취소'));

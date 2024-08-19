@@ -59,5 +59,6 @@ module.exports = {
     env: {
         email: 'hskang@monki.net',
         password: 'test123!',
+        cardPassword: ['9', '4', '0', '5', '1', '3'],
     },
 };
