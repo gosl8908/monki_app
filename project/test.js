@@ -1,7 +1,5 @@
 const { remote } = require('webdriverio');
 const { options, getFormattedTime, env } = require('../config.js');
-const fs = require('fs'); // fs 모듈 추가
-const path = require('path'); // path 모듈 추가
 const {
     clickElement,
     scroll,
