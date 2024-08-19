@@ -2,6 +2,8 @@ const { remote } = require('webdriverio');
 const { options, getFormattedTime, env } = require('../config.js');
 const { clickElement, scroll, wait, uiSelectorText, uiSelectorBtnText, enterText } = require('../module/utils.js');
 const { loginModule } = require('../module/manager.module.js');
+const fs = require('fs'); // fs 모듈 추가
+const path = require('path'); // path 모듈 추가
 
 const serverUrl = 'http://localhost:4723';
 
