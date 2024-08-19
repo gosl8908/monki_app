@@ -1,5 +1,5 @@
 const { remote } = require('webdriverio');
-const { options, getFormattedTime } = require('../config.js');
+const { options, getFormattedTime, env } = require('../config.js');
 const fs = require('fs'); // fs 모듈 추가
 const path = require('path'); // path 모듈 추가
 const {
@@ -77,7 +77,7 @@ async function completeOrder(driver, passwordDigits) {
         /* 로그인 */
         const loginButton = await driver.$(uiSelectorText('로그인'));
         if (await loginButton.isDisplayed()) {
-            await login(driver, 'hskang@monki.net', 'test123!');
+            await login(driver, env.email, env.password);
             await wait(5000);
         }
 

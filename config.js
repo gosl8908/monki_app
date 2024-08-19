@@ -1,3 +1,6 @@
+// config.js
+const { defineConfig } = require('webdriverio'); // 필요한 경우 추가
+
 const capabilities = {
     platformName: 'Android',
     'appium:automationName': 'uiautomator2',
@@ -50,5 +53,11 @@ function getFormattedTime() {
         EmailTitle: `${year}-${month}-${day} ${dayOfWeek} 자동화 테스트 결과`,
     };
 }
-
-module.exports = { options, getFormattedTime };
+module.exports = {
+    options,
+    getFormattedTime,
+    env: {
+        email: 'hskang@monki.net',
+        password: 'test123!',
+    },
+};
