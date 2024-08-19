@@ -20,7 +20,6 @@ const serverUrl = 'http://localhost:4723';
         driver = await remote(options);
 
         // 스크린샷 캡처
-        await wait(5 * 1000);
         await driver.takeScreenshot().then(screenshot => {
             const screenshotPath = path.join(
                 __dirname,

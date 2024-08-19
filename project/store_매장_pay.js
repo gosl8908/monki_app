@@ -148,6 +148,17 @@ async function completeOrder(driver, passwordDigits) {
         /* 카드 입력 & 주문완료 확인 */
         const cardPassword = ['9', '4', '0', '5', '1', '3'];
         await completeOrder(driver, cardPassword);
+
+        /* 주문취소 */
+        await clickElement(driver, uiSelectorText('주문취소'));
+        await wait(5000);
+        await clickElement(driver, uiSelectorText('단순 변심'));
+        await wait(5000);
+        await clickElement(driver, uiSelectorText('취소하기'));
+        await waitForTextAndClick(driver, '주문이 취소되었습니다.', 30000);
+        console.log('주문취소 완료 텍스트가 나타났습니다.');
+
+        await clickElement(driver, uiSelectorText('확인'));
     } catch (error) {
         console.error('Error occurred:', error);
     } finally {

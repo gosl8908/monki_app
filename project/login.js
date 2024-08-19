@@ -36,9 +36,9 @@ async function logout(driver) {
     try {
         const orderCompleteText = await driver.$(orderCompleteTextSelector);
         await orderCompleteText.waitForExist({ timeout: 30 * 1000 });
-        console.log('결제완료 & 주문완료 텍스트가 나타났습니다.');
+        console.log('닉네임 텍스트 확인');
     } catch (error) {
-        console.log('주문완료 텍스트가 30초 내에 나타나지 않았습니다.');
+        console.log('닉네임 텍스트가 30초 내에 나타나지 않았습니다.');
     }
 
     await scroll(driver, 500, 1500, 500, 0);
