@@ -18,6 +18,7 @@ const capabilities = {
     'appium:disableWindowAnimation': true, // UI 애니메이션 비활성화
     'appium:enablePerformanceLogging': true, // 성능 로그 활성화
     'appium:ignoreUnimportantViews': true, // UIAutomator가 중요하지 않은 뷰를 무시하도록 설정
+    'appium:skipServerInstallation': false,
 };
 
 const options = {

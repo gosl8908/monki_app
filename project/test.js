@@ -18,7 +18,6 @@ const serverUrl = 'http://localhost:4723';
     try {
         driver = await remote(options);
         await wait(5 * 1000);
-
         await loginModule.login(driver, env.email, env.password);
     } catch (error) {
         console.error('Error occurred:', error);
