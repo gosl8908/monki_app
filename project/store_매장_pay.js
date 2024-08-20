@@ -1,7 +1,7 @@
 const { remote } = require('webdriverio');
 const { options, getFormattedTime, env } = require('../config.js');
 const { clickElement, scroll, wait, uiSelectorText, uiSelectorBtnText, enterText } = require('../module/utils.js');
-const { loginModule } = require('../module/manager.module.js');
+const { loginModule, searchModule } = require('../module/manager.module.js');
 const fs = require('fs'); // fs 모듈 추가
 const path = require('path'); // path 모듈 추가
 
@@ -16,29 +16,6 @@ async function waitForTextAndClick(driver, text, timeout = 5000) {
         console.log(`"${text}" 텍스트를 찾고 클릭했습니다.`);
     } catch (error) {
         console.log(`"${text}" 텍스트를 찾지 못했습니다: ${error.message}`);
-    }
-}
-
-async function searchAndSelectItem(driver, searchText, itemText) {
-    try {
-        await clickElement(driver, uiSelectorText('검색'));
-        await wait(5000);
-
-        const storeTextSelector = uiSelectorText(searchText);
-        const storeTextBtn = await driver.$(storeTextSelector);
-
-        if (await storeTextBtn.isDisplayed()) {
-            await clickElement(driver, uiSelectorText(itemText));
-        } else {
-            await enterText(
-                driver,
-                '//android.widget.EditText[@text="음식이나 음식점 이름을 검색해주세요"]',
-                searchText,
-            );
-        }
-        console.log('검색 및 선택 완료');
-    } catch (error) {
-        console.error(`검색 및 선택 중 오류 발생: ${error.message}`);
     }
 }
 
@@ -89,7 +66,7 @@ async function completeOrder(driver, passwordDigits) {
         }
 
         /* 검색 */
-        await searchAndSelectItem(driver, '몬키', '몬키');
+        await searchModule.search(driver, '몬키', '몬키');
         await wait(5 * 1000);
         await clickElement(driver, uiSelectorText('몬키지점stg'), { timeout: 10 * 1000 });
         console.log('검색 성공');
