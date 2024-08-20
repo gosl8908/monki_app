@@ -1,6 +1,5 @@
 // module/search.module.js
-const { clickElement, wait, uiSelectorText, enterText } = require('../module/utils');
-
+const { clickElement, wait, uiSelectorText, enterText, clearText } = require('../module/utils');
 async function search(driver, searchText) {
     try {
         await clickElement(driver, uiSelectorText('검색'));
@@ -21,6 +20,12 @@ async function search(driver, searchText) {
             await clickElement(driver, uiSelectorText(searchText));
             await driver.pressKeyCode(66); // 66 is the key code for Enter
         }
+
+        await clearText(driver, `//android.widget.EditText[@text='${searchText}']`);
+        await wait(5 * 1000);
+        await clickElement(driver, uiSelectorText(searchText));
+        await wait(5 * 1000);
+
         console.log('검색 및 선택 완료');
     } catch (error) {
         console.error(`검색 및 선택 중 오류 발생: ${error.message}`);

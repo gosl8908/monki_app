@@ -18,9 +18,9 @@ const serverUrl = 'http://localhost:4723';
     try {
         driver = await remote(options);
         await wait(5 * 1000);
-        // await searchModule.search(driver, '몬키');
+        await searchModule.search(driver, '몬키지점stg');
         /* 카드 입력 & 주문완료 확인 */
-        await payModule.pay(driver, env.cardPassword);
+        // await payModule.pay(driver, env.cardPassword);
     } catch (error) {
         console.error('Error occurred:', error);
     } finally {

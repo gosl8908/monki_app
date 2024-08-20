@@ -40,6 +40,19 @@ async function enterText(driver, selector, value, timeout = 5000) {
         console.error(`Error entering value '${value}' into element with selector '${selector}':`, error);
     }
 }
+// 텍스트 지우기
+async function clearText(driver, selector, timeout = 5000) {
+    try {
+        // Wait for the element to be displayed
+        const element = await driver.$(selector);
+        await element.waitForDisplayed({ timeout });
+
+        // Clear the text
+        await element.clearValue(); // `clear` is deprecated in WebdriverIO v5+, use `clearValue` instead
+    } catch (error) {
+        console.error(`Error clearing text in element with selector '${selector}':`, error);
+    }
+}
 
 // 볼륨 버튼 조작
 async function pressVolumeButton(driver, direction = 'up') {
@@ -71,6 +84,7 @@ module.exports = {
     uiSelectorText,
     uiSelectorBtnText,
     enterText,
+    clearText,
     pressVolumeButton,
     waitForTextAndClick,
 };

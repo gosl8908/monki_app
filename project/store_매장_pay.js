@@ -29,9 +29,7 @@ const serverUrl = 'http://localhost:4723';
         }
 
         /* 검색 */
-        await searchModule.search(driver, '몬키');
-        await wait(5 * 1000);
-        await clickElement(driver, uiSelectorText('몬키지점stg'), { timeout: 10 * 1000 });
+        await searchModule.search(driver, '몬키지점stg');
         console.log('검색 성공');
 
         /* 메뉴 */
@@ -53,16 +51,7 @@ const serverUrl = 'http://localhost:4723';
         console.log('메뉴 장바구니 담기 성공');
 
         /* 결제 */
-        await wait(10000);
-        await scroll(driver, 500, 2500, 500, 0);
-        await clickElement(driver, uiSelectorText('모두사용'));
-        await wait(5000);
-        await clickElement(driver, uiSelectorText('간편결제'));
-        await wait(5000);
-        await scroll(driver, 500, 1000, 500, 0);
-        await clickElement(driver, uiSelectorText('개인정보 제3자 제공 내용 및 결제에 동의합니다.'));
-        await wait(5000);
-        await clickElement(driver, uiSelectorText('결제하기'));
+        await payModule.order(driver);
 
         /* 카드 입력 & 주문완료 확인 */
         await payModule.pay(driver, env.cardPassword);
