@@ -1,54 +1,17 @@
 const { remote } = require('webdriverio');
 const { options, getFormattedTime, env } = require('../config.js');
-const { clickElement, scroll, wait, uiSelectorText, uiSelectorBtnText, enterText } = require('../module/utils.js');
-const { loginModule } = require('../module/manager.module.js');
-const fs = require('fs'); // fs 모듈 추가
-const path = require('path'); // path 모듈 추가
+const {
+    clickElement,
+    scroll,
+    wait,
+    uiSelectorText,
+    uiSelectorBtnText,
+    enterText,
+    waitForTextAndClick,
+} = require('../module/utils.js');
+const { loginModule, payModule } = require('../module/manager.module.js');
 
 const serverUrl = 'http://localhost:4723';
-
-async function waitForTextAndClick(driver, text, timeout = 5000) {
-    try {
-        const selector = uiSelectorText(text);
-        const element = await driver.$(selector);
-        await element.waitForExist({ timeout });
-        await element.click();
-        console.log(`"${text}" 텍스트를 찾고 클릭했습니다.`);
-    } catch (error) {
-        console.log(`"${text}" 텍스트를 찾지 못했습니다: ${error.message}`);
-    }
-}
-
-async function completeOrder(driver, passwordDigits) {
-    try {
-        await wait(10000);
-        await scroll(driver, 500, 1300, 500, 100);
-        await clickElement(driver, uiSelectorBtnText('결제'));
-        await wait(5000);
-
-        for (const digit of passwordDigits) {
-            await clickElement(driver, `android=new UiSelector().className("android.widget.Button").text("${digit}")`);
-            await wait(1000);
-        }
-
-        await waitForTextAndClick(driver, '주문완료', 30000);
-        console.log('결제완료 & 주문완료 텍스트가 나타났습니다.');
-
-        // 스크린샷 캡처
-        await wait(5 * 1000);
-        await driver.takeScreenshot().then(screenshot => {
-            const screenshotPath = path.join(
-                __dirname,
-                '../screenshot',
-                `screenshot_${getFormattedTime().DateLabel}.jpg`,
-            );
-            fs.mkdirSync(path.dirname(screenshotPath), { recursive: true });
-            fs.writeFileSync(screenshotPath, screenshot, 'base64');
-        });
-    } catch (error) {
-        console.error(`주문 완료 중 오류 발생: ${error.message}`);
-    }
-}
 
 (async () => {
     let driver;
@@ -105,7 +68,7 @@ async function completeOrder(driver, passwordDigits) {
         await clickElement(driver, uiSelectorText('무료배달 결제하기'));
 
         /* 카드 입력 & 주문완료 확인 */
-        await completeOrder(driver, env.cardPassword);
+        await payModule.pay(driver, env.cardPassword);
 
         /* 주문취소 */
         await clickElement(driver, uiSelectorText('주문취소'));

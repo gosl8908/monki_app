@@ -9,7 +9,7 @@ const {
     enterText,
     pressVolumeButton,
 } = require('../module/utils.js');
-const { loginModule } = require('../module/manager.module.js');
+const { loginModule, searchModule, payModule } = require('../module/manager.module.js');
 
 const serverUrl = 'http://localhost:4723';
 
@@ -18,6 +18,9 @@ const serverUrl = 'http://localhost:4723';
     try {
         driver = await remote(options);
         await wait(5 * 1000);
+        // await searchModule.search(driver, '몬키');
+        /* 카드 입력 & 주문완료 확인 */
+        await payModule.pay(driver, env.cardPassword);
     } catch (error) {
         console.error('Error occurred:', error);
     } finally {

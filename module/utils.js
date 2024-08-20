@@ -52,6 +52,18 @@ async function pressVolumeButton(driver, direction = 'up') {
     }
 }
 
+async function waitForTextAndClick(driver, text, timeout = 5000) {
+    try {
+        const selector = uiSelectorText(text);
+        const element = await driver.$(selector);
+        await element.waitForExist({ timeout });
+        await element.click();
+        console.log(`"${text}" 텍스트를 찾고 클릭했습니다.`);
+    } catch (error) {
+        console.log(`"${text}" 텍스트를 찾지 못했습니다: ${error.message}`);
+    }
+}
+
 module.exports = {
     clickElement,
     scroll,
@@ -59,5 +71,6 @@ module.exports = {
     uiSelectorText,
     uiSelectorBtnText,
     enterText,
-    pressVolumeButton, // 볼륨 버튼 함수도 추가
+    pressVolumeButton,
+    waitForTextAndClick,
 };
