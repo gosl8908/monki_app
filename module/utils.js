@@ -65,6 +65,7 @@ async function pressVolumeButton(driver, direction = 'up') {
     }
 }
 
+// 텍스트 인식 클릭
 async function waitForTextAndClick(driver, text, timeout = 5000) {
     try {
         const selector = uiSelectorText(text);
@@ -77,6 +78,17 @@ async function waitForTextAndClick(driver, text, timeout = 5000) {
     }
 }
 
+// 텍스트 인식 클릭
+async function contains(driver, text, timeout = 5000) {
+    try {
+        const selector = uiSelectorText(text);
+        const element = await driver.$(selector);
+        await element.waitForExist({ timeout });
+        console.log(`"${text}" 텍스트를 찾았습니다.`);
+    } catch (error) {
+        console.log(`"${text}" 텍스트를 찾지 못했습니다: ${error.message}`);
+    }
+}
 module.exports = {
     clickElement,
     scroll,
@@ -87,4 +99,5 @@ module.exports = {
     clearText,
     pressVolumeButton,
     waitForTextAndClick,
+    contains,
 };

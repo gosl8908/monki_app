@@ -1,7 +1,7 @@
 const { clickElement, wait, scroll, uiSelectorBtnText, uiSelectorText, waitForTextAndClick } = require('./utils');
 const fs = require('fs'); // fs 모듈 추가
 const path = require('path'); // path 모듈 추가
-const { getFormattedTime } = require('../config.js');
+const { env } = require('../config.js');
 
 async function order(driver, type = undefined) {
     try {
@@ -42,11 +42,7 @@ async function pay(driver, passwordDigits) {
         // 스크린샷 캡처
         await wait(5 * 1000);
         await driver.takeScreenshot().then(screenshot => {
-            const screenshotPath = path.join(
-                __dirname,
-                '../screenshot',
-                `screenshot_${getFormattedTime().DateLabel}.jpg`,
-            );
+            const screenshotPath = path.join(__dirname, '../screenshot', `screenshot_${env.DateLabel}.jpg`);
             fs.mkdirSync(path.dirname(screenshotPath), { recursive: true });
             fs.writeFileSync(screenshotPath, screenshot, 'base64');
         });

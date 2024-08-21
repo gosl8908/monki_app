@@ -1,5 +1,10 @@
 // config.js
 const { defineConfig } = require('webdriverio'); // 필요한 경우 추가
+const nodemailer = require('nodemailer');
+
+/* Email Account */
+const EamilId = 'gosl8908@gmail.com';
+const EamilPwd = 'boft yzek iitd uuxa';
 
 const capabilities = {
     platformName: 'Android',
@@ -51,15 +56,66 @@ function getFormattedTime() {
         Time: `${hours}:${minutes}:${seconds}`,
         DateLabel: `${year}${month}${day}_${hours}${minutes}${seconds}`,
         DateLabelWeek: `${year}-${month}-${day} ${dayOfWeek} ${hours}:${minutes}:${seconds}`,
-        EmailTitle: `${year}-${month}-${day} ${dayOfWeek} 자동화 테스트 결과`,
+        EmailTitle: `${year}-${month}-${day} ${dayOfWeek}`,
     };
 }
+function sendEmail({ recipient, subject, body, screenshotFileNames }) {
+    const attachments = [];
+    if (screenshotFileNames && screenshotFileNames.length > 0) {
+        screenshotFileNames.forEach(screenshotFileName => {
+            const path = `./screenshot/${screenshotFileName}`;
+            attachments.push({
+                filename: screenshotFileName,
+                encoding: 'base64',
+                path: path,
+            });
+        });
+    }
+
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
+        auth: {
+            user: EamilId,
+            pass: EamilPwd,
+        },
+    });
+
+    const mailOptions = {
+        from: EamilId,
+        to: EamilId,
+        subject: subject,
+        text: body,
+        attachments: attachments,
+    };
+
+    return transporter
+        .sendMail(mailOptions)
+        .then(info => {
+            console.log('이메일 성공적으로 전송됨: ' + info.response);
+            return true;
+        })
+        .catch(error => {
+            console.error('이메일 전송 실패: ' + error);
+            return false;
+        });
+}
+
 module.exports = {
     options,
     getFormattedTime,
+    sendEmail,
     env: {
         email: 'hskang@monki.net',
         password: 'test123!',
         cardPassword: ['9', '4', '0', '5', '1', '3'],
+        /* content */
+        EmailBody: `App 자동화 테스트가 성공적으로 완료되었습니다`,
+        Date: getFormattedTime().Date,
+        Time: getFormattedTime().Time,
+        DateLabel: getFormattedTime().DateLabel,
+        DateLabelWeek: getFormattedTime().DateLabelWeek,
+        EmailTitle: getFormattedTime().EmailTitle,
     },
 };
