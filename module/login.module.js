@@ -1,4 +1,4 @@
-const { clickElement, wait, uiSelectorText, waitForTextAndClick, enterText } = require('../module/utils');
+const { click, wait, uiSelectorText, waitForTextAndClick, enterText } = require('../module/utils');
 
 async function login(driver, email, password) {
     try {
@@ -6,7 +6,7 @@ async function login(driver, email, password) {
         if (await loginButton.isDisplayed()) {
             await enterText(driver, '//android.widget.EditText[@text="이메일을 입력해 주세요"]', email);
             await enterText(driver, '//android.widget.EditText[@text="비밀번호를 입력해 주세요"]', password);
-            await clickElement(driver, uiSelectorText('로그인'));
+            await click(driver, uiSelectorText('로그인'));
             await wait(5 * 1000);
             console.log('로그인 완료');
         }

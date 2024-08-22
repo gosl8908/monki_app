@@ -3,7 +3,7 @@ const { options, env } = require('../config.js');
 const fs = require('fs');
 const path = require('path');
 const {
-    clickElement,
+    click,
     scroll,
     wait,
     uiSelectorText,
@@ -28,30 +28,30 @@ let Failure = false;
         await loginModule.login(driver, env.email, env.password);
 
         /* 검색 */
-        await clickElement(driver, uiSelectorText('무료배달'));
+        await click(driver, uiSelectorText('무료배달'));
         await wait(5 * 1000);
-        await clickElement(driver, uiSelectorText('먼키지점'), { timeout: 10 * 1000 });
+        await click(driver, uiSelectorText('먼키지점'), { timeout: 10 * 1000 });
         await wait(10 * 1000);
         await scroll(driver, 500, 2000, 500, 0);
-        await clickElement(driver, uiSelectorText('몬키지점stg'), { timeout: 10 * 1000 });
+        await click(driver, uiSelectorText('몬키지점stg'), { timeout: 10 * 1000 });
         console.log('검색 성공');
 
         /* 메뉴 */
         await wait(10 * 1000);
         await scroll(driver, 500, 1500, 500, 0);
-        await clickElement(driver, uiSelectorText('비빔밥'));
+        await click(driver, uiSelectorText('비빔밥'));
         console.log('메뉴 상세 진입 성공');
 
         /* 장바구니 담기 */
         await wait(10 * 1000);
         await scroll(driver, 500, 1500, 500, 0);
-        await clickElement(driver, uiSelectorText('특대'), { timeout: 30 * 1000 });
+        await click(driver, uiSelectorText('특대'), { timeout: 30 * 1000 });
         await wait(5 * 1000);
-        await clickElement(driver, uiSelectorText('16,500원 장바구니 담기'));
+        await click(driver, uiSelectorText('16,500원 장바구니 담기'));
         await wait(10 * 1000);
-        await clickElement(driver, uiSelectorText('장바구니 보기'));
+        await click(driver, uiSelectorText('장바구니 보기'));
         await wait(5 * 1000);
-        await clickElement(driver, uiSelectorText('무료배달 주문'));
+        await click(driver, uiSelectorText('무료배달 주문'));
         console.log('메뉴 장바구니 담기 성공');
 
         /* 결제 */
@@ -61,15 +61,15 @@ let Failure = false;
         await payModule.pay(driver, env.cardPassword);
 
         /* 주문취소 */
-        await clickElement(driver, uiSelectorText('주문취소'));
+        await click(driver, uiSelectorText('주문취소'));
         await wait(5000);
-        await clickElement(driver, uiSelectorText('단순 변심'));
+        await click(driver, uiSelectorText('단순 변심'));
         await wait(5000);
-        await clickElement(driver, uiSelectorText('취소하기'));
+        await click(driver, uiSelectorText('취소하기'));
         await waitForTextAndClick(driver, '주문이 취소되었습니다.', 30000);
         console.log('주문취소 완료 텍스트가 나타났습니다.');
 
-        await clickElement(driver, uiSelectorText('확인'));
+        await click(driver, uiSelectorText('확인'));
     } catch (error) {
         console.error(error);
         Failure = true;

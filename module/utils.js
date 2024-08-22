@@ -104,6 +104,5 @@ module.exports = {
     clearText,
     pressVolumeButton,
     waitForTextAndClick,
-    uiSelectorTextContains,
     contains,
 };

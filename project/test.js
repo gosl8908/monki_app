@@ -3,14 +3,13 @@ const { options, env } = require('../config.js');
 const fs = require('fs');
 const path = require('path');
 const {
-    clickElement,
+    click,
     scroll,
     wait,
     uiSelectorText,
     uiSelectorBtnText,
     enterText,
     pressVolumeButton,
-    uiSelectorTextContains,
     contains,
 } = require('../module/utils.js');
 const { loginModule, searchModule, payModule, emailModule } = require('../module/manager.module.js');

@@ -1,7 +1,7 @@
 const { remote } = require('webdriverio');
 const { options, getFormattedTime, env } = require('../config.js');
 const {
-    clickElement,
+    click,
     scroll,
     wait,
     uiSelectorText,
@@ -18,17 +18,17 @@ const serverUrl = 'http://localhost:4723';
     try {
         driver = await remote(options);
         await wait(5 * 1000);
-        await clickElement(driver, uiSelectorText('My먼키'));
+        await click(driver, uiSelectorText('My먼키'));
         await wait(5 * 1000);
-        await clickElement(driver, uiSelectorText('주소설정'));
+        await click(driver, uiSelectorText('주소설정'));
         await wait(5 * 1000);
-        await clickElement(driver, uiSelectorText('현재 위치 찾기'));
+        await click(driver, uiSelectorText('현재 위치 찾기'));
         await wait(5 * 1000);
         await enterText(driver, '//android.widget.EditText[@text="상세주소를 입력해 주세요"]', '1');
         await wait(5 * 1000);
         await enterText(driver, '//android.widget.EditText[@text="명칭을 입력해 주세요"]', '1');
         await wait(5 * 1000);
-        await clickElement(driver, uiSelectorText('주소로 설정하기'));
+        await click(driver, uiSelectorText('주소로 설정하기'));
     } catch (error) {
         console.error('Error occurred:', error);
     } finally {
