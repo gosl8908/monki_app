@@ -22,6 +22,7 @@ async function order(driver, type = undefined) {
         await clickElement(driver, uiSelectorText('결제하기'));
     } catch (error) {
         console.error(`주문 완료 중 오류 발생: ${error.message}`);
+        throw error;
     }
 }
 async function pay(driver, passwordDigits) {
@@ -48,6 +49,7 @@ async function pay(driver, passwordDigits) {
         });
     } catch (error) {
         console.error(`주문 완료 중 오류 발생: ${error.message}`);
+        throw error;
     }
 }
 

@@ -15,43 +15,43 @@ const {
 const { loginModule, searchModule, payModule, emailModule } = require('../module/manager.module.js');
 
 const serverUrl = 'http://localhost:4723';
-
-let TestFails = []; // 실패 원인을 저장할 변수
 let Screenshots = []; // 스크린샷을 저장할 배열
+let TestFails = []; // 실패 원인을 저장할 변수
 let Failure = false;
 
 (async () => {
     let driver;
-
     try {
         driver = await remote(options);
         await wait(5 * 1000);
-        // await contains(driver, 'asdasdasd', 1 * 1000);
-        const result = await contains(driver, 'asdasdasd', 1 * 1000);
-        if (!result) {
-            throw new Error('Element not found');
-        }
-    } catch (Error) {
-        console.error('Error occurred:', Error);
-        TestFails.push(Error.message || '알 수 없는 이유로 실패함'); // 실패 원인 저장
+
+        await contains(driver, '먼키지점stg2');
+    } catch (error) {
+        console.log(error.message);
+        console.error('Error occurred:', error);
         Failure = true; // 오류 발생 시 Failure 상태 변경
+        TestFails.push(error.message); // 실패 원인 저장
     } finally {
-        if (Failure && driver) {
-            const ScreenshotFileName2 = `App Test ${env.DateLabel}`;
-            try {
-                const screenshot = await driver.takeScreenshot();
-                const screenshotPath = path.join(__dirname, '../screenshot', `${ScreenshotFileName2}.png`);
-                fs.mkdirSync(path.dirname(screenshotPath), { recursive: true });
-                fs.writeFileSync(screenshotPath, screenshot, 'base64');
-                Screenshots.push(ScreenshotFileName2);
-            } catch (screenshotError) {
-                console.error('Error taking screenshot:', screenshotError);
+        if (Failure) {
+            if (driver) {
+                try {
+                    const ScreenshotFileName = `App Test ${env.DateLabel || new Date().toISOString()}`;
+                    const screenshot = await driver.takeScreenshot();
+                    const screenshotPath = path.join(__dirname, '../screenshot', `${ScreenshotFileName}.png`);
+                    fs.mkdirSync(path.dirname(screenshotPath), { recursive: true });
+                    fs.writeFileSync(screenshotPath, screenshot, 'base64');
+                    Screenshots.push(ScreenshotFileName);
+                } catch (screenshotError) {
+                    console.error('Error taking screenshot:', screenshotError);
+                }
+
+                try {
+                    await driver.deleteSession();
+                    console.log('Driver session ended.');
+                } catch (deleteSessionError) {
+                    console.error('Error ending driver session:', deleteSessionError);
+                }
             }
-        }
-        Failure = false;
-        if (driver) {
-            await driver.deleteSession();
-            console.log('Driver session ended.');
         }
         const TestRange = '1. 검색';
         await emailModule.email({

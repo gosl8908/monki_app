@@ -38,6 +38,7 @@ async function enterText(driver, selector, value, timeout = 5000) {
         console.log(`Entered value '${value}' successfully.`);
     } catch (error) {
         console.error(`Error entering value '${value}' into element with selector '${selector}':`, error);
+        throw error;
     }
 }
 // 텍스트 지우기
@@ -51,6 +52,7 @@ async function clearText(driver, selector, timeout = 5000) {
         await element.clearValue(); // `clear` is deprecated in WebdriverIO v5+, use `clearValue` instead
     } catch (error) {
         console.error(`Error clearing text in element with selector '${selector}':`, error);
+        throw error;
     }
 }
 
@@ -62,6 +64,7 @@ async function pressVolumeButton(driver, direction = 'up') {
         console.log(`Volume button '${direction}' pressed successfully.`);
     } catch (error) {
         console.error(`Error pressing volume button '${direction}':`, error);
+        throw error;
     }
 }
 
@@ -75,18 +78,20 @@ async function waitForTextAndClick(driver, text, timeout = 5000) {
         console.log(`"${text}" 텍스트를 찾고 클릭했습니다.`);
     } catch (error) {
         console.log(`"${text}" 텍스트를 찾지 못했습니다: ${error.message}`);
+        throw error;
     }
 }
 
 // 텍스트 인식 클릭
-async function contains(driver, text, timeout = 5000) {
+async function contains(driver, text) {
     try {
         const selector = uiSelectorText(text);
         const element = await driver.$(selector);
-        await element.waitForExist({ timeout });
-        console.log(`"${text}" 텍스트를 찾았습니다.`);
+        await element.waitForExist(1 * 1000);
+        console.log(`${text} 텍스트를 찾았습니다.`);
     } catch (error) {
-        console.log(`"${text}" 텍스트를 찾지 못했습니다: ${error.message}`);
+        console.log(`${text} 텍스트를 찾지 못했습니다: ${error.message}`);
+        throw error;
     }
 }
 module.exports = {

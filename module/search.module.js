@@ -29,6 +29,7 @@ async function search(driver, searchText) {
         console.log('검색 및 선택 완료');
     } catch (error) {
         console.error(`검색 및 선택 중 오류 발생: ${error.message}`);
+        throw error;
     }
 }
 
