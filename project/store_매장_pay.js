@@ -42,7 +42,7 @@ let Failure = false;
         await scroll(driver, 500, 1500, 500, 0);
         await click(driver, uiSelectorText('기본'), { timeout: 30 * 1000 });
         await wait(5 * 1000);
-        await click(driver, uiSelectorText("//*[contains(text(), '장바구니 담기')]"));
+        await click(driver, uiSelectorText('장바구니 담기'));
         await wait(5 * 1000);
         await click(driver, uiSelectorText('장바구니 보기'), { timeout: 30 * 1000 });
         await wait(5 * 1000);

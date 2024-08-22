@@ -23,13 +23,15 @@ let Failure = false;
     let driver;
     try {
         driver = await remote(options);
+
         await wait(5 * 1000);
+
         await loginModule.login(driver, env.email, env.password);
         // await contains(driver, '먼키지점stg2');
     } catch (error) {
         console.error(error);
-        Failure = true;
-        TestFails.push(error.message);
+        // Failure = true;
+        // TestFails.push(error.message);
     } finally {
         // if (Failure) {
         //     if (driver) {

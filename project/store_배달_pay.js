@@ -47,7 +47,7 @@ let Failure = false;
         await scroll(driver, 500, 1500, 500, 0);
         await click(driver, uiSelectorText('특대'), { timeout: 30 * 1000 });
         await wait(5 * 1000);
-        await click(driver, uiSelectorText('16,500원 장바구니 담기'));
+        await click(driver, uiSelectorText('장바구니 담기'));
         await wait(10 * 1000);
         await click(driver, uiSelectorText('장바구니 보기'));
         await wait(5 * 1000);
