@@ -2,16 +2,7 @@ const { remote } = require('webdriverio');
 const { options, env } = require('../config.js');
 const fs = require('fs');
 const path = require('path');
-const {
-    click,
-    scroll,
-    wait,
-    uiSelectorText,
-    uiSelectorBtnText,
-    enterText,
-    pressVolumeButton,
-    contains,
-} = require('../module/utils.js');
+const utils = require('../module/utils');
 const { loginModule, searchModule, payModule, emailModule } = require('../module/manager.module.js');
 
 const serverUrl = 'http://localhost:4723';
@@ -24,9 +15,14 @@ let Failure = false;
     try {
         driver = await remote(options);
 
-        await wait(5 * 1000);
+        await utils.wait(5 * 1000);
 
-        await loginModule.login(driver, env.email, env.password);
+        // await loginModule.login(driver, env.email, env.password);
+
+        await searchModule.search(driver, '몬키지점stg');
+
+        /* 카드 입력 & 주문완료 확인 */
+        // await payModule.pay(driver, env.cardPassword);
         // await contains(driver, '먼키지점stg2');
     } catch (error) {
         console.error(error);

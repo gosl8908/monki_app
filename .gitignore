@@ -160,4 +160,4 @@ package-lock.json
 ######################
 # appium
 ######################
-monki_app/screenshot
+screenshot/

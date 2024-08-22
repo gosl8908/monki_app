@@ -1,30 +1,32 @@
-// module/search.module.js
-const { click, wait, uiSelectorText, enterText, clearText } = require('../module/utils');
+const utils = require('../module/utils'); // utils 모듈을 가져옵니다.
+
 async function search(driver, searchText) {
     try {
-        await click(driver, uiSelectorText('검색'));
-        await wait(5000);
+        // 검색 버튼 클릭
+        await utils.click(driver, utils.uiSelectorText('검색'));
+        await utils.wait(5000); // 대기
 
-        const storeTextSelector = uiSelectorText(searchText);
+        // 검색 텍스트가 이미 있는 경우 클릭, 없으면 텍스트 입력 후 엔터키 입력
+        const storeTextSelector = utils.uiSelectorText(searchText);
         const storeTextBtn = await driver.$(storeTextSelector);
 
         if (await storeTextBtn.isDisplayed()) {
-            await click(driver, uiSelectorText(searchText));
+            await utils.click(driver, storeTextSelector);
         } else {
-            await enterText(
+            await utils.enterText(
                 driver,
                 '//android.widget.EditText[@text="음식이나 음식점 이름을 검색해주세요"]',
                 searchText,
             );
-            // Press the Enter key (key code 66 for Android)
-            await click(driver, uiSelectorText(searchText));
-            await driver.pressKeyCode(66); // 66 is the key code for Enter
+            // Enter 키를 누릅니다 (Android의 경우 key code 66)
+            await driver.pressKeyCode(66); // 66은 Enter 키의 key code
         }
 
-        await clearText(driver, `//android.widget.EditText[@text='${searchText}']`);
-        await wait(5 * 1000);
-        await click(driver, uiSelectorText(searchText));
-        await wait(5 * 1000);
+        // 검색 텍스트 필드를 비우고 다시 클릭
+        await utils.clearText(driver, `//android.widget.EditText[@text='${searchText}']`);
+        await utils.wait(5 * 1000); // 대기
+        await utils.click(driver, storeTextSelector);
+        await utils.wait(5 * 1000); // 대기
 
         console.log('검색 및 선택 완료');
     } catch (error) {

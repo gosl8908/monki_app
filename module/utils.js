@@ -94,7 +94,21 @@ async function contains(driver, text) {
         throw error;
     }
 }
-module.exports = {
+// module.exports = {
+//     click,
+//     scroll,
+//     wait,
+//     uiSelectorText,
+//     uiSelectorBtnText,
+//     enterText,
+//     clearText,
+//     pressVolumeButton,
+//     waitForTextAndClick,
+//     contains,
+// };
+
+// 모든 함수를 자동으로 export
+const utils = {
     click,
     scroll,
     wait,
@@ -106,3 +120,5 @@ module.exports = {
     waitForTextAndClick,
     contains,
 };
+
+module.exports = utils;
