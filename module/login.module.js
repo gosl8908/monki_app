@@ -1,4 +1,4 @@
-const { clickElement, wait, uiSelectorText, enterText } = require('../module/utils');
+const { clickElement, wait, uiSelectorText, waitForTextAndClick, enterText } = require('../module/utils');
 
 async function login(driver, email, password) {
     try {
@@ -9,6 +9,13 @@ async function login(driver, email, password) {
             await clickElement(driver, uiSelectorText('로그인'));
             await wait(5 * 1000);
             console.log('로그인 완료');
+        }
+
+        /* 배너 확인 */
+        const eventBtn = await driver.$(uiSelectorText('오늘하루 그만보기'));
+        if (await eventBtn.isDisplayed()) {
+            await waitForTextAndClick(driver, '오늘하루 그만보기');
+            await wait(5000);
         }
     } catch (error) {
         console.error(`로그인 중 오류 발생: ${error.message}`);

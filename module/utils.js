@@ -1,7 +1,6 @@
 // 요소 클릭
-async function clickElement(driver, selector) {
-    const element = await driver.$(selector);
-    await element.click();
+async function click(driver, selector) {
+    await driver.$(selector).click();
 }
 
 // 스크롤 동작
@@ -26,7 +25,8 @@ async function scroll(driver, startX, startY, endX, endY, duration = 1000) {
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 // 텍스트로 요소 선택자 생성
-const uiSelectorText = text => `android=new UiSelector().text("${text}")`;
+// const uiSelectorText = text => `android=new UiSelector().text("${text}")`;
+const uiSelectorText = text => `android=new UiSelector().textContains("${text}")`;
 const uiSelectorBtnText = text => `android=new UiSelector().className("android.widget.Button").text("${text}")`;
 
 // 텍스트 입력
@@ -95,7 +95,7 @@ async function contains(driver, text) {
     }
 }
 module.exports = {
-    clickElement,
+    click,
     scroll,
     wait,
     uiSelectorText,
@@ -104,5 +104,6 @@ module.exports = {
     clearText,
     pressVolumeButton,
     waitForTextAndClick,
+    uiSelectorTextContains,
     contains,
 };
