@@ -47,7 +47,7 @@ let Failure = false;
                 }
             }
         }
-        const TestRange = '1. 검색';
+        const TestRange = '1. 테스트';
         await emailModule.email({
             TestFails: TestFails,
             EmailTitle: `[${env.EmailTitle}]`,

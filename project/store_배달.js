@@ -89,7 +89,7 @@ let Failure = false;
         }
 
         // 이메일 전송
-        const TestRange = '1. 검색';
+        const TestRange = '1. 지점 배달 결제';
         await emailModule.email({
             TestFails: TestFails,
             EmailTitle: `[${env.EmailTitle}]`,

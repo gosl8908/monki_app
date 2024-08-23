@@ -21,6 +21,7 @@ async function order(driver, type = undefined) {
             await utils.click(driver, utils.uiSelectorText('무료배달 결제하기'));
         }
         await utils.click(driver, utils.uiSelectorText('결제하기'));
+        console.log('주문 완료');
     } catch (error) {
         console.error(`주문 완료 중 오류 발생: ${error.message}`);
         throw error;
@@ -51,6 +52,7 @@ async function pay(driver, passwordDigits) {
             const screenshotPath = path.join(__dirname, '../screenshot', `screenshot_${env.DateLabel}.jpg`);
             fs.mkdirSync(path.dirname(screenshotPath), { recursive: true });
             fs.writeFileSync(screenshotPath, screenshot, 'base64');
+            console.log('스크린샷 캡쳐 완료.');
         });
     } catch (error) {
         console.error(`결제 중 오류 발생: ${error.message}`);

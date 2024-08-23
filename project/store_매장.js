@@ -21,7 +21,6 @@ let Failure = false;
 
         // 검색
         await searchModule.search(driver, '몬키지점stg');
-        console.log('검색 성공');
 
         // 메뉴
         await utils.wait(10 * 1000);
@@ -80,7 +79,7 @@ let Failure = false;
                 console.error('Error ending driver session:', deleteSessionError);
             }
         }
-        const TestRange = '1. 검색';
+        const TestRange = '1. 지점 매장식사 결제';
         await emailModule.email({
             TestFails: TestFails,
             EmailTitle: `[${env.EmailTitle}]`,

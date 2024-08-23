@@ -20,7 +20,6 @@ let Failure = false;
 
         // 검색
         await searchModule.search(driver, '번개단골');
-        console.log('검색 성공');
 
         // 메뉴
         await utils.wait(10 * 1000);
@@ -82,7 +81,7 @@ let Failure = false;
         }
 
         // 이메일 전송
-        const TestRange = '1. 검색';
+        const TestRange = '1. 단골맛집 배달 결제';
         await emailModule.email({
             TestFails: TestFails,
             EmailTitle: `[${env.EmailTitle}]`,
