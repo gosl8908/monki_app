@@ -1,4 +1,4 @@
-const utils = require('./utils'); // utils 모듈을 가져옵니다.
+const utils = require('../module/utils'); // utils 모듈을 가져옵니다.
 const fs = require('fs'); // fs 모듈 추가
 const path = require('path'); // path 모듈 추가
 const { env } = require('../config.js'); // 환경 변수 불러오기
@@ -7,7 +7,8 @@ async function order(driver, type = undefined) {
     try {
         // 대기 후 스크롤 및 클릭 작업 수행
         await utils.wait(10000);
-        await utils.scroll(driver, 500, 2500, 500, 0);
+        await utils.scroll(driver, 1000, 2000, 500, 0);
+        await utils.wait(5000);
         await utils.click(driver, utils.uiSelectorText('모두사용'));
         await utils.wait(5000);
         await utils.click(driver, utils.uiSelectorText('간편결제'));

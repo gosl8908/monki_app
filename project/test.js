@@ -17,43 +17,42 @@ let Failure = false;
 
         await utils.wait(5 * 1000);
 
-        // await loginModule.login(driver, env.email, env.password);
+        await loginModule.login(driver, env.email, env.password);
 
-        await searchModule.search(driver, '몬키지점stg');
+        // await searchModule.search(driver, '몬키지점stg');
 
-        /* 카드 입력 & 주문완료 확인 */
         // await payModule.pay(driver, env.cardPassword);
         // await contains(driver, '먼키지점stg2');
     } catch (error) {
         console.error(error);
-        // Failure = true;
-        // TestFails.push(error.message);
+        Failure = true;
+        TestFails.push(error.message);
     } finally {
-        // if (Failure) {
-        //     if (driver) {
-        //         try {
-        //             const ScreenshotFileName = `App Test ${env.DateLabel || new Date().toISOString()}`;
-        //             const screenshotPath = path.join(__dirname, '../screenshot', `${ScreenshotFileName}.png`);
-        //             fs.mkdirSync(path.dirname(screenshotPath), { recursive: true });
-        //             fs.writeFileSync(screenshotPath, await driver.takeScreenshot(), 'base64');
-        //             Screenshots.push(ScreenshotFileName);
-        //         } catch (screenshotError) {
-        //             console.error('Error taking screenshot:', screenshotError);
-        //         }
-        //         try {
-        //             await driver.deleteSession();
-        //             console.log('Driver session ended.');
-        //         } catch (deleteSessionError) {
-        //             console.error('Error ending driver session:', deleteSessionError);
-        //         }
-        //     }
-        // }
-        // const TestRange = '1. 검색';
-        // await emailModule.email({
-        //     TestFails: TestFails,
-        //     EmailTitle: `[${env.EmailTitle}]`,
-        //     TestRange: TestRange,
-        //     Screenshots: Screenshots,
-        // });
+        if (Failure) {
+            if (driver) {
+                try {
+                    const ScreenshotFileName = `App Test ${env.DateLabel || new Date().toISOString()}`;
+                    const screenshotPath = path.join(__dirname, '../screenshot', `${ScreenshotFileName}.png`);
+                    fs.mkdirSync(path.dirname(screenshotPath), { recursive: true });
+                    fs.writeFileSync(screenshotPath, await driver.takeScreenshot(), 'base64');
+                    Screenshots.push(ScreenshotFileName);
+                } catch (screenshotError) {
+                    console.error('Error taking screenshot:', screenshotError);
+                }
+                try {
+                    await driver.deleteSession();
+                    console.log('Driver session ended.');
+                } catch (deleteSessionError) {
+                    console.error('Error ending driver session:', deleteSessionError);
+                }
+            }
+        }
+        const TestRange = '1. 검색';
+        await emailModule.email({
+            TestFails: TestFails,
+            EmailTitle: `[${env.EmailTitle}]`,
+            TestRange: TestRange,
+            Screenshots: Screenshots,
+        });
     }
 })();
