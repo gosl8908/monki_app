@@ -58,7 +58,7 @@ let Failure = false;
         const buttons = await driver.$$(`android=new UiSelector().textContains("중복확인")`);
         await buttons[0].click();
 
-        await utils.enterText(driver, '//android.widget.EditText[@text="닉네임을 입력해 주세요"]', '몬키stg');
+        await utils.enterText(driver, '//android.widget.EditText[@text="닉네임을 입력해 주세요"]', '몬키');
         await buttons[1].click();
 
         await utils.click(driver, utils.uiSelectorText('중복확인'));
