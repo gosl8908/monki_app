@@ -3,7 +3,7 @@ const { options, env } = require('../config.js');
 const fs = require('fs');
 const path = require('path');
 const utils = require('../module/utils.js');
-const { loginModule, searchModule, payModule, emailModule, messageModule } = require('../module/manager.module.js');
+const Module = require('../module/manager.module.js');
 
 const serverUrl = 'http://localhost:4723';
 let Screenshots = []; // 스크린샷을 저장할 배열
@@ -29,7 +29,7 @@ let Failure = false;
         // await utils.click(driver, utils.uiSelectorText('재전송'));
 
         // 인증번호를 읽어오는 함수
-        const verificationCode = await messageModule.message('18995678');
+        const verificationCode = await Module.messageModule.message('18995678');
 
         if (verificationCode) {
             // 인증번호 입력란에 입력
@@ -49,7 +49,7 @@ let Failure = false;
             await verificationInput.clearValue();
 
             // 인증번호를 읽어오는 함수
-            const verificationNewCode = await messageModule.message('18995678');
+            const verificationNewCode = await Module.messageModule.message('18995678');
             await verificationInput.setValue(verificationNewCode);
             await utils.click(driver, utils.uiSelectorText('인증하기'));
         }
@@ -84,7 +84,7 @@ let Failure = false;
             await utils.waitForTextAndClick(driver, '오늘하루 그만보기');
         }
 
-        await loginModule.signout(driver);
+        await Module.loginModule.signout(driver);
     } catch (error) {
         console.error(error);
         Failure = true;
@@ -110,7 +110,7 @@ let Failure = false;
             }
         }
         const TestRange = '1. 테스트';
-        await emailModule.email({
+        await Module.emailModule.email({
             TestFails: TestFails,
             EmailTitle: `[${env.EmailTitle}]`,
             TestRange: TestRange,

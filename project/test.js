@@ -3,7 +3,7 @@ const { options, env } = require('../config.js');
 const fs = require('fs');
 const path = require('path');
 const utils = require('../module/utils');
-const { loginModule, searchModule, payModule, emailModule } = require('../module/manager.module.js');
+const Module = require('../module/manager.module.js');
 
 const serverUrl = 'http://localhost:4723';
 let Screenshots = []; // 스크린샷을 저장할 배열
@@ -17,7 +17,7 @@ let Failure = false;
 
         await utils.wait(5 * 1000);
 
-        await loginModule.login(driver, env.email, env.password);
+        await Module.loginModule.login(driver, env.email, env.password);
         // await searchModule.search(driver, '몬키지점stg');
         // await payModule.pay(driver, env.cardPassword);
     } catch (error) {
@@ -45,7 +45,7 @@ let Failure = false;
             }
         }
         const TestRange = '1. 테스트';
-        await emailModule.email({
+        await Module.emailModule.email({
             TestFails: TestFails,
             EmailTitle: `[${env.EmailTitle}]`,
             TestRange: TestRange,

@@ -3,8 +3,7 @@ const { options, env } = require('../config.js');
 const fs = require('fs');
 const path = require('path');
 const utils = require('../module/utils');
-const { loginModule, searchModule, payModule, emailModule } = require('../module/manager.module.js');
-
+const Module = require('../module/manager.module.js');
 const serverUrl = 'http://localhost:4723';
 let Screenshots = []; // 스크린샷을 저장할 배열
 let TestFails = []; // 실패 원인을 저장할 변수
@@ -57,7 +56,7 @@ let Failure = false;
             }
         }
         const TestRange = '1. 테스트';
-        await emailModule.email({
+        await Module.emailModule.email({
             TestFails: TestFails,
             EmailTitle: `[${env.EmailTitle}]`,
             TestRange: TestRange,

@@ -3,7 +3,7 @@ const { options, env } = require('../config.js');
 const fs = require('fs');
 const path = require('path');
 const utils = require('../module/utils.js'); // utils 모듈 가져오기
-const { loginModule, searchModule, payModule, emailModule } = require('../module/manager.module.js');
+const Module = require('../module/manager.module.js');
 
 const serverUrl = 'http://localhost:4723';
 let Screenshots = []; // 스크린샷을 저장할 배열
@@ -17,10 +17,10 @@ let Failure = false;
         await utils.wait(5 * 1000);
 
         /* 로그인 */
-        await loginModule.login(driver, env.email, env.password);
+        await Module.loginModule.login(driver, env.email, env.password);
 
         // 검색
-        await searchModule.search(driver, '몬키지점stg');
+        await Module.searchModule.search(driver, '몬키지점stg');
 
         // 메뉴
         await utils.wait(10 * 1000);
@@ -41,10 +41,10 @@ let Failure = false;
         console.log('메뉴 장바구니 담기 성공');
 
         // 결제
-        await payModule.order(driver);
+        await Module.payModule.order(driver);
 
         // 카드 입력 & 주문완료 확인
-        await payModule.pay(driver, env.cardPassword);
+        await Module.payModule.pay(driver, env.cardPassword);
 
         // 주문취소
         await utils.click(driver, utils.uiSelectorText('주문취소'));
@@ -80,7 +80,7 @@ let Failure = false;
             }
         }
         const TestRange = '1. 지점 매장식사 결제';
-        await emailModule.email({
+        await Module.emailModule.email({
             TestFails: TestFails,
             EmailTitle: `[${env.EmailTitle}]`,
             TestRange: TestRange,
