@@ -9,12 +9,27 @@ const gmailEamilPwd = 'boft yzek iitd uuxa';
 const doorayEamilId = 'hskang@monki.net';
 const doorayEamilPwd = 'gotjd0215!';
 
+const devices = {
+    GalaxyNote20: {
+        deviceName: 'Galaxy Note 20 5G',
+        udid: 'R3CN80AK2MV',
+        platformVersion: '12.0',
+    },
+    GalaxyA24: {
+        deviceName: 'Galaxy A24',
+        udid: 'R59W800DBFD',
+        platformVersion: '13.0',
+    },
+    GalaxyS10: {
+        deviceName: 'Galaxy S10',
+        udid: 'R39M10EAHFH',
+        platformVersion: '12.0',
+    },
+};
+
 const capabilities = {
     platformName: 'Android',
     'appium:automationName': 'uiautomator2',
-    'appium:deviceName': 'Galaxy Note 20 5G',
-    'appium:udid': 'R3CN80AK2MV',
-    'appium:platformVersion': '12.0',
     'appium:appPackage': 'com.svcorps.mkitchen',
     'appium:appWaitActivity': 'com.svcorps.mkitchen.*', // 앱 대기 액티비티 설정
     'appium:appActivity': 'com.svcorps.mkitchen.MainActivity',
@@ -138,6 +153,7 @@ module.exports = {
     sendEmail,
     env: {
         email: 'hskang@monki.net',
+        testemail: 'monki@monki.net',
         password: 'test123!',
         cardPassword: ['9', '4', '0', '5', '1', '3'],
         /* content */

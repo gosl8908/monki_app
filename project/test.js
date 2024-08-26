@@ -18,11 +18,8 @@ let Failure = false;
         await utils.wait(5 * 1000);
 
         await loginModule.login(driver, env.email, env.password);
-
         // await searchModule.search(driver, '몬키지점stg');
-
         // await payModule.pay(driver, env.cardPassword);
-        // await contains(driver, '먼키지점stg2');
     } catch (error) {
         console.error(error);
         Failure = true;
@@ -31,7 +28,7 @@ let Failure = false;
         if (Failure) {
             if (driver) {
                 try {
-                    const ScreenshotFileName = `App Test ${env.DateLabel || new Date().toISOString()}`;
+                    const ScreenshotFileName = `App Test ${env.DateLabel}`;
                     const screenshotPath = path.join(__dirname, '../screenshot', `${ScreenshotFileName}.png`);
                     fs.mkdirSync(path.dirname(screenshotPath), { recursive: true });
                     fs.writeFileSync(screenshotPath, await driver.takeScreenshot(), 'base64');

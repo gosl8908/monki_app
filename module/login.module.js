@@ -24,6 +24,42 @@ async function login(driver, email, password) {
     }
 }
 
+async function logout(driver) {
+    await utils.click(driver, utils.uiSelectorText('My먼키'));
+
+    await utils.click(driver, utils.uiSelectorText('내정보'));
+
+    await utils.scroll(driver, 500, 1500, 500, 0);
+
+    await utils.click(driver, utils.uiSelectorText('로그아웃'));
+
+    await utils.click(driver, utils.uiSelectorText('확인'));
+
+    await utils.contains(driver, '로그인');
+}
+
+async function signout(driver) {
+    await utils.click(driver, utils.uiSelectorText('My먼키'));
+
+    await utils.click(driver, utils.uiSelectorText('내정보'));
+
+    await utils.scroll(driver, 500, 1500, 500, 0);
+
+    await utils.click(driver, utils.uiSelectorText('회원탈퇴'));
+
+    await utils.click(driver, utils.uiSelectorText('탈퇴에 대한 유의사항을 모두 확인하였습니다.'));
+
+    await utils.click(driver, utils.uiSelectorText('계정 삭제하기'));
+
+    await utils.click(driver, utils.uiSelectorText('회원 탈퇴가 완료되었습니다.'));
+
+    await utils.click(driver, utils.uiSelectorText('확인'));
+
+    await utils.contains(driver, '로그인');
+}
+
 module.exports = {
     login,
+    logout,
+    signout,
 };

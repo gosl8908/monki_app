@@ -1,6 +1,7 @@
 // 요소 클릭
 async function click(driver, selector) {
     await driver.$(selector).click();
+    await wait(3 * 1000);
 }
 
 // 스크롤 동작
@@ -19,6 +20,7 @@ async function scroll(driver, startX, startY, endX, endY, duration = 1000) {
             ],
         },
     ]);
+    await wait(3 * 1000);
 }
 
 // 대기
@@ -35,6 +37,7 @@ async function enterText(driver, selector, value, timeout = 5000) {
         const element = await driver.$(selector);
         await element.waitForExist({ timeout });
         await element.setValue(value);
+        await wait(3 * 1000);
         console.log(`Entered value '${value}' successfully.`);
     } catch (error) {
         console.error(`Error entering value '${value}' into element with selector '${selector}':`, error);
@@ -50,6 +53,7 @@ async function clearText(driver, selector, timeout = 5000) {
 
         // Clear the text
         await element.clearValue(); // `clear` is deprecated in WebdriverIO v5+, use `clearValue` instead
+        await wait(3 * 1000);
     } catch (error) {
         console.error(`Error clearing text in element with selector '${selector}':`, error);
         throw error;
@@ -75,6 +79,7 @@ async function waitForTextAndClick(driver, text, timeout = 5000) {
         const element = await driver.$(selector);
         await element.waitForExist({ timeout });
         await element.click();
+        await wait(3 * 1000);
         console.log(`"${text}" 텍스트를 찾고 클릭했습니다.`);
     } catch (error) {
         console.log(`"${text}" 텍스트를 찾지 못했습니다: ${error.message}`);
@@ -82,12 +87,13 @@ async function waitForTextAndClick(driver, text, timeout = 5000) {
     }
 }
 
-// 텍스트 인식 클릭
+// 텍스트 확인
 async function contains(driver, text) {
     try {
         const selector = uiSelectorText(text);
         const element = await driver.$(selector);
         await element.waitForExist(1 * 1000);
+        await wait(3 * 1000);
         console.log(`${text} 텍스트를 찾았습니다.`);
     } catch (error) {
         console.log(`${text} 텍스트를 찾지 못했습니다: ${error.message}`);
