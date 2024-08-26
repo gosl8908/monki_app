@@ -24,7 +24,7 @@ let Failure = false;
         // 메뉴
         await utils.wait(10 * 1000);
         await utils.click(driver, utils.uiSelectorText('무료배달'));
-        await utils.scroll(driver, 500, 1500, 500, 0);
+        await utils.scroll(driver, 0.5, 0.75, 0.5, 0.0);
         await utils.click(driver, utils.uiSelectorText('치킨'));
         console.log('메뉴 상세 진입 성공');
 

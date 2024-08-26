@@ -29,7 +29,7 @@ async function logout(driver) {
 
     await utils.click(driver, utils.uiSelectorText('내정보'));
 
-    await utils.scroll(driver, 500, 1500, 500, 0);
+    await utils.scroll(driver, 0.5, 0.8, 0.5, 0.0);
 
     await utils.click(driver, utils.uiSelectorText('로그아웃'));
 
@@ -43,7 +43,7 @@ async function signout(driver) {
 
     await utils.click(driver, utils.uiSelectorText('내정보'));
 
-    await utils.scroll(driver, 500, 1500, 500, 0);
+    await utils.scroll(driver, 0.5, 0.8, 0.5, 0.0);
 
     await utils.click(driver, utils.uiSelectorText('회원탈퇴'));
 

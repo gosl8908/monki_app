@@ -21,27 +21,37 @@ let Failure = false;
         // 검색
         await utils.click(driver, utils.uiSelectorText('무료배달'));
         await utils.wait(5 * 1000);
-        await utils.click(driver, utils.uiSelectorText('먼키지점'), { timeout: 10 * 1000 });
+
+        const store = await driver.$(utils.uiSelectorText('번개지점(stg)'));
+        if (!(await store.isDisplayed())) {
+            await utils.click(driver, utils.uiSelectorText('변경'), { timeout: 10 * 1000 });
+            await utils.click(driver, utils.uiSelectorText('번개지점(stg)'), { timeout: 10 * 1000 });
+
+            await utils.click(driver, utils.uiSelector('선택'), { timeout: 10 * 1000 });
+            await utils.wait(3 * 1000);
+            await utils.click(driver, utils.uiSelectorText('무료배달'));
+        }
+        await utils.click(driver, utils.uiSelectorText('번개지점(stg)'));
         await utils.wait(10 * 1000);
-        await utils.scroll(driver, 500, 2000, 500, 0);
+        await utils.scroll(driver, 0.5, 0.8, 0.5, 0.0);
         await utils.click(driver, utils.uiSelectorText('몬키지점stg'), { timeout: 10 * 1000 });
         console.log('검색 성공');
 
         // 메뉴
         await utils.wait(10 * 1000);
-        await utils.scroll(driver, 500, 1500, 500, 0);
+        await utils.scroll(driver, 0.5, 0.75, 0.5, 0.0);
         await utils.click(driver, utils.uiSelectorText('비빔밥'));
         console.log('메뉴 상세 진입 성공');
 
         // 장바구니 담기
-        await utils.wait(10 * 1000);
-        await utils.scroll(driver, 500, 1500, 500, 0);
+        await utils.scroll(driver, 0.5, 0.75, 0.5, 0.0);
+
         await utils.click(driver, utils.uiSelectorText('특대'), { timeout: 30 * 1000 });
-        await utils.wait(5 * 1000);
+
         await utils.click(driver, utils.uiSelectorText('장바구니 담기'));
-        await utils.wait(10 * 1000);
+
         await utils.click(driver, utils.uiSelectorText('장바구니 보기'));
-        await utils.wait(5 * 1000);
+
         await utils.click(driver, utils.uiSelectorText('무료배달 주문'));
         console.log('메뉴 장바구니 담기 성공');
 

@@ -7,13 +7,13 @@ async function order(driver, type = undefined) {
     try {
         // 대기 후 스크롤 및 클릭 작업 수행
         await utils.wait(10000);
-        await utils.scroll(driver, 1000, 2000, 500, 0);
+        await utils.scroll(driver, 0.5, 0.8, 0.5, 0.0);
         await utils.wait(5000);
         await utils.click(driver, utils.uiSelectorText('모두사용'));
         await utils.wait(5000);
         await utils.click(driver, utils.uiSelectorText('간편결제'));
         await utils.wait(5000);
-        await utils.scroll(driver, 500, 1000, 500, 0);
+        await utils.scroll(driver, 0.5, 0.6, 0.5, 0.0);
         await utils.click(driver, utils.uiSelectorText('개인정보 제3자 제공 내용 및 결제에 동의합니다.'));
         await utils.wait(5000);
 
@@ -32,7 +32,7 @@ async function pay(driver, passwordDigits) {
     try {
         // 대기 후 스크롤 및 클릭 작업 수행
         await utils.wait(10000);
-        await utils.scroll(driver, 500, 1300, 500, 100);
+        await utils.scroll(driver, 0.5, 0.6, 0.5, 0.0);
         await utils.click(driver, utils.uiSelectorBtnText('결제'));
         await utils.wait(5000);
 
