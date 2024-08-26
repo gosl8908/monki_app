@@ -54,7 +54,7 @@ let Failure = false;
             await utils.click(driver, utils.uiSelectorText('인증하기'));
         }
 
-        await utils.enterText(driver, '//android.widget.EditText[@text="이메일 주소를 입력해 주세요"]', env.testemail);
+        await utils.enterText(driver, '//android.widget.EditText[@text="이메일 주소를 입력해 주세요"]', env.email);
         const buttons = await driver.$$(`android=new UiSelector().textContains("중복확인")`);
         await buttons[0].click();
 

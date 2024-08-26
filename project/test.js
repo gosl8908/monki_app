@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const utils = require('../module/utils');
 const Module = require('../module/manager.module.js');
+const { constants } = require('buffer');
 
 const serverUrl = 'http://localhost:4723';
 let Screenshots = []; // 스크린샷을 저장할 배열
@@ -15,12 +16,15 @@ let Failure = false;
     try {
         driver = await remote(options);
 
-        await utils.wait(5 * 1000);
-
-        // await utils.scroll(driver, 500, 2000, 500, 0);
-        await utils.scroll(driver, 0.5, 0.8, 0.5, 0.0);
-
+        // await utils.wait(5 * 1000);
         // await Module.loginModule.login(driver, env.email, env.password);
+
+        const text = await driver.$(utils.uiSelectorText('자주가는 먼키지점을 설정할 수 있어요'));
+        if (await text.isDisplayed()) {
+        }
+
+        // await utils.scroll(driver, 0.5, 0.8, 0.5, 0.0);
+
         // await searchModule.search(driver, '몬키지점stg');
         // await payModule.pay(driver, env.cardPassword);
     } catch (error) {
