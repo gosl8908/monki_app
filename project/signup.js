@@ -55,11 +55,22 @@ let Failure = false;
         await utils.enterText(driver, '//android.widget.EditText[@text="이메일 주소를 입력해 주세요"]', env.testemail);
         const buttons = await driver.$$(`android=new UiSelector().textContains("중복확인")`);
         await buttons[0].click();
+        // await utils.click(driver, utils.uiSelectorText('중복확인'));
+        const email = await driver.$(utils.uiSelectorText('email이 존재합니다'));
+        if (await email.isDisplayed()) {
+            await utils.enterText(driver, `//android.widget.EditText[@text="${env.testemail}"]`, '1' + env.testemail);
+            await buttons[0].click();
+        }
 
         await utils.enterText(driver, '//android.widget.EditText[@text="닉네임을 입력해 주세요"]', '몬키');
         await buttons[1].click();
 
-        await utils.click(driver, utils.uiSelectorText('중복확인'));
+        // await utils.click(driver, utils.uiSelectorText('중복확인'));
+        const nickname = await driver.$(utils.uiSelectorText('닉네임이 존재합니다'));
+        if (await nickname.isDisplayed()) {
+            await utils.enterText(driver, '//android.widget.EditText[@text="몬키"]', 'monkitest');
+            await buttons[1].click();
+        }
 
         await utils.enterText(driver, '//android.widget.EditText[@text="비밀번호를 입력해 주세요"]', env.password);
 

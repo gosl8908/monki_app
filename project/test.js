@@ -15,9 +15,9 @@ let Failure = false;
         driver = await remote(options);
 
         await utils.wait(5 * 1000);
-        // await Module.loginModule.login(driver, env.testemail, env.password);
+        await Module.loginModule.login(driver, env.email, env.password);
 
-        await utils.click(driver, utils.uiSelectorText('asdasdasd'));
+        // await utils.click(driver, utils.uiSelectorText('asdasdasd'));
 
         // const text = await driver.$(utils.uiSelectorText('자주가는 먼키지점을 설정할 수 있어요'));
         // if (await text.isDisplayed()) {
