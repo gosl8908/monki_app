@@ -5,7 +5,6 @@ const { env } = require('../config.js');
 // 요소 클릭
 async function click(driver, selector) {
     await driver.$(selector).click();
-    await wait(3 * 1000);
 }
 
 // 스크롤 동작
@@ -166,6 +165,7 @@ async function contains(driver, text) {
     }
 }
 
+/* 실패시 스크린샷 */
 async function screenshot(driver, Screenshots) {
     try {
         const ScreenshotFileName = `App_Test_${env.DateLabel || new Date().toISOString()}`;
