@@ -25,6 +25,11 @@ const devices = {
         udid: 'R39M10EAHFH',
         platformVersion: '12.0',
     },
+    GalaxyZFlip: {
+        deviceName: 'Galaxy Z Flip',
+        udid: 'R39N301S8SV',
+        platformVersion: '13',
+    },
 };
 
 const capabilities = {

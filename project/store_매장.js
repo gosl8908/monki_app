@@ -1,7 +1,5 @@
 const { remote } = require('webdriverio');
 const { options, env } = require('../config.js');
-const fs = require('fs');
-const path = require('path');
 const utils = require('../module/utils.js'); // utils 모듈 가져오기
 const Module = require('../module/manager.module.js');
 
@@ -61,22 +59,15 @@ let Failure = false;
         Failure = true;
         TestFails.push(error.message);
     } finally {
-        if (Failure && driver) {
-            try {
-                const ScreenshotFileName = `App_Test_${env.DateLabel || new Date().toISOString()}`;
-                const screenshotPath = path.join(__dirname, '../screenshot', `${ScreenshotFileName}.png`);
-                fs.mkdirSync(path.dirname(screenshotPath), { recursive: true });
-                const screenshot = await driver.takeScreenshot();
-                fs.writeFileSync(screenshotPath, screenshot, 'base64');
-                Screenshots.push(ScreenshotFileName);
-            } catch (screenshotError) {
-                console.error('Error taking screenshot:', screenshotError);
-            }
-            try {
-                await driver.deleteSession();
-                console.log('Driver session ended.');
-            } catch (deleteSessionError) {
-                console.error('Error ending driver session:', deleteSessionError);
+        if (Failure) {
+            if (driver) {
+                await utils.screenshot(driver, Screenshots);
+                try {
+                    await driver.deleteSession();
+                    console.log('Driver session ended.');
+                } catch (deleteSessionError) {
+                    console.error('Error ending driver session:', deleteSessionError);
+                }
             }
         }
         const TestRange = '1. 지점 매장식사 결제';

@@ -1,3 +1,7 @@
+const fs = require('fs');
+const path = require('path');
+const { env } = require('../config.js');
+
 // 요소 클릭
 async function click(driver, selector) {
     await driver.$(selector).click();
@@ -35,6 +39,35 @@ async function scroll(driver, startXRatio, startYRatio, endXRatio, endYRatio, du
 
     // 추가 대기 시간
     await wait(3000);
+}
+
+async function touchTap(driver, xRatio, yRatio) {
+    // 디바이스의 해상도를 가져옵니다.
+    const windowRect = await driver.getWindowRect();
+    const deviceWidth = windowRect.width;
+    const deviceHeight = windowRect.height;
+
+    // 비율에 따라 실제 터치 좌표를 계산합니다.
+    const x = Math.floor(deviceWidth * xRatio);
+    const y = Math.floor(deviceHeight * yRatio);
+
+    // 터치 액션을 수행합니다.
+    await driver.performActions([
+        {
+            type: 'pointer',
+            id: 'finger1',
+            parameters: { pointerType: 'touch' },
+            actions: [
+                { type: 'pointerMove', duration: 0, x: x, y: y }, // 터치 위치로 이동
+                { type: 'pointerDown', button: 0 }, // 터치 다운
+                { type: 'pause', duration: 200 }, // 일시 정지
+                { type: 'pointerUp', button: 0 }, // 터치 업
+            ],
+        },
+    ]);
+
+    // 추가 대기 시간
+    await wait(1000);
 }
 
 // async function scroll(driver, startX, startY, endX, endY, duration = 1000) {
@@ -132,6 +165,22 @@ async function contains(driver, text) {
         throw error;
     }
 }
+
+async function screenshot(driver, Screenshots) {
+    try {
+        const ScreenshotFileName = `App_Test_${env.DateLabel || new Date().toISOString()}`;
+        const screenshotPath = path.join(__dirname, '../screenshot', `${ScreenshotFileName}.png`);
+        fs.mkdirSync(path.dirname(screenshotPath), { recursive: true });
+        const screenshot = await driver.takeScreenshot();
+        fs.writeFileSync(screenshotPath, screenshot, 'base64');
+        Screenshots.push(ScreenshotFileName);
+    } catch (screenshotError) {
+        console.error('Error taking screenshot:', screenshotError);
+        throw error;
+    }
+    return Screenshots; // 배열을 반환
+}
+
 // module.exports = {
 //     click,
 //     scroll,
@@ -158,6 +207,8 @@ const utils = {
     pressVolumeButton,
     waitForTextAndClick,
     contains,
+    touchTap,
+    screenshot,
 };
 
 module.exports = utils;

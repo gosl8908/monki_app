@@ -1,9 +1,8 @@
 const { remote } = require('webdriverio');
 const { options, env } = require('../config.js');
-const fs = require('fs');
-const path = require('path');
 const utils = require('../module/utils');
 const Module = require('../module/manager.module.js');
+
 const serverUrl = 'http://localhost:4723';
 let Screenshots = []; // 스크린샷을 저장할 배열
 let TestFails = []; // 실패 원인을 저장할 변수
@@ -38,15 +37,7 @@ let Failure = false;
     } finally {
         if (Failure) {
             if (driver) {
-                try {
-                    const ScreenshotFileName = `App Test ${env.DateLabel}`;
-                    const screenshotPath = path.join(__dirname, '../screenshot', `${ScreenshotFileName}.png`);
-                    fs.mkdirSync(path.dirname(screenshotPath), { recursive: true });
-                    fs.writeFileSync(screenshotPath, await driver.takeScreenshot(), 'base64');
-                    Screenshots.push(ScreenshotFileName);
-                } catch (screenshotError) {
-                    console.error('Error taking screenshot:', screenshotError);
-                }
+                await utils.screenshot(driver, Screenshots);
                 try {
                     await driver.deleteSession();
                     console.log('Driver session ended.');

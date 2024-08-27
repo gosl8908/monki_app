@@ -1,7 +1,5 @@
 const { remote } = require('webdriverio');
 const { options, env } = require('../config.js');
-const fs = require('fs');
-const path = require('path');
 const utils = require('../module/utils.js');
 const Module = require('../module/manager.module.js');
 
@@ -54,7 +52,7 @@ let Failure = false;
             await utils.click(driver, utils.uiSelectorText('인증하기'));
         }
 
-        await utils.enterText(driver, '//android.widget.EditText[@text="이메일 주소를 입력해 주세요"]', env.email);
+        await utils.enterText(driver, '//android.widget.EditText[@text="이메일 주소를 입력해 주세요"]', env.testemail);
         const buttons = await driver.$$(`android=new UiSelector().textContains("중복확인")`);
         await buttons[0].click();
 
@@ -92,15 +90,7 @@ let Failure = false;
     } finally {
         if (Failure) {
             if (driver) {
-                try {
-                    const ScreenshotFileName = `App Test ${env.DateLabel}`;
-                    const screenshotPath = path.join(__dirname, '../screenshot', `${ScreenshotFileName}.png`);
-                    fs.mkdirSync(path.dirname(screenshotPath), { recursive: true });
-                    fs.writeFileSync(screenshotPath, await driver.takeScreenshot(), 'base64');
-                    Screenshots.push(ScreenshotFileName);
-                } catch (screenshotError) {
-                    console.error('Error taking screenshot:', screenshotError);
-                }
+                await utils.screenshot(driver, Screenshots);
                 try {
                     await driver.deleteSession();
                     console.log('Driver session ended.');
@@ -109,7 +99,7 @@ let Failure = false;
                 }
             }
         }
-        const TestRange = '1. 테스트';
+        const TestRange = '1. 회원가입, 2. 회원탈퇴';
         await Module.emailModule.email({
             TestFails: TestFails,
             EmailTitle: `[${env.EmailTitle}]`,
