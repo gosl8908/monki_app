@@ -6,7 +6,6 @@ const Module = require('../module/manager.module.js');
 const serverUrl = 'http://localhost:4723';
 let Screenshots = []; // 스크린샷을 저장할 배열
 let TestFails = []; // 실패 원인을 저장할 변수
-let Failure = false;
 
 (async () => {
     let driver;
@@ -32,26 +31,22 @@ let Failure = false;
         await utils.click(driver, utils.uiSelectorText('확인'));
     } catch (error) {
         console.error(error);
-        Failure = true;
         TestFails.push(error.message);
+        if (driver) await utils.screenshot(driver, Screenshots);
     } finally {
-        if (Failure) {
-            if (driver) {
-                await utils.screenshot(driver, Screenshots);
-                try {
-                    await driver.deleteSession();
-                    console.log('Driver session ended.');
-                } catch (deleteSessionError) {
-                    console.error('Error ending driver session:', deleteSessionError);
-                }
+        if (driver) {
+            try {
+                await driver.deleteSession();
+                console.log('Driver session ended.');
+            } catch (deleteSessionError) {
+                console.error('Error ending driver session:', deleteSessionError);
             }
         }
-        const TestRange = '1. 테스트';
         await Module.emailModule.email({
-            TestFails: TestFails,
+            TestFails,
             EmailTitle: `[${env.EmailTitle}]`,
-            TestRange: TestRange,
-            Screenshots: Screenshots,
+            TestRange: '1. 테스트',
+            Screenshots,
         });
     }
 })();

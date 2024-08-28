@@ -78,7 +78,7 @@ function getFormattedTime() {
         Time: `${hours}:${minutes}:${seconds}`,
         DateLabel: `${year}${month}${day}_${hours}${minutes}${seconds}`,
         DateLabelWeek: `${year}-${month}-${day} ${dayOfWeek} ${hours}:${minutes}:${seconds}`,
-        EmailTitle: `${year}-${month}-${day} ${dayOfWeek}`,
+        EmailTitle: `${year}-${month}-${day} ${dayOfWeek} App 자동화 테스트 결과`,
     };
 }
 function sendEmail({ recipient, subject, body, screenshotFileNames }) {
