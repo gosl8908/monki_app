@@ -35,7 +35,7 @@ const devices = {
 };
 
 const capabilities = {
-    platformName: 'Android',
+    'appium:platformName': 'Android',
     'appium:automationName': 'uiautomator2',
     'appium:appPackage': 'com.svcorps.mkitchen',
     'appium:appWaitActivity': 'com.svcorps.mkitchen.*', // 앱 대기 액티비티 설정
