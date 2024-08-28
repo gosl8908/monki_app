@@ -168,7 +168,7 @@ async function contains(driver, text) {
 /* 실패시 스크린샷 */
 async function screenshot(driver, Screenshots) {
     try {
-        const ScreenshotFileName = `App_Test_${env.DateLabel || new Date().toISOString()}`;
+        const ScreenshotFileName = `App_Test_${env.DateLabel}`;
         const screenshotPath = path.join(__dirname, '../screenshot', `${ScreenshotFileName}.png`);
         fs.mkdirSync(path.dirname(screenshotPath), { recursive: true });
         const screenshot = await driver.takeScreenshot();

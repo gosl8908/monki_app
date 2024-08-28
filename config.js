@@ -1,6 +1,8 @@
 // config.js
 const { defineConfig } = require('webdriverio'); // 필요한 경우 추가
 const nodemailer = require('nodemailer');
+const fs = require('fs');
+const path = require('path');
 
 /* Email Account */
 const gmailEamilId = 'gosl8908@gmail.com';
