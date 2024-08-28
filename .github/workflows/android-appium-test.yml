@@ -26,18 +26,19 @@ jobs:
                   npm install -g appium
                   npm install
 
-            - name: Install Android SDK
+            - name: Install Android SDK Platform Tools
               run: |
                   sudo apt-get update
                   sudo apt-get install -y wget unzip
-                  mkdir -p $HOME/android-sdk/cmdline-tools
-                  wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O commandlinetools-linux.zip
-                  unzip commandlinetools-linux.zip -d $HOME/android-sdk/cmdline-tools
-                  mv $HOME/android-sdk/cmdline-tools/cmdline-tools/* $HOME/android-sdk/cmdline-tools/
-                  rm -rf $HOME/android-sdk/cmdline-tools/cmdline-tools
-                  echo "yes" | $HOME/android-sdk/cmdline-tools/bin/sdkmanager --licenses
-                  $HOME/android-sdk/cmdline-tools/bin/sdkmanager --update
-                  $HOME/android-sdk/cmdline-tools/bin/sdkmanager "platform-tools" "platforms;android-30" "system-images;android-30;google_apis;x86_64"
+                  wget https://dl.google.com/android/repository/platform-tools_r31.0.3-linux.zip -O platform-tools.zip
+                  unzip platform-tools.zip -d $HOME/android-sdk/
+                  echo "export PATH=$PATH:$HOME/android-sdk/platform-tools" >> $GITHUB_ENV
+
+            - name: Install Android Emulator
+              run: |
+                  wget https://dl.google.com/android/repository/emulator-linux-x86_64-9216767.zip -O emulator.zip
+                  unzip emulator.zip -d $HOME/android-sdk/
+                  echo "export PATH=$PATH:$HOME/android-sdk/emulator" >> $GITHUB_ENV
 
             - name: Set up Android Emulator
               run: |
@@ -48,7 +49,7 @@ jobs:
             - name: Run Appium Server
               run: |
                   appium --use-plugins element-wait --no-reset --port 4723 &
-                  sleep 10
+                  sleep 10 # Appium 서버가 시작될 시간을 기다립니다.
 
             - name: Run Tests
               run: |
