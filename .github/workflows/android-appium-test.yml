@@ -1,4 +1,4 @@
-name: CI/CD for Appium Android Tests
+name: Android Appium Tests
 
 on:
     push:
@@ -11,6 +11,7 @@ on:
 jobs:
     test:
         runs-on: ubuntu-latest
+
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
@@ -18,31 +19,38 @@ jobs:
             - name: Set up Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: '16' # 원하는 Node.js 버전으로 변경 가능
+                  node-version: '16' # 원하는 Node.js 버전을 지정
 
             - name: Install dependencies
-              run: npm install
-
-            - name: Install Appium
-              run: npm install -g appium
+              run: |
+                  npm install -g appium
+                  npm install
 
             - name: Install Android SDK
               run: |
                   sudo apt-get update
-                  sudo apt-get install -y openjdk-11-jdk wget unzip
-                  wget https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip
-                  unzip commandlinetools-linux-7583922_latest.zip -d ~/android-sdk
-                  yes | ~/android-sdk/cmdline-tools/bin/sdkmanager --licenses
-                  ~/android-sdk/cmdline-tools/bin/sdkmanager --update
-                  ~/android-sdk/cmdline-tools/bin/sdkmanager "platform-tools" "platforms;android-30"  # Android API Level에 맞게 조정
+                  sudo apt-get install -y wget unzip
+                  wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
+                  unzip commandlinetools-linux-8512546_latest.zip -d $HOME/android-sdk
+                  yes | $HOME/android-sdk/cmdline-tools/bin/sdkmanager --licenses
+                  $HOME/android-sdk/cmdline-tools/bin/sdkmanager --update
+                  $HOME/android-sdk/cmdline-tools/bin/sdkmanager "platform-tools" "platforms;android-30" "system-images;android-30;google_apis;x86_64"
 
-            - name: Start Appium Server
+            - name: Set up Android Emulator
               run: |
-                  appium &  # Appium 서버를 백그라운드에서 실행
-                  sleep 10  # 서버가 완전히 시작될 때까지 대기
+                  echo "no" | $HOME/android-sdk/emulator/emulator -avd test -no-audio -no-window &
+                  adb wait-for-device
+                  adb shell input keyevent 82
 
-            - name: Run tests
-              run: node project/test.js # 테스트 스크립트를 실행
+            - name: Run Appium Server
+              run: |
+                  appium --use-plugins element-wait --no-reset &
+                  sleep 10 # Appium 서버가 시작될 시간을 기다립니다.
 
-            - name: Stop Appium Server
-              run: pkill -f appium # Appium 서버를 종료
+            - name: Run Appium Tests
+              run: |
+                  node project/test.js
+
+            - name: Clean up
+              run: |
+                  adb -s emulator-5554 emu kill
