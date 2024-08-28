@@ -14,7 +14,7 @@ jobs:
 
         services:
             appium:
-                image: appium/appium:1.22.3
+                image: appium/appium::latest
                 ports:
                     - 4723:4723
                 options: >-
