@@ -19,7 +19,7 @@ jobs:
             - name: Set up Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: '16' # 원하는 Node.js 버전을 지정
+                  node-version: '16'
 
             - name: Install dependencies
               run: |
@@ -30,9 +30,12 @@ jobs:
               run: |
                   sudo apt-get update
                   sudo apt-get install -y wget unzip
-                  wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip
-                  unzip commandlinetools-linux-8512546_latest.zip -d $HOME/android-sdk
-                  yes | $HOME/android-sdk/cmdline-tools/bin/sdkmanager --licenses
+                  mkdir -p $HOME/android-sdk/cmdline-tools
+                  wget https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip -O commandlinetools-linux.zip
+                  unzip commandlinetools-linux.zip -d $HOME/android-sdk/cmdline-tools
+                  mv $HOME/android-sdk/cmdline-tools/cmdline-tools/* $HOME/android-sdk/cmdline-tools/
+                  rm -rf $HOME/android-sdk/cmdline-tools/cmdline-tools
+                  echo "yes" | $HOME/android-sdk/cmdline-tools/bin/sdkmanager --licenses
                   $HOME/android-sdk/cmdline-tools/bin/sdkmanager --update
                   $HOME/android-sdk/cmdline-tools/bin/sdkmanager "platform-tools" "platforms;android-30" "system-images;android-30;google_apis;x86_64"
 
@@ -44,10 +47,10 @@ jobs:
 
             - name: Run Appium Server
               run: |
-                  appium --use-plugins element-wait --no-reset &
-                  sleep 10 # Appium 서버가 시작될 시간을 기다립니다.
+                  appium --use-plugins element-wait --no-reset --port 4723 &
+                  sleep 10
 
-            - name: Run Appium Tests
+            - name: Run Tests
               run: |
                   node project/test.js
 
