@@ -10,7 +10,7 @@ on:
 
 jobs:
     test:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-latest # 또는 macos-latest
 
         steps:
             - name: Checkout code
@@ -26,23 +26,15 @@ jobs:
                   npm install -g appium
                   npm install
 
-            - name: Install Android SDK Platform Tools
+            - name: Set up Android SDK
               run: |
-                  sudo apt-get update
-                  sudo apt-get install -y wget unzip
-                  wget https://dl.google.com/android/repository/platform-tools_r31.0.3-linux.zip -O platform-tools.zip
-                  unzip platform-tools.zip -d $HOME/android-sdk/
-                  echo "export PATH=$PATH:$HOME/android-sdk/platform-tools" >> $GITHUB_ENV
+                  echo "sdkmanager --install 'system-images;android-29;google_apis;x86_64'" >> $GITHUB_ENV
+                  echo "sdkmanager --install emulator" >> $GITHUB_ENV
 
-            - name: Install Android Emulator
+            - name: Create and launch emulator
               run: |
-                  wget https://dl.google.com/android/repository/emulator-linux-x86_64-9216767.zip -O emulator.zip
-                  unzip emulator.zip -d $HOME/android-sdk/
-                  echo "export PATH=$PATH:$HOME/android-sdk/emulator" >> $GITHUB_ENV
-
-            - name: Set up Android Emulator
-              run: |
-                  echo "no" | $HOME/android-sdk/emulator/emulator -avd test -no-audio -no-window &
+                  echo "no" | avdmanager create avd -n test -k "system-images;android-29;google_apis;x86_64"
+                  emulator -avd test -no-audio -no-window &
                   adb wait-for-device
                   adb shell input keyevent 82
 
