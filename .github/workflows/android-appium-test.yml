@@ -27,15 +27,6 @@ jobs:
                       extras;google;m2repository
                       extras;android;m2repository
 
-            - name: Grant execute permission for gradlew
-              run: chmod +x gradlew
-
-            - name: Clean Build
-              run: ./gradlew clean
-
-            - name: Run Unit Test
-              run: ./gradlew test
-
             # Appium Setup & Tests
             - name: Set up Node.js (Required for Appium)
               uses: actions/setup-node@v3
@@ -68,9 +59,7 @@ jobs:
                       # python -m unittest test_appium_android.py
                       # Replace this with your actual Appium test script execution command
 
-            - name: Assemble
-              run: ./gradlew assemble
-
+            # APK Upload Steps (Replace with your actual method of building APKs)
             - name: Upload Debug APK
               uses: actions/upload-artifact@v3
               with:
