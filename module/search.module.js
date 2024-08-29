@@ -12,14 +12,17 @@ async function search(driver, searchText) {
 
         if (await storeTextBtn.isDisplayed()) {
             await utils.click(driver, storeTextSelector);
+            await utils.wait(5000); // 대기
         } else {
             await utils.enterText(
                 driver,
                 '//android.widget.EditText[@text="음식이나 음식점 이름을 검색해주세요"]',
                 searchText,
             );
+            await utils.wait(5000); // 대기
             // Enter 키를 누릅니다 (Android의 경우 key code 66)
             await driver.pressKeyCode(66); // 66은 Enter 키의 key code
+            await utils.wait(5000); // 대기
         }
 
         // 검색 텍스트 필드를 비우고 다시 클릭

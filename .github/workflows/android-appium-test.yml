@@ -40,14 +40,18 @@ jobs:
               run: npm install
 
             - name: Install Appium
-              run: |
-                  npm install -g appium
-                  npm install -g appium-doctor
+              run: npm install -g appium
+
+            - name: Install Appium Doctor (Optional)
+              run: npm install -g appium-doctor
 
             - name: Check Appium Setup
               run: appium-doctor --android
 
-            - name: Create and Run Android Emulator
+            - name: Run Appium Server
+              run: nohup appium > appium.log 2>&1 &
+
+            - name: Run Android Emulator
               uses: reactivecircus/android-emulator-runner@v2
               with:
                   api-level: 31
@@ -61,15 +65,9 @@ jobs:
                       adb -s emulator-5554 wait-for-device
                       adb -s emulator-5554 shell 'while [[ "$(getprop sys.boot_completed)" != "1" ]]; do sleep 1; done'
                       echo "Emulator booted"
-
-            - name: Run Appium Server
-              run: |
-                  nohup appium > appium.log 2>&1 &
-                  sleep 10  # Give Appium some time to start
-
-            - name: Run Tests
-              run: |
-                  node project/githubAction.js
+                      sleep 30
+                      node project/githubAction.js
+                      adb -s emulator-5554 emu kill
 
             - name: Upload Appium Log
               uses: actions/upload-artifact@v3

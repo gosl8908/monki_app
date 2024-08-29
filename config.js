@@ -34,9 +34,7 @@ const devices = {
 
 const capabilities = {
     'appium:platformName': 'Android',
-    'appium:deviceName': 'Test',
     'appium:automationName': 'Uiautomator2',
-    'appium:app': './apk/monki-431_20240731_staging.apk',
     'appium:appPackage': 'com.svcorps.mkitchen',
     'appium:appWaitActivity': 'com.svcorps.mkitchen.*', // 앱 대기 액티비티 설정
     'appium:appActivity': 'com.svcorps.mkitchen.MainActivity',
