@@ -33,6 +33,9 @@ jobs:
               with:
                   node-version: '18'
 
+            - name: Install Dependencies
+              run: npm install # Install all dependencies defined in package.json
+
             - name: Install Appium
               run: npm install -g appium
 
@@ -54,8 +57,8 @@ jobs:
                   profile: Nexus 6
                   script: |
                       adb devices # Check if emulator is running
-                      # Execute the test.js file located in the project folder
                       node project/test.js # Run the test.js file
+                  #   Execute the test.js file located in the project folder
                   #   cd project # Change to the project directory
 
             # APK Upload Steps (Replace with your actual method of building APKs)
