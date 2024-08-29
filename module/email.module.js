@@ -8,7 +8,6 @@ function email({ TestFails, EmailTitle, TestRange, Screenshots }) {
     ${
         IsTestFailed
             ? `
-
     테스트 실패 원인 : ${TestFails.join('\n')}`
             : ''
     }`;

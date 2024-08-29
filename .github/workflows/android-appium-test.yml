@@ -8,6 +8,9 @@ on:
         branches:
             - main
 
+env:
+    TZ: 'Asia/Seoul'
+
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -55,13 +58,14 @@ jobs:
                   arch: x86_64
                   profile: Nexus 5X
                   script: |
+                      seelep 10
                       adb devices
                       adb -s emulator-5554 shell input keyevent 82
                       echo "Waiting for emulator to boot up..."
                       adb -s emulator-5554 wait-for-device
                       adb -s emulator-5554 shell 'while [[ "$(getprop sys.boot_completed)" != "1" ]]; do sleep 1; done'
                       echo "Emulator booted"
-                      node project/test.js
+                      node project/github action.js
 
             - name: Upload Appium Log
               uses: actions/upload-artifact@v3
