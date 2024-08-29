@@ -11,7 +11,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
     let driver;
     try {
         driver = await remote(action);
-        await utils.wait(3000);
+        await utils.wait(10000);
         await utils.click(driver, utils.uiSelector('확인'));
         await utils.wait(1000);
         await utils.scroll(driver, 0.95, 0.5, 0.0, 0.0);
