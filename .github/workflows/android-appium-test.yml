@@ -18,9 +18,9 @@ jobs:
             - name: Set up Android SDK
               uses: android-actions/setup-android@v2
               with:
-                  api-level: 33
-                  build-tools: 33.0.0
-                  target: 'android-33'
+                  api-level: 31
+                  build-tools: 31.0.0
+                  target: 'android-31'
                   components: |
                       platform-tools
                       extras;google;google_play_services
@@ -60,10 +60,10 @@ jobs:
             - name: Run Android Emulator
               uses: reactivecircus/android-emulator-runner@v2
               with:
-                  api-level: 33
+                  api-level: 31
                   target: default
                   arch: x86_64
-                  profile: Pixel 6 # Update to a compatible profile for API level 33
+                  profile: Nexus 5X # Update to a compatible profile for API level 33
                   script: |
                       adb devices 
                       adb -s emulator-5554 shell input keyevent 82 
