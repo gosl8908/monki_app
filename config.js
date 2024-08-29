@@ -36,6 +36,7 @@ const devices = {
 
 const capabilities = {
     'appium:platformName': 'Android',
+    'appium:deviceName': 'emulator-5554',
     'appium:automationName': 'uiautomator2',
     'appium:appPackage': 'com.svcorps.mkitchen',
     'appium:appWaitActivity': 'com.svcorps.mkitchen.*', // 앱 대기 액티비티 설정
@@ -53,7 +54,7 @@ const capabilities = {
 const options = {
     hostname: '127.0.0.1',
     port: 4723,
-    path: '/wd/hub',
+    path: '/',
     capabilities: capabilities,
 };
 

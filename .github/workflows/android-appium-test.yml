@@ -46,7 +46,7 @@ jobs:
 
             - name: Start Appium Server
               run: |
-                  nohup appium > appium.log 2>&1 &
+                  appium
                   sleep 5
 
             - name: Run Android Emulator
@@ -65,18 +65,6 @@ jobs:
                       echo "Emulator booted"
                       curl -X GET http://localhost:4723/wd/hub/status
                       node project/test.js
-
-            - name: Upload Debug APK
-              uses: actions/upload-artifact@v3
-              with:
-                  name: debug
-                  path: ./app/build/outputs/apk/debug/app-debug.apk
-
-            - name: Upload Release APK
-              uses: actions/upload-artifact@v3
-              with:
-                  name: release
-                  path: ./app/build/outputs/apk/release/app-release-unsigned.apk
 
             - name: Upload Appium Log
               uses: actions/upload-artifact@v3
