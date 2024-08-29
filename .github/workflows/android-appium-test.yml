@@ -46,7 +46,8 @@ jobs:
               run: appium-doctor --android
 
             - name: Start Appium Server
-              run: appium & # Starts Appium in the background
+              run: appium & sleep 30
+              # Starts Appium in the background
 
             - name: Run Android Emulator
               uses: reactivecircus/android-emulator-runner@v2
@@ -57,7 +58,12 @@ jobs:
                   profile: Nexus 6
                   script: |
                       adb devices # Check if emulator is running
+                      adb -s emulator-5554 shell input keyevent 82 
+                      sleep 30 
+                      curl -X GET http://localhost:4723/wd/hub/status
                       node project/test.js # Run the test.js file
+                  # Unlock emulator if needed
+                  #   Give the emulator some time to fully boot up
                   #   Execute the test.js file located in the project folder
                   #   cd project # Change to the project directory
 
