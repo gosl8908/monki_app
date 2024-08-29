@@ -63,7 +63,7 @@ jobs:
                       adb -s emulator-5554 shell input keyevent 82
                       echo "Waiting for emulator to boot up..."
                       adb -s emulator-5554 wait-for-device
-                      timeout 300 bash -c 'while [[ "$(getprop sys.boot_completed)" != "1" ]]; do sleep 1; done'
+                      adb -s emulator-5554 shell 'while [[ "$(getprop sys.boot_completed)" != "1" ]]; do sleep 1; done'
                       echo "Emulator booted"
                       node project/githubAction.js
                       adb -s emulator-5554 emu kill
