@@ -3,7 +3,7 @@ const { options, sendEmail, env } = require('../config.js');
 function email({ TestFails, EmailTitle, TestRange, Screenshots }) {
     const IsTestFailed = TestFails.length > 0;
     const EmailBody = `App 자동화 테스트가 ${IsTestFailed ? '실패' : '성공'}하였습니다.
-    테스트 실행 시간 : ${env.DateLabelWeek}\
+    테스트 실행 시간 : ${env.DateLabelWeek}
     테스트 범위 : ${TestRange}
     ${
         IsTestFailed
