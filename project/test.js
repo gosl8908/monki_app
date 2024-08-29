@@ -13,8 +13,8 @@ let TestFails = []; // 실패 원인을 저장할 변수
         driver = await remote(options);
         await utils.wait(3000);
         // await utils.touchTap(driver, 0.0833, 0.062);
-        await driver.touchPerform([{ action: 'tap', options: { x: 90, y: 145 } }]);
-        // await utils.click(driver, utils.uiSelector('확인'));
+        // await driver.touchPerform([{ action: 'tap', options: { x: 90, y: 145 } }]);
+        await utils.click(driver, utils.uiSelector('확인'));
         // await utils.wait(1000);
         // await utils.scroll(driver, 0.95, 0.5, 0.0, 0.0);
         // await utils.wait(1000);
