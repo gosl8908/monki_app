@@ -51,9 +51,9 @@ const capabilities = {
 };
 
 const options = {
-    hostname: 'localhost',
+    hostname: '127.0.0.1',
     port: 4723,
-    path: '/',
+    path: '/wd/hub',
     capabilities: capabilities,
 };
 
