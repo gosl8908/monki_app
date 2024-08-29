@@ -55,8 +55,8 @@ jobs:
                   script: |
                       adb devices # Check if emulator is running
                       # Execute the test.js file located in the project folder
-                      cd project # Change to the project directory
-                      node test.js # Run the test.js file
+                      node project/test.js # Run the test.js file
+                  #   cd project # Change to the project directory
 
             # APK Upload Steps (Replace with your actual method of building APKs)
             - name: Upload Debug APK
