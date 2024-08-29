@@ -54,10 +54,9 @@ jobs:
                   profile: Nexus 6
                   script: |
                       adb devices # Check if emulator is running
-                      # Add your Appium test execution command here
-                      # For example, if using a Python script, you might do:
-                      # python -m unittest test_appium_android.py
-                      # Replace this with your actual Appium test script execution command
+                      # Execute the test.js file located in the project folder
+                      cd project # Change to the project directory
+                      node test.js # Run the test.js file
 
             # APK Upload Steps (Replace with your actual method of building APKs)
             - name: Upload Debug APK
