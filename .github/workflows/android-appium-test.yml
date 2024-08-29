@@ -18,14 +18,22 @@ jobs:
             - name: Set up Android SDK
               uses: android-actions/setup-android@v2
               with:
-                  api-level: 29
-                  build-tools: 30.0.2
-                  target: 'android-29'
+                  api-level: 33
+                  build-tools: 33.0.0
+                  target: 'android-33'
                   components: |
                       platform-tools
                       extras;google;google_play_services
                       extras;google;m2repository
                       extras;android;m2repository
+                  #   api-level: 29
+                  #   build-tools: 30.0.2
+                  #   target: 'android-29'
+                  #   components: |
+                  #       platform-tools
+                  #       extras;google;google_play_services
+                  #       extras;google;m2repository
+                  #       extras;android;m2repository
 
             # Appium Setup & Tests
             - name: Set up Node.js (Required for Appium)
@@ -52,20 +60,22 @@ jobs:
             - name: Run Android Emulator
               uses: reactivecircus/android-emulator-runner@v2
               with:
-                  api-level: 29
+                  api-level: 33
                   target: default
                   arch: x86_64
-                  profile: Nexus 6
+                  profile: Pixel 6 # Update to a compatible profile for API level 33
                   script: |
-                      adb devices # Check if emulator is running
+                      adb devices 
                       adb -s emulator-5554 shell input keyevent 82 
                       sleep 30 
                       curl -X GET http://localhost:4723/wd/hub/status
-                      node project/test.js # Run the test.js file
-                  # Unlock emulator if needed
-                  #   Give the emulator some time to fully boot up
-                  #   Execute the test.js file located in the project folder
-                  #   cd project # Change to the project directory
+                      node project/test.js
+                  #     Run the test.js file
+                  #     Check if emulator is running
+                  #     Unlock emulator if needed
+                  #     Give the emulator some time to fully boot up
+                  #     Execute the test.js file located in the project folder
+                  #     cd project # Change to the project directory
 
             # APK Upload Steps (Replace with your actual method of building APKs)
             - name: Upload Debug APK
