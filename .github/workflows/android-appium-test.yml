@@ -26,36 +26,26 @@ jobs:
                       extras;google;google_play_services
                       extras;google;m2repository
                       extras;android;m2repository
-                  #   api-level: 29
-                  #   build-tools: 30.0.2
-                  #   target: 'android-29'
-                  #   components: |
-                  #       platform-tools
-                  #       extras;google;google_play_services
-                  #       extras;google;m2repository
-                  #       extras;android;m2repository
 
-            # Appium Setup & Tests
             - name: Set up Node.js (Required for Appium)
               uses: actions/setup-node@v3
               with:
                   node-version: '18'
 
             - name: Install Dependencies
-              run: npm install # Install all dependencies defined in package.json
+              run: npm install
 
             - name: Install Appium
               run: npm install -g appium
 
-            - name: Install Appium Doctor (Optional - for ensuring environment is set up correctly)
+            - name: Install Appium Doctor (Optional)
               run: npm install -g appium-doctor
 
             - name: Check Appium Setup
               run: appium-doctor --android
 
             - name: Start Appium Server
-              run: appium & sleep 30
-              # Starts Appium in the background
+              run: nohup appium > appium.log 2>&1 &
 
             - name: Run Android Emulator
               uses: reactivecircus/android-emulator-runner@v2
@@ -63,21 +53,17 @@ jobs:
                   api-level: 31
                   target: default
                   arch: x86_64
-                  profile: Nexus 5X # Update to a compatible profile for API level 33
+                  profile: Nexus 5X
                   script: |
-                      adb devices 
-                      adb -s emulator-5554 shell input keyevent 82 
-                      sleep 30 
+                      adb devices
+                      adb -s emulator-5554 shell input keyevent 82
+                      echo "Waiting for emulator to boot up..."
+                      adb -s emulator-5554 wait-for-device
+                      adb -s emulator-5554 shell 'while [[ "$(getprop sys.boot_completed)" != "1" ]]; do sleep 1; done'
+                      echo "Emulator booted"
                       curl -X GET http://localhost:4723/wd/hub/status
                       node project/test.js
-                  #     Run the test.js file
-                  #     Check if emulator is running
-                  #     Unlock emulator if needed
-                  #     Give the emulator some time to fully boot up
-                  #     Execute the test.js file located in the project folder
-                  #     cd project # Change to the project directory
 
-            # APK Upload Steps (Replace with your actual method of building APKs)
             - name: Upload Debug APK
               uses: actions/upload-artifact@v3
               with:
