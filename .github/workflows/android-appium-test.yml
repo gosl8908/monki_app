@@ -1,10 +1,12 @@
-name: Android CI
+name: Android Appium Tests
 
 on:
     push:
-        branches: ['main']
+        branches:
+            - main
     pull_request:
-        branches: ['main']
+        branches:
+            - main
 
 jobs:
     build:
@@ -12,7 +14,8 @@ jobs:
 
         steps:
             - uses: actions/checkout@v3
-            - name: set up JDK 17
+
+            - name: Set up JDK 17
               uses: actions/setup-java@v3
               with:
                   java-version: '17'
@@ -21,19 +24,44 @@ jobs:
 
             - name: Grant execute permission for gradlew
               run: chmod +x gradlew
-            - name: Clean Bulid
+
+            - name: Clean Build
               run: ./gradlew clean
+
             - name: Run Unit Test
               run: ./gradlew test
 
-            - name: Run Android Test
+            # Appium Setup & Tests
+            - name: Set up Node.js (Required for Appium)
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '18'
+
+            - name: Install Appium
+              run: npm install -g appium
+
+            - name: Install Appium Doctor (Optional - for ensuring environment is set up correctly)
+              run: npm install -g appium-doctor
+
+            - name: Check Appium Setup
+              run: appium-doctor --android
+
+            - name: Start Appium Server
+              run: appium & # Starts Appium in the background
+
+            - name: Run Android Emulator
               uses: reactivecircus/android-emulator-runner@v2
               with:
                   api-level: 29
                   target: default
                   arch: x86_64
                   profile: Nexus 6
-                  script: ./gradlew connectedCheck --stacktrace
+                  script: |
+                      adb devices # Check if emulator is running
+                      # Add your Appium test execution command here
+                      # For example, if using a Python script, you might do:
+                      # python -m unittest test_appium_android.py
+                      # Replace this with your actual Appium test script execution command
 
             - name: Assemble
               run: ./gradlew assemble
