@@ -10,6 +10,7 @@ on:
 
 env:
     TZ: 'Asia/Seoul'
+    ANDROID_HOME: /usr/local/lib/android/sdk
 
 jobs:
     build:
@@ -62,9 +63,10 @@ jobs:
                       adb -s emulator-5554 shell input keyevent 82
                       echo "Waiting for emulator to boot up..."
                       adb -s emulator-5554 wait-for-device
-                      adb -s emulator-5554 shell 'while [[ "$(getprop sys.boot_completed)" != "1" ]]; do sleep 1; done'
+                      timeout 300 bash -c 'while [[ "$(getprop sys.boot_completed)" != "1" ]]; do sleep 1; done'
                       echo "Emulator booted"
                       node project/githubAction.js
+                      adb -s emulator-5554 emu kill
 
             - name: Upload Appium Log
               uses: actions/upload-artifact@v3

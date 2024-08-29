@@ -11,17 +11,18 @@ let TestFails = []; // 실패 원인을 저장할 변수
     let driver;
     try {
         driver = await remote(action);
-        await utils.wait(10000);
+        await utils.wait(3000);
+        await utils.click(driver, utils.uiSelector('App info'));
         await utils.click(driver, utils.uiSelector('확인'));
-        await utils.wait(1000);
-        await utils.scroll(driver, 0.95, 0.5, 0.0, 0.0);
-        await utils.wait(1000);
-        await utils.scroll(driver, 0.95, 0.5, 0.0, 0.0);
-        await utils.wait(1000);
-        await utils.scroll(driver, 0.95, 0.5, 0.0, 0.0);
-        await utils.wait(1000);
-        await utils.click(driver, utils.uiSelectorText('시작하기'));
-        await utils.wait(1000);
+        // await utils.wait(1000);
+        // await utils.scroll(driver, 0.95, 0.5, 0.0, 0.0);
+        // await utils.wait(1000);
+        // await utils.scroll(driver, 0.95, 0.5, 0.0, 0.0);
+        // await utils.wait(1000);
+        // await utils.scroll(driver, 0.95, 0.5, 0.0, 0.0);
+        // await utils.wait(1000);
+        // await utils.click(driver, utils.uiSelectorText('시작하기'));
+        // await utils.wait(1000);
     } catch (error) {
         console.error(error);
         TestFails.push(error.message);

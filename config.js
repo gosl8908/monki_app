@@ -36,8 +36,9 @@ const devices = {
 
 const capabilities = {
     'appium:platformName': 'Android',
+    'appium:deviceName': 'Test',
     'appium:automationName': 'uiautomator2',
-    // 'appium:app': './apk/monki-431_20240731_staging.apk',
+    'appium:app': './apk/monki-431_20240731_staging.apk',
     'appium:appPackage': 'com.svcorps.mkitchen',
     'appium:appWaitActivity': 'com.svcorps.mkitchen.*', // 앱 대기 액티비티 설정
     'appium:appActivity': 'com.svcorps.mkitchen.MainActivity',
@@ -66,6 +67,8 @@ const actioncapabilities = {
     'appium:enablePerformanceLogging': true, // 성능 로그 활성화
     'appium:ignoreUnimportantViews': true, // UIAutomator가 중요하지 않은 뷰를 무시하도록 설정
     'appium:skipServerInstallation': false,
+    'appium:uiautomator2ServerLaunchTimeout': 60000,
+    'appium:androidInstallTimeout': 120000,
 };
 
 const options = {
