@@ -37,7 +37,7 @@ const devices = {
 const capabilities = {
     'appium:platformName': 'Android',
     'appium:deviceName': 'Test',
-    'appium:automationName': 'uiautomator2',
+    'appium:automationName': 'Uiautomator2',
     'appium:app': './apk/monki-431_20240731_staging.apk',
     'appium:appPackage': 'com.svcorps.mkitchen',
     'appium:appWaitActivity': 'com.svcorps.mkitchen.*', // 앱 대기 액티비티 설정
@@ -54,7 +54,7 @@ const capabilities = {
 const actioncapabilities = {
     'appium:platformName': 'Android',
     'appium:deviceName': 'emulator-5554',
-    'appium:automationName': 'uiautomator2',
+    'appium:automationName': 'Uiautomator2',
     'appium:app': './apk/monki-431_20240731_staging.apk',
     'appium:appPackage': 'com.svcorps.mkitchen',
     'appium:appWaitActivity': 'com.svcorps.mkitchen.*', // 앱 대기 액티비티 설정

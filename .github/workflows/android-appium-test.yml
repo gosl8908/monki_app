@@ -22,8 +22,8 @@ jobs:
             - name: Set up Android SDK
               uses: android-actions/setup-android@v2
               with:
-                  api-level: 31
-                  build-tools: 31.0.0
+                  api-level: 32
+                  build-tools: 32.0.0
                   target: 'android-31'
                   components: |
                       platform-tools
@@ -54,10 +54,10 @@ jobs:
             - name: Run Android Emulator
               uses: reactivecircus/android-emulator-runner@v2
               with:
-                  api-level: 31
+                  api-level: 32
                   target: default
                   arch: x86_64
-                  profile: Nexus 5X
+                  profile: Pixel 8 Pro
                   script: |
                       adb devices
                       adb -s emulator-5554 shell input keyevent 82
@@ -65,6 +65,7 @@ jobs:
                       adb -s emulator-5554 wait-for-device
                       adb -s emulator-5554 shell 'while [[ "$(getprop sys.boot_completed)" != "1" ]]; do sleep 1; done'
                       echo "Emulator booted"
+                      sleep 30
                       node project/githubAction.js
                       adb -s emulator-5554 emu kill
 
