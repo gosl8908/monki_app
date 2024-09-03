@@ -15,7 +15,6 @@ jobs:
             TZ: 'Asia/Seoul'
             ANDROID_HOME: 'C:\path\to\android-sdk' # Android SDK 경로
             ANDROID_SDK_ROOT: 'C:\path\to\android-sdk' # Android SDK 경로
-            PATH: ${{ env.PATH }};C:\path\to\android-sdk\platform-tools;C:\path\to\android-sdk\tools
 
         steps:
             - name: Checkout code
@@ -32,6 +31,7 @@ jobs:
 
             - name: Run Tests on Real Device
               run: |
+                  set PATH=%PATH%;%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\tools
                   echo "실제 디바이스에서 테스트를 실행합니다..."
                   node project/test.js
               shell: cmd
