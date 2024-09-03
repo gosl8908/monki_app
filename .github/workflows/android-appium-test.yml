@@ -26,10 +26,11 @@ jobs:
             - name: Install Android SDK
               run: |
                   echo "Installing Android SDK..."
+                  if (Test-Path "%HOME%\android-sdk") { Remove-Item -Recurse -Force "%HOME%\android-sdk" }
                   mkdir "%HOME%\android-sdk"
                   cd "%HOME%\android-sdk"
                   curl -o cmdline-tools.zip "https://dl.google.com/android/repository/commandlinetools-win-8512546_latest.zip"
-                  powershell -Command "Expand-Archive -Path 'cmdline-tools.zip' -DestinationPath 'cmdline-tools'"
+                  powershell -Command "Expand-Archive -Path 'cmdline-tools.zip' -DestinationPath '%HOME%\android-sdk\cmdline-tools' -Force"
                   del cmdline-tools.zip
                   set "ANDROID_HOME=%HOME%\android-sdk"
                   set "PATH=%PATH%;%ANDROID_HOME%\cmdline-tools\latest\bin"
