@@ -18,39 +18,7 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v3
 
-            - name: Set PowerShell Execution Policy
-              run: |
-                  Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
-              shell: powershell
-
-            - name: Set up Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: '14'
-
-            - name: Install Appium
-              run: |
-                  npm install -g appium
-                  npm install
-
-            - name: Verify Appium Installation
-              run: |
-                  appium --version
-
-            - name: Start Appium Server
-              run: |
-                  echo "Starting Appium Server..."
-                  npx appium --address 0.0.0.0 --port 4723 &
-                  Start-Sleep -Seconds 10  # Appium이 시작될 시간을 기다립니다.
-              shell: powershell
-
             - name: Run Tests on Real Device
               run: |
                   echo "실제 디바이스에서 테스트를 실행합니다..."
                   node project/test.js
-
-            - name: Upload Appium Log
-              uses: actions/upload-artifact@v3
-              with:
-                  name: appium-log
-                  path: appium.log
