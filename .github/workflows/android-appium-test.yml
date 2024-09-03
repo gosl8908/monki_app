@@ -21,8 +21,8 @@ jobs:
             - name: Run Appium Server
               run: |
                   echo "Appium 서버를 실행합니다..."
-                  appium
-                  sleep 10  # Appium 서버가 시작될 때까지 대기
+                  start /B appium > appium.log 2>&1  # Appium 서버를 백그라운드에서 실행
+                  timeout /t 20  # Appium 서버가 준비될 때까지 대기 (20초)
 
             - name: Run Tests on Real Device
               run: |
