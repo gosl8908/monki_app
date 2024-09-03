@@ -22,4 +22,4 @@ jobs:
               run: |
                   echo "실제 디바이스에서 테스트를 실행합니다..."
                   node project/test.js
-                shell: cmd
+              shell: cmd
