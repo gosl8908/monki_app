@@ -28,9 +28,13 @@ jobs:
                   npm install -g appium
                   npm install
 
+            - name: Verify Appium Installation
+              run: |
+                  appium --version
+
             - name: Start Appium Server
               run: |
-                  Start-Process -NoNewWindow -FilePath "appium" -ArgumentList "--use-plugins device-farm" -PassThru | Wait-Process
+                  Start-Process -NoNewWindow -FilePath "appium" -ArgumentList "" -PassThru | Wait-Process
 
             - name: Run Tests on Real Device
               run: |
