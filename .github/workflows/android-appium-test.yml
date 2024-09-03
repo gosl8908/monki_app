@@ -13,8 +13,6 @@ jobs:
         runs-on: self-hosted
         env:
             TZ: 'Asia/Seoul'
-            ANDROID_HOME: 'C:\path\to\android-sdk' # Android SDK 경로
-            ANDROID_SDK_ROOT: 'C:\path\to\android-sdk' # Android SDK 경로
 
         steps:
             - name: Checkout code
@@ -24,6 +22,15 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: '21.7.1' # 원하는 Node.js 버전으로 변경 가능
+
+            - name: Install Android SDK
+                  run: |
+                      echo "Installing Android SDK..."
+                      # Android SDK 설치 스크립트
+                      set "PATH=%PATH%;%ANDROID_HOME%\cmdline-tools\latest\bin"
+                      sdkmanager --update
+                      sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+                  shell: cmd
 
             - name: Install Dependencies
               run: npm install
