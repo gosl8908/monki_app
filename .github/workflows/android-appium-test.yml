@@ -21,7 +21,7 @@ jobs:
             - name: Run Appium Server
               run: |
                   echo "Appium 서버를 실행합니다..."
-                  node C:\Users\monthlykitchen\AppData\Roaming\npm\node_modules\appium\build\lib\main.js > appium.log 2>&1 &
+                  node C:\Users\monthlykitchen\AppData\Roaming\npm\node_modules\appium\build\lib\main.js
                   timeout /t 20  # 서버가 준비될 때까지 대기
 
             - name: Run Tests on Real Device
