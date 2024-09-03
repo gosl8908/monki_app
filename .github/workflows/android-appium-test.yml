@@ -27,6 +27,11 @@ jobs:
               run: npm install -g appium
               shell: cmd
 
+            - name: Install Appium Drivers
+              run: |
+                  appium driver install uiautomator2
+              shell: cmd
+
             - name: Start Appium Server
               run: start /B appium --port 4723
               shell: cmd
