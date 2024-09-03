@@ -10,8 +10,7 @@ on:
 
 jobs:
     build:
-        runs-on: self-hosted
-        labels: DESKTOP-HGS6BUE
+        runs-on: [self-hosted, DESKTOP-HGS6BUE]
         env:
             TZ: 'Asia/Seoul'
 
