@@ -21,7 +21,7 @@ jobs:
             - name: Run Appium Server
               run: |
                   echo "Appium 서버를 실행합니다..."
-                  start /B appium > appium.log 2>&1  # Appium 서버를 백그라운드에서 실행
+                  start /B C:\Users\monthlykitchen\AppData\Roaming\npm\appium > appium.log 2>&1
                   timeout /t 20  # Appium 서버가 준비될 때까지 대기 (20초)
 
             - name: Run Tests on Real Device
