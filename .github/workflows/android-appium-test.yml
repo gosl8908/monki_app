@@ -8,33 +8,34 @@ on:
         branches:
             - main
 
-env:
-    TZ: 'Asia/Seoul'
-
 jobs:
     build:
         runs-on: self-hosted
+        env:
+            TZ: 'Asia/Seoul'
+            ANDROID_HOME: C:\Users\monthlykitchen\Documents\platform-tools # Path to platform-tools
+            PATH: C:\Users\monthlykitchen\Documents\platform-tools;${{ env.PATH }} # Ensure adb is in PATH
 
-        steps:
-            - uses: actions/checkout@v3
+            steps:
+                - uses: actions/checkout@v3
 
-            - name: Ensure ADB Recognizes Device
-              run: |
-                  adb devices
-                  adb wait-for-device
-                  echo "디바이스가 연결되고 인식되었습니다."
+                - name: Ensure ADB Recognizes Device
+                  run: |
+                      adb devices
+                      adb wait-for-device
+                      echo "디바이스가 연결되고 인식되었습니다."
 
-            - name: Unlock Android Device
-              run: |
-                  adb -s $(adb devices | grep -w "device" | awk '{print $1}') shell input keyevent 82
+                - name: Unlock Android Device
+                  run: |
+                      adb -s $(adb devices | grep -w "device" | awk '{print $1}') shell input keyevent 82
 
-            - name: Run Tests on Real Device
-              run: |
-                  echo "실제 디바이스에서 테스트를 실행합니다..."
-                  node project/test.js
+                - name: Run Tests on Real Device
+                  run: |
+                      echo "실제 디바이스에서 테스트를 실행합니다..."
+                      node project/test.js
 
-            - name: Upload Appium Log
-              uses: actions/upload-artifact@v3
-              with:
-                  name: appium-log
-                  path: appium.log
+                - name: Upload Appium Log
+                  uses: actions/upload-artifact@v3
+                  with:
+                      name: appium-log
+                      path: appium.log
