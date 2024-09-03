@@ -162,3 +162,5 @@ package-lock.json
 ######################
 screenshot/*
 actions-runner/
+_diag/
+test/

@@ -10,7 +10,8 @@ on:
 
 env:
     TZ: 'Asia/Seoul'
-    ANDROID_HOME: /usr/local/lib/android/sdk
+    ANDROID_HOME: C:\Users\monthlykitchen\Documents\platform-tools # 경로 설정
+    PATH: ${{ env.ANDROID_HOME }}:${{ env.PATH }} # `adb` 경로를 `PATH`에 추가
 
 jobs:
     build:
