@@ -18,6 +18,21 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v3
 
+            - name: Set up Docker
+              uses: docker/setup-buildx-action@v2
+
+            - name: Run Appium server in Docker
+              run: |
+                  docker run -d --name appium-server -p 4723:4723 appium/appium
+
+            - name: Wait for Appium server to be ready
+              run: |
+                  sleep 20  # Adjust this based on how long it takes for Appium to start
+
+            - name: Install Node.js dependencies
+              run: |
+                  npm install
+
             - name: Run Tests on Real Device
               run: |
                   echo "실제 디바이스에서 테스트를 실행합니다..."
