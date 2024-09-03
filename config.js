@@ -47,6 +47,12 @@ const capabilities = {
     'appium:ignoreUnimportantViews': true, // UIAutomator가 중요하지 않은 뷰를 무시하도록 설정
     'appium:skipServerInstallation': false,
 };
+const options = {
+    hostname: '127.0.0.1',
+    port: 4723,
+    path: '/wd/hub',
+    capabilities: capabilities,
+};
 const actioncapabilities = {
     'appium:platformName': 'Android',
     'appium:deviceName': 'emulator-5554',
@@ -67,12 +73,6 @@ const actioncapabilities = {
     'appium:androidInstallTimeout': 120000,
 };
 
-const options = {
-    hostname: '127.0.0.1',
-    port: 4723,
-    path: '/',
-    capabilities: capabilities,
-};
 const action = {
     hostname: '127.0.0.1',
     port: 4723,
