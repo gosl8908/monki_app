@@ -31,7 +31,9 @@ jobs:
 
             - name: Run Tests on Real Device
               run: |
-                  set PATH=%PATH%;%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\tools
+                  set "PATH=%PATH%;%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\tools"
+                  echo "ANDROID_HOME is set to %ANDROID_HOME%"
+                  echo "PATH is set to %PATH%"
                   echo "실제 디바이스에서 테스트를 실행합니다..."
                   node project/test.js
               shell: cmd
