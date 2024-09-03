@@ -26,21 +26,11 @@ jobs:
             - name: Install Android SDK
               run: |
                   echo "Installing Android SDK..."
-                  # Define the SDK installation directory
-                  set "ANDROID_SDK_ROOT=%HOME%\android-sdk"
-                  set "ANDROID_HOME=%ANDROID_SDK_ROOT%"
-                  set "PATH=%PATH%;%ANDROID_HOME%\cmdline-tools\latest\bin"
-
-                  # Create directories if they do not exist
-                  mkdir "%ANDROID_HOME%"
-                  mkdir "%ANDROID_HOME%\cmdline-tools"
-
-                  # Download and install Command-line tools
+                  mkdir "%HOME%\android-sdk"
+                  cd "%HOME%\android-sdk"
                   curl -o cmdline-tools.zip "https://dl.google.com/android/repository/commandlinetools-win-8512546_latest.zip"
-                  tar -xzf cmdline-tools.zip -C "%ANDROID_HOME%\cmdline-tools"
+                  tar -xzf cmdline-tools.zip
                   del cmdline-tools.zip
-
-                  # Update and install SDK components
                   sdkmanager --update
                   sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
               shell: cmd
@@ -51,9 +41,6 @@ jobs:
 
             - name: Run Tests on Real Device
               run: |
-                  set "PATH=%PATH%;%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\tools"
-                  echo "ANDROID_HOME is set to %ANDROID_HOME%"
-                  echo "PATH is set to %PATH%"
-                  echo "실제 디바이스에서 테스트를 실행합니다..."
+                  echo "Running tests on a real device..."
                   node project/test.js
               shell: cmd
