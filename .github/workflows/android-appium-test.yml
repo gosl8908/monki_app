@@ -18,6 +18,17 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v3
 
+            - name: Ensure No Existing Appium Process
+              run: |
+                  # Appium 프로세스가 실행 중인지 확인하고 종료합니다.
+                  $appiumProcesses = Get-Process | Where-Object { $_.Path -like "*appium*" }
+                  if ($appiumProcesses) {
+                      $appiumProcesses | Stop-Process -Force
+                      echo "기존 Appium 프로세스를 종료했습니다."
+                  } else {
+                      echo "실행 중인 Appium 프로세스가 없습니다."
+                  }
+
             - name: Run Appium Server
               run: |
                   echo "Appium 서버를 실행합니다..."
