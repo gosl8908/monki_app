@@ -23,30 +23,6 @@ jobs:
               with:
                   node-version: '21.7.1' # 원하는 Node.js 버전으로 변경 가능
 
-            - name: Install Android SDK
-              shell: pwsh
-              run: |
-                  Write-Host "Installing Android SDK..."
-
-                  $sdkPath = "$env:HOME\android-sdk"
-
-                  if (Test-Path $sdkPath) {
-                      Remove-Item -Recurse -Force $sdkPath
-                  }
-
-                  New-Item -ItemType Directory -Force -Path $sdkPath
-                  Set-Location -Path $sdkPath
-
-                  Invoke-WebRequest -Uri "https://dl.google.com/android/repository/commandlinetools-win-8512546_latest.zip" -OutFile "cmdline-tools.zip"
-                  Expand-Archive -Path "cmdline-tools.zip" -DestinationPath "$sdkPath\cmdline-tools" -Force
-                  Remove-Item -Path "cmdline-tools.zip"
-
-                  $env:ANDROID_HOME = $sdkPath
-                  $env:PATH += ";$sdkPath\cmdline-tools\latest\bin"
-
-                  & "$sdkPath\cmdline-tools\latest\bin\sdkmanager.bat" --update
-                  & "$sdkPath\cmdline-tools\latest\bin\sdkmanager.bat" "platform-tools" "platforms;android-30" "build-tools;30.0.3"
-
             - name: Install Dependencies
               run: npm install
               shell: cmd
