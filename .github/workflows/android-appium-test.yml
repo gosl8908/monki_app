@@ -34,7 +34,9 @@ jobs:
 
             - name: Start Appium Server
               run: |
-                  Start-Process -NoNewWindow -FilePath "appium" -ArgumentList "" -PassThru | Wait-Process
+                  echo "Starting Appium Server..."
+                  npx appium --address 0.0.0.0 --port 4723 &
+                  Start-Sleep -Seconds 10  # Appium이 시작될 시간을 기다립니다.
 
             - name: Run Tests on Real Device
               run: |
