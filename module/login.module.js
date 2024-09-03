@@ -5,8 +5,8 @@ async function login(driver, email, password) {
         // 로그인 버튼을 찾고 클릭하기
         const loginButton = await driver.$(utils.uiSelectorText('로그인'));
         if (await loginButton.isDisplayed()) {
-            await utils.enterText(driver, '//android.widget.EditText[@text="이메일을 입력해 주세요"]', email);
-            await utils.enterText(driver, '//android.widget.EditText[@text="비밀번호를 입력해 주세요"]', password);
+            await utils.enterText(driver, utils.uiedit('이메일을 입력해 주세요'), email);
+            await utils.enterText(driver, utils.uiedit('비밀번호를 입력해 주세요'), password);
             await utils.click(driver, utils.uiSelectorText('로그인'));
             await utils.wait(5 * 1000); // 5초 대기
             // 배너 확인 및 클릭하기

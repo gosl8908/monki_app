@@ -20,9 +20,9 @@ let TestFails = []; // 실패 원인을 저장할 변수
 
         await utils.click(driver, utils.uiSelectorText('현재 위치 찾기'));
 
-        await utils.enterText(driver, '//android.widget.EditText[@text="상세주소를 입력해 주세요"]', '1');
+        await utils.enterText(driver, utils.uiedit('상세주소를 입력해 주세요'), '1');
 
-        await utils.enterText(driver, '//android.widget.EditText[@text="명칭을 입력해 주세요"]', '1');
+        await utils.enterText(driver, utils.uiedit('명칭을 입력해 주세요'), '1');
 
         await utils.click(driver, utils.uiSelectorText('주소로 설정하기'));
 

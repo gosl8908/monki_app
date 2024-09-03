@@ -91,6 +91,7 @@ async function touchTap(driver, xRatio, yRatio) {
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 // 텍스트로 요소 선택자 생성
+const uiedit = text => `android.widget.EditText[@text="${text}"]'`;
 const uiSelector = text => `android=new UiSelector().text("${text}")`;
 const uiSelectorText = text => `android=new UiSelector().textContains("${text}")`;
 const uiSelectorBtnText = text => `android=new UiSelector().className("android.widget.Button").text("${text}")`;
@@ -198,6 +199,7 @@ async function screenshot(driver, Screenshots) {
 const utils = {
     click,
     scroll,
+    uiedit,
     wait,
     uiSelector,
     uiSelectorText,

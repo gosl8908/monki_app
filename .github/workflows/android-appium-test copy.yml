@@ -1,0 +1,73 @@
+name: Android Appium Tests
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+
+env:
+    TZ: 'Asia/Seoul'
+    ANDROID_HOME: /usr/local/lib/android/sdk
+
+jobs:
+    build:
+        runs-on: [self-hosted, ubuntu-latest]
+
+        steps:
+            - uses: actions/checkout@v3
+
+            - name: Set up Android SDK
+              uses: android-actions/setup-android@v2
+              with:
+                  api-level: 31
+                  build-tools: 31.0.0
+                  target: 'android-31'
+                  components: |
+                      platform-tools
+                      extras;google;google_play_services
+                      extras;google;m2repository
+                      extras;android;m2repository
+
+            - name: Set up Node.js (Required for Appium)
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '18'
+
+            - name: Install Dependencies
+              run: npm install
+
+            - name: Install Appium
+              run: npm install -g appium
+
+            - name: Install Appium Doctor (Optional)
+              run: npm install -g appium-doctor
+
+            - name: Check Appium Setup
+              run: appium-doctor --android
+
+            - name: Run Appium Server
+              run: nohup appium > appium.log 2>&1 &
+
+            - name: Ensure ADB Recognizes Device
+              run: |
+                  adb devices
+                  adb wait-for-device
+                  echo "디바이스가 연결되고 인식되었습니다."
+
+            - name: Unlock Android Device
+              run: |
+                  adb -s $(adb devices | grep -w "device" | awk '{print $1}') shell input keyevent 82
+
+            - name: Run Tests on Real Device
+              run: |
+                  echo "실제 디바이스에서 테스트를 실행합니다..."
+                  node project/githubAction.js
+
+            - name: Upload Appium Log
+              uses: actions/upload-artifact@v3
+              with:
+                  name: appium-log
+                  path: appium.log
