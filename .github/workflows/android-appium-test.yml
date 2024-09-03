@@ -18,6 +18,11 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v3
 
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '21.7.1' # 원하는 Node.js 버전으로 변경 가능
+
             - name: Run Tests on Real Device
               run: |
                   echo "실제 디바이스에서 테스트를 실행합니다..."
