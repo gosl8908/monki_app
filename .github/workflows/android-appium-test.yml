@@ -24,19 +24,28 @@ jobs:
                   node-version: '21.7.1' # 원하는 Node.js 버전으로 변경 가능
 
             - name: Install Android SDK
+              shell: pwsh
               run: |
-                  echo "Installing Android SDK..."
-                  if (Test-Path "%HOME%\android-sdk") { Remove-Item -Recurse -Force "%HOME%\android-sdk" }
-                  mkdir "%HOME%\android-sdk"
-                  cd "%HOME%\android-sdk"
-                  curl -o cmdline-tools.zip "https://dl.google.com/android/repository/commandlinetools-win-8512546_latest.zip"
-                  powershell -Command "Expand-Archive -Path 'cmdline-tools.zip' -DestinationPath '%HOME%\android-sdk\cmdline-tools' -Force"
-                  del cmdline-tools.zip
-                  set "ANDROID_HOME=%HOME%\android-sdk"
-                  set "PATH=%PATH%;%ANDROID_HOME%\cmdline-tools\latest\bin"
-                  sdkmanager --update
-                  sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
-              shell: cmd
+                  Write-Host "Installing Android SDK..."
+
+                  $sdkPath = "$env:HOME\android-sdk"
+
+                  if (Test-Path $sdkPath) {
+                      Remove-Item -Recurse -Force $sdkPath
+                  }
+
+                  New-Item -ItemType Directory -Force -Path $sdkPath
+                  Set-Location -Path $sdkPath
+
+                  Invoke-WebRequest -Uri "https://dl.google.com/android/repository/commandlinetools-win-8512546_latest.zip" -OutFile "cmdline-tools.zip"
+                  Expand-Archive -Path "cmdline-tools.zip" -DestinationPath "$sdkPath\cmdline-tools" -Force
+                  Remove-Item -Path "cmdline-tools.zip"
+
+                  $env:ANDROID_HOME = $sdkPath
+                  $env:PATH += ";$sdkPath\cmdline-tools\latest\bin"
+
+                  & "$sdkPath\cmdline-tools\latest\bin\sdkmanager.bat" --update
+                  & "$sdkPath\cmdline-tools\latest\bin\sdkmanager.bat" "platform-tools" "platforms;android-30" "build-tools;30.0.3"
 
             - name: Install Dependencies
               run: npm install
