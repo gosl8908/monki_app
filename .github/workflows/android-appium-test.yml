@@ -13,6 +13,9 @@ jobs:
         runs-on: self-hosted
         env:
             TZ: 'Asia/Seoul'
+            ANDROID_HOME: 'C:\path\to\android-sdk' # Android SDK 경로
+            ANDROID_SDK_ROOT: 'C:\path\to\android-sdk' # Android SDK 경로
+            PATH: ${{ env.PATH }};C:\path\to\android-sdk\platform-tools;C:\path\to\android-sdk\tools
 
         steps:
             - name: Checkout code
