@@ -48,7 +48,7 @@ const capabilities = {
     'appium:skipServerInstallation': false,
 };
 const options = {
-    hostname: '127.0.0.1',
+    hostname: 'localhost',
     port: 4723,
     path: '/',
     capabilities: capabilities,
