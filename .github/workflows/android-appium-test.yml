@@ -14,60 +14,25 @@ env:
 
 jobs:
     build:
-        runs-on: ubuntu-latest
+        runs-on: self-hosted
 
         steps:
             - uses: actions/checkout@v3
 
-            - name: Set up Android SDK
-              uses: android-actions/setup-android@v2
-              with:
-                  api-level: 31
-                  build-tools: 31.0.0
-                  target: 'android-31'
-                  components: |
-                      platform-tools
-                      extras;google;google_play_services
-                      extras;google;m2repository
-                      extras;android;m2repository
+            - name: Ensure ADB Recognizes Device
+              run: |
+                  adb devices
+                  adb wait-for-device
+                  echo "디바이스가 연결되고 인식되었습니다."
 
-            - name: Set up Node.js (Required for Appium)
-              uses: actions/setup-node@v3
-              with:
-                  node-version: '18'
+            - name: Unlock Android Device
+              run: |
+                  adb -s $(adb devices | grep -w "device" | awk '{print $1}') shell input keyevent 82
 
-            - name: Install Dependencies
-              run: npm install
-
-            - name: Install Appium
-              run: npm install -g appium
-
-            - name: Install Appium Doctor (Optional)
-              run: npm install -g appium-doctor
-
-            - name: Check Appium Setup
-              run: appium-doctor --android
-
-            - name: Run Appium Server
-              run: nohup appium > appium.log 2>&1 &
-
-            - name: Run Android Emulator
-              uses: reactivecircus/android-emulator-runner@v2
-              with:
-                  api-level: 31
-                  target: default
-                  arch: x86_64
-                  profile: Nexus 5X
-                  script: |
-                      adb devices
-                      adb -s emulator-5554 shell input keyevent 82
-                      echo "Waiting for emulator to boot up..."
-                      adb -s emulator-5554 wait-for-device
-                      adb -s emulator-5554 shell 'while [[ "$(getprop sys.boot_completed)" != "1" ]]; do sleep 1; done'
-                      echo "Emulator booted"
-                      sleep 30
-                      node project/githubAction.js
-                      adb -s emulator-5554 emu kill
+            - name: Run Tests on Real Device
+              run: |
+                  echo "실제 디바이스에서 테스트를 실행합니다..."
+                  node project/test.js
 
             - name: Upload Appium Log
               uses: actions/upload-artifact@v3
