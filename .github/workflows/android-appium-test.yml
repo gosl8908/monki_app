@@ -13,22 +13,10 @@ jobs:
         runs-on: self-hosted
         env:
             TZ: 'Asia/Seoul'
-            ANDROID_HOME: C:\Users\monthlykitchen\Documents\platform-tools # Path to platform-tools
-            PATH: C:\Users\monthlykitchen\Documents\platform-tools;${{ env.PATH }} # Ensure adb is in PATH
 
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
-
-            - name: Ensure ADB Recognizes Device
-              run: |
-                  adb devices
-                  adb wait-for-device
-                  echo "디바이스가 연결되고 인식되었습니다."
-
-            - name: Unlock Android Device
-              run: |
-                  adb -s $(adb devices | grep -w "device" | awk '{print $1}') shell input keyevent 82
 
             - name: Run Tests on Real Device
               run: |
