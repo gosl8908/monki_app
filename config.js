@@ -50,7 +50,7 @@ const capabilities = {
 const options = {
     hostname: '127.0.0.1',
     port: 4723,
-    path: '/wd/hub',
+    path: '/',
     capabilities: capabilities,
 };
 const actioncapabilities = {
