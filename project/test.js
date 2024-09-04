@@ -3,14 +3,14 @@ const { options, env } = require('../config.js');
 const utils = require('../module/utils');
 const Module = require('../module/manager.module.js');
 
-const serverUrl = 'http://localhost:4723';
+const serverUrl = 'http://localhost:4725';
 let Screenshots = []; // 스크린샷을 저장할 배열
 let TestFails = []; // 실패 원인을 저장할 변수
 
 (async () => {
     let driver;
     try {
-        driver = await remote(options);
+        driver = await remote(action);
         await utils.wait(3000);
         // await utils.touchTap(driver, 0.0833, 0.062);
         // await driver.touchPerform([{ action: 'tap', options: { x: 90, y: 145 } }]);

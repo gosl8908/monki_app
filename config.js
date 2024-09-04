@@ -53,31 +53,12 @@ const options = {
     path: '/',
     capabilities: capabilities,
 };
-const actioncapabilities = {
-    'appium:platformName': 'Android',
-    'appium:deviceName': 'emulator-5554',
-    'appium:automationName': 'Uiautomator2',
-    'appium:app': './apk/monki-431_20240731_staging.apk',
-    'appium:appPackage': 'com.svcorps.mkitchen',
-    'appium:appWaitActivity': 'com.svcorps.mkitchen.*', // 앱 대기 액티비티 설정
-    'appium:appActivity': 'com.svcorps.mkitchen.MainActivity',
-    'appium:noReset': true, // 앱 상태를 초기화하지 않고 유지
-    'appium:fullReset': false, // 앱을 삭제하지 않고 유지
-    'appium:autoGrantPermissions': true, // 권한 자동 부여
-    'appium:ignoreHiddenApiPolicyError': true, // 숨겨진 API 오류 무시
-    'appium:disableWindowAnimation': true, // UI 애니메이션 비활성화
-    'appium:enablePerformanceLogging': true, // 성능 로그 활성화
-    'appium:ignoreUnimportantViews': true, // UIAutomator가 중요하지 않은 뷰를 무시하도록 설정
-    'appium:skipServerInstallation': false,
-    'appium:uiautomator2ServerLaunchTimeout': 60000,
-    'appium:androidInstallTimeout': 120000,
-};
 
 const action = {
     hostname: '127.0.0.1',
-    port: 4723,
-    path: '/wd/hub',
-    capabilities: actioncapabilities,
+    port: 4725,
+    path: '/',
+    capabilities: capabilities,
 };
 
 function getFormattedTime() {
