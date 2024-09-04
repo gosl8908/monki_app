@@ -28,12 +28,7 @@ jobs:
               shell: cmd
 
             - name: Install Appium Drivers
-              run: |
-                  appium driver install uiautomator2
-              shell: cmd
-
-            - name: Start Appium Server
-              run: nohup appium --port 4725
+              run: appium driver install uiautomator2
               shell: cmd
 
             - name: Install Dependencies
@@ -42,6 +37,7 @@ jobs:
 
             - name: Run Tests on Real Device
               run: |
+                  start /B appium --port 4725
                   echo "Running tests on a real device..."
                   node project/test.js
               shell: cmd
