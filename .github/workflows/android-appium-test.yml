@@ -33,7 +33,7 @@ jobs:
               shell: cmd
 
             - name: Start Appium Server
-              run: appium --port 4725
+              run: nohup appium --port 4725
               shell: cmd
 
             - name: Install Dependencies
