@@ -1,5 +1,5 @@
 const { remote } = require('webdriverio');
-const { options, env } = require('../config.js');
+const { action, options, env } = require('../config.js');
 const utils = require('../module/utils');
 const Module = require('../module/manager.module.js');
 
