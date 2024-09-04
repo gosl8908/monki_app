@@ -40,16 +40,7 @@ jobs:
               run: npm install
 
             - name: Install Appium
-              run: npm install -g appium
-
-            - name: Install Appium Doctor (Optional)
-              run: npm install -g appium-doctor
-
-            - name: Check Appium Setup
-              run: appium-doctor --android
-
-            - name: Run Appium Server
-              run: nohup appium > appium.log 2>&1 &
+              run: npm install appium
 
             - name: Run Android Emulator
               uses: reactivecircus/android-emulator-runner@v2
@@ -60,17 +51,9 @@ jobs:
                   profile: Nexus 5X
                   script: |
                       adb devices
+                      nohup npx appium > appium.log 2>&1 &
                       adb -s emulator-5554 shell input keyevent 82
-                      echo "Waiting for emulator to boot up..."
                       adb -s emulator-5554 wait-for-device
                       adb -s emulator-5554 shell 'while [[ "$(getprop sys.boot_completed)" != "1" ]]; do sleep 1; done'
-                      echo "Emulator booted"
-                      sleep 30
                       node project/githubAction.js
                       adb -s emulator-5554 emu kill
-
-            - name: Upload Appium Log
-              uses: actions/upload-artifact@v3
-              with:
-                  name: appium-log
-                  path: appium.log

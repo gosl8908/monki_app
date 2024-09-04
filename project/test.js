@@ -1,5 +1,5 @@
 const { remote } = require('webdriverio');
-const { action, options, env } = require('../config.js');
+const { options, env } = require('../config.js');
 const utils = require('../module/utils');
 const Module = require('../module/manager.module.js');
 
@@ -10,7 +10,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
 (async () => {
     let driver;
     try {
-        driver = await remote(action);
+        driver = await remote(options);
         await utils.wait(3000);
         // await utils.touchTap(driver, 0.0833, 0.062);
         // await driver.touchPerform([{ action: 'tap', options: { x: 90, y: 145 } }]);
