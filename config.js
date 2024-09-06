@@ -31,7 +31,6 @@ const devices = {
         platformVersion: '13',
     },
 };
-
 const capabilities = {
     'appium:platformName': 'Android',
     'appium:automationName': 'Uiautomator2',
@@ -157,8 +156,18 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
             return false;
         });
 }
-
 module.exports = {
+    reporters: [
+        'spec',
+        [
+            'allure',
+            {
+                outputDir: 'allure-results',
+                disableWebdriverStepsReporting: true,
+                disableWebdriverScreenshotsReporting: true,
+            },
+        ],
+    ],
     action,
     options,
     getFormattedTime,

@@ -22,6 +22,8 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@wdio/allure-reporter": "^9.0.8",
+    "allure-commandline": "^2.30.0",
     "appium-uiautomator2-driver": "^3.7.6",
     "chai": "^5.1.1",
     "eslint": "^9.9.0",

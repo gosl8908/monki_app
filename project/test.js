@@ -1,5 +1,6 @@
 const { remote } = require('webdriverio');
 const { options, env } = require('../config.js');
+const allure = require('allure-commandline');
 const utils = require('../module/utils');
 const Module = require('../module/manager.module.js');
 
@@ -32,6 +33,9 @@ let TestFails = []; // 실패 원인을 저장할 변수
     } finally {
         if (driver) {
             try {
+                await driver.execute(() => {
+                    allure.addAttachment('My Attachment', 'Attachment content');
+                });
                 await driver.deleteSession();
                 console.log('Driver session ended.');
             } catch (deleteSessionError) {
