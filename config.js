@@ -157,17 +157,6 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
         });
 }
 module.exports = {
-    reporters: [
-        'spec',
-        [
-            'allure',
-            {
-                outputDir: 'allure-results',
-                disableWebdriverStepsReporting: true,
-                disableWebdriverScreenshotsReporting: true,
-            },
-        ],
-    ],
     action,
     options,
     getFormattedTime,

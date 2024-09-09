@@ -1,4 +1,4 @@
-name: Android Appium Tests
+name: Android Appium Test
 
 on:
     push:
@@ -15,7 +15,6 @@ env:
 jobs:
     build:
         runs-on: ubuntu-latest
-
         steps:
             - uses: actions/checkout@v3
 
