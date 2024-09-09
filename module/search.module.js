@@ -14,7 +14,7 @@ async function search(driver, searchText) {
             await utils.click(driver, storeTextSelector);
             await utils.wait(5000); // 대기
         } else {
-            await utils.enterText(driver, utils.uiedit('음식이나 음식점 이름을 검색해주세요'), searchText);
+            await utils.enterText(driver, utils.uiSelectorText('음식이나 음식점 이름을 검색해주세요'), searchText);
             await utils.wait(5000); // 대기
             // Enter 키를 누릅니다 (Android의 경우 key code 66)
             await driver.pressKeyCode(66); // 66은 Enter 키의 key code
@@ -22,7 +22,7 @@ async function search(driver, searchText) {
         }
 
         // 검색 텍스트 필드를 비우고 다시 클릭
-        await utils.clearText(driver, utils.uiedit(`${searchText}`));
+        await utils.clearText(driver, utils.uiSelectorText(`${searchText}`));
         await utils.wait(5 * 1000); // 대기
         await utils.click(driver, storeTextSelector);
         await utils.wait(5 * 1000); // 대기

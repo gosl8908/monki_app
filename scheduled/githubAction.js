@@ -1,39 +1,27 @@
 const { remote } = require('webdriverio');
-const { options, env } = require('../config.js');
-const utils = require('../module/utils.js'); // utils 모듈 가져오기
+const { options, action, env } = require('../config.js');
+const utils = require('../module/utils.js');
 const Module = require('../module/manager.module.js');
 
-const serverUrl = 'http://localhost:4723';
+const serverUrl = 'http://localhost:4725';
 let Screenshots = []; // 스크린샷을 저장할 배열
-let TestFails = []; // 실패 원인을 저장할 배열
+let TestFails = []; // 실패 원인을 저장할 변수
 
 (async () => {
     let driver;
     try {
-        driver = await remote(options);
-        await utils.wait(5 * 1000);
+        driver = await remote(action);
+        await utils.wait(3000);
 
         /* 로그인 */
         await Module.loginModule.login(driver, env.email, env.password);
 
-        const store = await driver.$(utils.uiSelectorText('번개지점(stg)'));
-        if (!(await store.isDisplayed())) {
-            await utils.click(driver, utils.uiSelectorText('변경'), { timeout: 10 * 1000 });
-            await utils.click(driver, utils.uiSelectorText('번개지점(stg)'), { timeout: 10 * 1000 });
-
-            await utils.click(driver, utils.uiSelector('선택'), { timeout: 10 * 1000 });
-            await utils.wait(3 * 1000);
-            await utils.click(driver, utils.uiSelectorText('무료배달'));
-        }
-        await utils.click(driver, utils.uiSelectorText('번개지점(stg)'));
-        await utils.wait(10 * 1000);
-        await utils.scroll(driver, 0.5, 0.6, 0.5, 0.0);
-        await utils.click(driver, utils.uiSelectorText('몬키지점stg'), { timeout: 10 * 1000 });
-        console.log('검색 성공');
+        // 검색
+        await Module.searchModule.search(driver, '몬키지점stg');
 
         // 메뉴
         await utils.wait(10 * 1000);
-        await utils.scroll(driver, 0.5, 0.6, 0.5, 0.0);
+        await utils.scroll(driver, 0.5, 0.75, 0.5, 0.0);
         await utils.click(driver, utils.uiSelectorText('라면'));
         console.log('메뉴 상세 진입 성공');
 
@@ -81,7 +69,7 @@ let TestFails = []; // 실패 원인을 저장할 배열
         await Module.emailModule.email({
             TestFails,
             EmailTitle: `[${env.EmailTitle}]`,
-            TestRange: '1. 지점 매장식사 결제',
+            TestRange: '1. 테스트',
             Screenshots,
         });
     }
