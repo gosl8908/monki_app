@@ -48,12 +48,12 @@ let TestFails = []; // 실패 원인을 저장할 변수
         // 장바구니 담기
         await utils.wait(10 * 1000);
         await utils.scroll(driver, 0.5, 0.75, 0.5, 0.0);
-        await utils.click(driver, utils.uiSelectorText('기본'), { timeout: 30 * 1000 });
-        await utils.wait(5 * 1000);
+        await utils.click(driver, utils.uiSelectorText('기본'));
+        await utils.wait(10 * 1000);
         await utils.click(driver, utils.uiSelectorText('장바구니 담기'));
-        await utils.wait(5 * 1000);
-        await utils.click(driver, utils.uiSelectorText('장바구니 보기'), { timeout: 30 * 1000 });
-        await utils.wait(5 * 1000);
+        await utils.wait(10 * 1000);
+        await utils.click(driver, utils.uiSelectorText('장바구니 보기'));
+        await utils.wait(10 * 1000);
         await utils.click(driver, utils.uiSelectorText('매장식사 주문'));
         console.log('메뉴 장바구니 담기 성공');
 
