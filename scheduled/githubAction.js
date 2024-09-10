@@ -16,6 +16,13 @@ let TestFails = []; // 실패 원인을 저장할 변수
         /* 로그인 */
         await Module.loginModule.login(driver, env.email, env.password);
 
+        // 배너 확인 및 클릭하기
+        const eventBtn = await driver.$(utils.uiSelectorText('오늘하루 그만보기'));
+        if (await eventBtn.isDisplayed()) {
+            await utils.waitForTextAndClick(driver, '오늘하루 그만보기');
+            await utils.wait(5000); // 5초 대기
+        }
+
         const store = await driver.$(utils.uiSelectorText('번개지점(stg)'));
         if (!(await store.isDisplayed())) {
             await utils.click(driver, utils.uiSelectorText('변경'), { timeout: 10 * 1000 });

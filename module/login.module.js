@@ -18,12 +18,6 @@ async function login(driver, email, password) {
             await utils.contains(driver, '자주가는 먼키지점');
             console.log('로그인 완료');
         }
-        // 배너 확인 및 클릭하기
-        const eventBtn = await driver.$(utils.uiSelectorText('오늘하루 그만보기'));
-        if (await eventBtn.isDisplayed()) {
-            await utils.waitForTextAndClick(driver, '오늘하루 그만보기');
-            await utils.wait(5000); // 5초 대기
-        }
     } catch (error) {
         console.error(`로그인 중 오류 발생: ${error.message}`);
         throw error;
