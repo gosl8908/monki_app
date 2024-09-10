@@ -1,29 +1,33 @@
 {
+  "name": "monki_app",
+  "version": "1.0.0",
+  "description": "Your project description",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha project/test2.js --timeout 10000 --reporter allure-mocha",
+    "allure:clean": "rmdir /s /q allure-results && rmdir /s /q allure-report",
+    "allure:generate": "npm run allure:clean && allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report",
+    "allure:serve": "allure serve allure-results",
+    "test:allure": "npm test && npm run allure:generate && npm run allure:open"
+  },
+  "keywords": ["test", "automation"],
+  "author": "Your Name",
+  "license": "ISC",
   "dependencies": {
     "@wdio/appium-service": "^8.38.0",
     "@wdio/cli": "^8.38.0",
     "adbkit": "^2.11.1",
     "appium": "^2.11.3",
     "express": "^4.19.2",
-    "fs": "^0.0.1-security",
-    "nodemailer": "^6.9.14",
     "path": "^0.12.7",
     "wd": "^1.14.0",
     "webdriverio": "^8.38.0"
   },
-  "name": "monki_app",
-  "version": "1.0.0",
-  "main": ".eslintrc.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "devDependencies": {
     "@wdio/allure-reporter": "^9.0.8",
     "allure-commandline": "^2.30.0",
+    "allure-mocha": "^3.0.0-beta.12",
     "appium-uiautomator2-driver": "^3.7.6",
     "chai": "^5.1.1",
     "eslint": "^9.9.0",

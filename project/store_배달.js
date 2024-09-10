@@ -75,6 +75,7 @@ let TestFails = []; // 실패 원인을 저장할 배열
     } finally {
         if (driver) {
             try {
+                await driver.terminateApp('com.svcorps.mkitchen');
                 await driver.deleteSession();
                 console.log('Driver session ended.');
             } catch (deleteSessionError) {

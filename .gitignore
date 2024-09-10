@@ -161,6 +161,6 @@ package-lock.json
 # appium
 ######################
 screenshot/*
-actions-runner/
+allure-results/*
 _diag/
 test/
