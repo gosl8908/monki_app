@@ -11,7 +11,10 @@
     "allure:serve": "allure serve allure-results",
     "test:allure": "npm test && npm run allure:generate && npm run allure:open"
   },
-  "keywords": ["test", "automation"],
+  "keywords": [
+    "test",
+    "automation"
+  ],
   "author": "Your Name",
   "license": "ISC",
   "dependencies": {
@@ -20,6 +23,7 @@
     "adbkit": "^2.11.1",
     "appium": "^2.11.3",
     "express": "^4.19.2",
+    "nodemailer": "^6.9.15",
     "path": "^0.12.7",
     "wd": "^1.14.0",
     "webdriverio": "^8.38.0"
