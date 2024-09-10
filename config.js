@@ -99,16 +99,6 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
         });
     }
 
-    const gmailtransporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-        port: 587,
-        secure: false,
-        auth: {
-            user: gmailEamilId,
-            pass: gmailEamilPwd,
-        },
-    });
-
     // 두레이 메일용 transporter
     const dooraytransporter = nodemailer.createTransport({
         host: 'smtp.dooray.com',
@@ -119,6 +109,32 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
             pass: doorayEamilPwd,
         },
     });
+    const dooraymailOptions = {
+        from: doorayEamilId,
+        to: doorayEamilId,
+        subject: subject,
+        text: body,
+        attachments: attachments,
+    };
+    return dooraytransporter
+        .sendMail(dooraymailOptions)
+        .then(info => {
+            console.log('이메일 성공적으로 전송됨: ' + info.response);
+            return true;
+        })
+        .catch(error => {
+            console.error('이메일 전송 실패: ' + error);
+            return false;
+        });
+    // const gmailtransporter = nodemailer.createTransport({
+    //     host: 'smtp.gmail.com',
+    //     port: 587,
+    //     secure: false,
+    //     auth: {
+    //         user: gmailEamilId,
+    //         pass: gmailEamilPwd,
+    //     },
+    // });
 
     // const gmailmailOptions = {
     //     from: gmailEamilId,
@@ -127,13 +143,6 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
     //     text: body,
     //     attachments: attachments,
     // };
-    const dooraymailOptions = {
-        from: doorayEamilId,
-        to: doorayEamilId,
-        subject: subject,
-        text: body,
-        attachments: attachments,
-    };
 
     // return gmailtransporter
     //     .sendMail(gmailmailOptions)
@@ -145,16 +154,6 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
     //         console.error('이메일 전송 실패: ' + error);
     //         return false;
     //     });
-    return dooraytransporter
-        .sendMail(dooraymailOptions)
-        .then(info => {
-            console.log('이메일 성공적으로 전송됨: ' + info.response);
-            return true;
-        })
-        .catch(error => {
-            console.error('이메일 전송 실패: ' + error);
-            return false;
-        });
 }
 module.exports = {
     action,
