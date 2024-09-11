@@ -43,7 +43,7 @@ describe('Appium Test Suite', function () {
         }
         await Module.emailModule.email({
             TestFails,
-            EmailTitle: `[${env.EmailTitle}]`,
+            EmailTitle: `[${env.AppEmailTitle}]`,
             TestRange: '1. 테스트',
             Screenshots,
         });

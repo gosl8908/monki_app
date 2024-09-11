@@ -49,6 +49,7 @@ const Appcapabilities = {
 };
 const Tableordercapabilities = {
     'appium:platformName': 'Android',
+    'appium:udid': '10.10.239.152:40479',
     'appium:automationName': 'Uiautomator2',
     'appium:appPackage': 'net.monki.tableorder',
     'appium:appActivity': '.MainActivity',
@@ -106,7 +107,8 @@ function getFormattedTime() {
         Time: `${hours}:${minutes}:${seconds}`,
         DateLabel: `${year}${month}${day}_${hours}${minutes}${seconds}`,
         DateLabelWeek: `${year}-${month}-${day} ${dayOfWeek} ${hours}:${minutes}:${seconds}`,
-        EmailTitle: `${year}-${month}-${day} ${dayOfWeek} App 자동화 테스트 결과`,
+        AppEmailTitle: `${year}-${month}-${day} ${dayOfWeek} App 자동화 테스트 결과`,
+        TableorderEmailTitle: `${year}-${month}-${day} ${dayOfWeek} Tableorder 자동화 테스트 결과`,
     };
 }
 function sendEmail({ recipient, subject, body, screenshotFileNames }) {
@@ -198,6 +200,7 @@ module.exports = {
         Time: getFormattedTime().Time,
         DateLabel: getFormattedTime().DateLabel,
         DateLabelWeek: getFormattedTime().DateLabelWeek,
-        EmailTitle: getFormattedTime().EmailTitle,
+        AppEmailTitle: getFormattedTime().AppEmailTitle,
+        TableorderEmailTitle: getFormattedTime().TableorderEmailTitle,
     },
 };

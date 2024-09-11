@@ -66,7 +66,7 @@ let TestFails = []; // 실패 원인을 저장할 배열
         }
         await Module.emailModule.email({
             TestFails,
-            EmailTitle: `[${env.EmailTitle}]`,
+            EmailTitle: `[${env.AppEmailTitle}]`,
             TestRange: '1. 단골맛집 배달 결제',
             Screenshots,
         });

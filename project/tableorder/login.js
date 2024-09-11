@@ -7,18 +7,17 @@ const { allure } = require('allure-mocha/runtime');
 const serverUrl = 'http://localhost:4725';
 let Screenshots = []; // 스크린샷을 저장할 배열
 let TestFails = []; // 실패 원인을 저장할 변수
-const currentPackage = await driver.getCurrentPackage();
-const currentActivity = await driver.getCurrentActivity();
 
 (async () => {
     // for (let i = 0; i < 10; i++) {
     let driver;
     try {
         driver = await remote(tableorderoptions);
+        // const currentPackage = await driver.getCurrentPackage();
+        // const currentActivity = await driver.getCurrentActivity();
+        // console.log('Current app package:', currentPackage);
+        // console.log('Current app activity:', currentActivity);
         await utils.wait(3000);
-
-        console.log('Current app package:', currentPackage);
-        console.log('Current app activity:', currentActivity);
 
         const ID = await driver.$(`android=new UiSelector().className("android.widget.EditText")`);
         await ID.click();
@@ -34,24 +33,23 @@ const currentActivity = await driver.getCurrentActivity();
         // await utils.touchTap(driver, 0.4, 0.6);
     } catch (error) {
         console.error(error);
-        // TestFails.push(error.message);
+        TestFails.push(error.message);
         if (driver) await utils.screenshot(driver, Screenshots);
     } finally {
         if (driver) {
             try {
-                await driver.terminateApp(currentPackage);
+                await driver.terminateApp('net.monki.tableorder');
                 await driver.deleteSession();
                 console.log('Driver session ended.');
             } catch (deleteSessionError) {
                 console.error('Error ending driver session:', deleteSessionError);
             }
         }
-        // await Module.emailModule.email({
-        //     TestFails,
-        //     EmailTitle: `[${env.EmailTitle}]`,
-        //     TestRange: '1. 테스트',
-        //     Screenshots,
-        // });
-        // }
+        await Module.emailModule.email({
+            TestFails,
+            EmailTitle: `[${env.TableorderEmailTitle}]`,
+            TestRange: '1. 테스트',
+            Screenshots,
+        });
     }
 })();

@@ -11,17 +11,6 @@ describe('회원가입 테스트', function () {
 
     before(async () => (driver = await remote(appoptions)));
 
-    after(async () => {
-        await driver?.terminateApp('com.svcorps.mkitchen');
-        await driver?.deleteSession();
-        await Module.emailModule.email({
-            TestFails,
-            EmailTitle: `[${env.EmailTitle}]`,
-            TestRange: '1. 회원가입, 2. 회원탈퇴',
-            Screenshots,
-        });
-    });
-
     it('간편 회원가입 진행', async () => {
         try {
             await utils.wait(5000);
@@ -96,4 +85,14 @@ describe('회원가입 테스트', function () {
         const eventBtn = await driver.$(utils.uiSelectorText('오늘하루 그만보기'));
         if (await eventBtn.isDisplayed()) await utils.waitForTextAndClick(driver, '오늘하루 그만보기');
     }
+    after(async () => {
+        await driver?.terminateApp('com.svcorps.mkitchen');
+        await driver?.deleteSession();
+        await Module.emailModule.email({
+            TestFails,
+            EmailTitle: `[${env.AppEmailTitle}]`,
+            TestRange: '1. 회원가입, 2. 회원탈퇴',
+            Screenshots,
+        });
+    });
 });

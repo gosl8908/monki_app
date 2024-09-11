@@ -111,7 +111,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
         }
         await Module.emailModule.email({
             TestFails,
-            EmailTitle: `[${env.EmailTitle}]`,
+            EmailTitle: `[${env.AppEmailTitle}]`,
             TestRange: '1. 회원가입, 2. 회원탈퇴',
             Screenshots,
         });
