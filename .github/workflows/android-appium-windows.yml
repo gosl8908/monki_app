@@ -41,5 +41,5 @@ jobs:
               run: |
                   start /B appium --port 4725
                   echo "Running tests on a real device..."
-                  node scheduled/githubAction.js
+                  node scheduled/app/githubAction.js
               shell: cmd

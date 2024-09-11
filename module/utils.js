@@ -95,6 +95,10 @@ const uiedit = text => `android.widget.EditText[@text="${text}"]'`;
 const uiSelector = text => `android=new UiSelector().text("${text}")`;
 const uiSelectorText = text => `android=new UiSelector().textContains("${text}")`;
 const uiSelectorBtnText = text => `android=new UiSelector().className("android.widget.Button").text("${text}")`;
+const webText = text => `//*[text()="${text}"]`;
+const containstext = text => `//*[contains(text(), "${text}")]`;
+const webviewText = text => `//android.widget.TextView[@text="${text}"]`;
+const btnText = text => `//android.widget.Button[@content-desc="${text}"]`;
 
 // 텍스트 입력
 async function enterText(driver, selector, value, timeout = 5000) {
@@ -200,10 +204,14 @@ const utils = {
     click,
     scroll,
     uiedit,
+    webText,
+    containstext,
     wait,
+    webviewText,
     uiSelector,
     uiSelectorText,
     uiSelectorBtnText,
+    btnText,
     enterText,
     clearText,
     pressVolumeButton,

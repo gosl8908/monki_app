@@ -31,12 +31,13 @@ const devices = {
         platformVersion: '13',
     },
 };
-const capabilities = {
+const Appcapabilities = {
     'appium:platformName': 'Android',
     'appium:automationName': 'Uiautomator2',
     'appium:appPackage': 'com.svcorps.mkitchen',
-    'appium:appWaitActivity': 'com.svcorps.mkitchen.*', // 앱 대기 액티비티 설정
+    'appium:appWaitActivity': 'com.svcorps.mkitchen.MainActivity, com.svcorps.mkitchen.*',
     'appium:appActivity': 'com.svcorps.mkitchen.MainActivity',
+    'appium:app': './apk/app/monki-431_20240731_staging.apk', // 앱 파일 경로
     'appium:noReset': true, // 앱 상태를 초기화하지 않고 유지
     'appium:fullReset': false, // 앱을 삭제하지 않고 유지
     'appium:autoGrantPermissions': true, // 권한 자동 부여
@@ -46,18 +47,40 @@ const capabilities = {
     'appium:ignoreUnimportantViews': true, // UIAutomator가 중요하지 않은 뷰를 무시하도록 설정
     'appium:skipServerInstallation': false,
 };
-const options = {
+const Tableordercapabilities = {
+    'appium:platformName': 'Android',
+    'appium:automationName': 'Uiautomator2',
+    'appium:appPackage': 'net.monki.tableorder',
+    'appium:appActivity': '.MainActivity',
+    'appium:appWaitActivity': 'net.monki.tableorder.MainActivity, net.monki.tableorder.*',
+    'appium:app': './apk/tableorder/app-staging-release-1.0.81+121.apk', // 앱 파일 경로
+    'appium:noReset': true, // 앱 상태를 초기화하지 않고 유지
+    'appium:fullReset': false, // 앱을 삭제하지 않고 유지
+    'appium:autoGrantPermissions': true, // 권한 자동 부여
+    'appium:ignoreHiddenApiPolicyError': true, // 숨겨진 API 오류 무시
+    'appium:disableWindowAnimation': true, // UI 애니메이션 비활성화
+    'appium:enablePerformanceLogging': true, // 성능 로그 활성화
+    'appium:ignoreUnimportantViews': true, // UIAutomator가 중요하지 않은 뷰를 무시하도록 설정
+    'appium:skipServerInstallation': false,
+};
+const appoptions = {
     hostname: '127.0.0.1',
     port: 4723,
     path: '/',
-    capabilities: capabilities,
+    capabilities: Appcapabilities,
+};
+const tableorderoptions = {
+    hostname: '127.0.0.1',
+    port: 4723,
+    path: '/',
+    capabilities: Tableordercapabilities,
 };
 
 const action = {
     hostname: '127.0.0.1',
     port: 4725,
     path: '/',
-    capabilities: capabilities,
+    capabilities: Appcapabilities,
 };
 
 function getFormattedTime() {
@@ -157,13 +180,17 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
 }
 module.exports = {
     action,
-    options,
+    appoptions,
+    tableorderoptions,
     getFormattedTime,
     sendEmail,
     env: {
         email: 'hskang@monki.net',
         testemail: 'monki@monki.net',
+        testid: 'monkitest',
         password: 'test123!',
+        testphone: '01052012705',
+        phone: '01020431653',
         cardPassword: ['9', '4', '0', '5', '1', '3'],
         /* content */
         EmailBody: `App 자동화 테스트가 성공적으로 완료되었습니다`,
