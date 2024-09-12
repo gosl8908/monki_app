@@ -41,5 +41,5 @@ jobs:
               run: |
                   start /B appium --port 4725
                   echo "Running tests on a real device..."
-                  node scheduled/app/fav_매장.js
+                  node scheduled/app/Action_fav_매장.js
               shell: cmd

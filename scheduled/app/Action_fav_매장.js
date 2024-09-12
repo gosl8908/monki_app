@@ -1,16 +1,16 @@
 const { remote } = require('webdriverio');
-const { appoptions, env } = require('../../config.js');
+const { action, env } = require('../../config.js');
 const utils = require('../../module/utils.js'); // utils 모듈을 가져옵니다.
 const Module = require('../../module/manager.module.js');
 
-const serverUrl = 'http://localhost:4723';
+const serverUrl = 'http://localhost:4725';
 let Screenshots = []; // 스크린샷을 저장할 배열
 let TestFails = []; // 실패 원인을 저장할 배열
 
 (async () => {
     let driver;
     try {
-        driver = await remote(appoptions);
+        driver = await remote(action);
         await utils.wait(5 * 1000);
 
         await Module.loginModule.login(driver, env.email, env.password);
