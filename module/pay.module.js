@@ -9,6 +9,10 @@ async function order(driver, type = undefined) {
         await utils.wait(10000);
         await utils.scroll(driver, 0.5, 0.6, 0.5, 0.0);
         await utils.wait(5000);
+        const CreditText = await driver.$(utils.uiSelectorText('모두사용'));
+        if (await !CreditText.isDisplayed()) {
+            await utils.scroll(driver, 0.5, 0.3, 0.5, 0.0);
+        }
         await utils.click(driver, utils.uiSelectorText('모두사용'));
         await utils.wait(5000);
         await utils.click(driver, utils.uiSelectorText('간편결제'));
