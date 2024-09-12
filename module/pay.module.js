@@ -7,7 +7,7 @@ async function order(driver, type = undefined) {
     try {
         // 대기 후 스크롤 및 클릭 작업 수행
         await utils.wait(10000);
-        await utils.scroll(driver, 0.5, 0.8, 0.5, 0.0);
+        await utils.scroll(driver, 0.5, 0.6, 0.5, 0.0);
         await utils.wait(5000);
         await utils.click(driver, utils.uiSelectorText('모두사용'));
         await utils.wait(5000);
