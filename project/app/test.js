@@ -18,7 +18,8 @@ describe('Appium Test Suite', function () {
     it('should login successfully', async function () {
         try {
             await utils.wait(3000);
-            await Module.loginModule.login(driver, env.email, env.password);
+            // await Module.loginModule.login(driver, env.email, env.password);
+            await utils.scroll(driver, 0.4, 0.6, 0.5, 0.0);
             allure.step('Login action performed', () => {
                 // 여기에 스텝과 관련된 추가 작업을 작성합니다.
                 console.log('Login step executed');

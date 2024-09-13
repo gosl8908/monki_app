@@ -36,7 +36,7 @@ async function pay(driver, passwordDigits) {
     try {
         // 대기 후 스크롤 및 클릭 작업 수행
         await utils.wait(10000);
-        await utils.scroll(driver, 0.5, 0.6, 0.5, 0.0);
+        await utils.scroll(driver, 0.5, 0.7, 0.5, 0.0);
         await utils.click(driver, utils.uiSelectorBtnText('결제'));
         await utils.wait(5000);
 
