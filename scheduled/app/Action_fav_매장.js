@@ -16,7 +16,7 @@ let TestFails = []; // 실패 원인을 저장할 배열
         await Module.loginModule.login(driver, env.email, env.password);
 
         // 검색
-        await Module.searchModule.search(driver, '번개');
+        await Module.searchModule.search(driver, '강남(stg)');
 
         // 메뉴
         await utils.wait(10 * 1000);

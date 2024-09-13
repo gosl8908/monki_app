@@ -91,7 +91,7 @@ async function touchTap(driver, xRatio, yRatio) {
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 // 텍스트로 요소 선택자 생성
-const uiedit = text => `android.widget.EditText[@text="${text}"]'`;
+const uiedit = text => `//android.widget.EditText[@text="${text}"]'`;
 const uiSelector = text => `android=new UiSelector().text("${text}")`;
 const uiSelectorText = text => `android=new UiSelector().textContains("${text}")`;
 const uiSelectorBtnText = text => `android=new UiSelector().className("android.widget.Button").text("${text}")`;
@@ -101,10 +101,10 @@ const webviewText = text => `//android.widget.TextView[@text="${text}"]`;
 const btnText = text => `//android.widget.Button[@content-desc="${text}"]`;
 
 // 텍스트 입력
-async function enterText(driver, selector, value, timeout = 5000) {
+async function enterText(driver, selector, value) {
     try {
         const element = await driver.$(selector);
-        await element.waitForExist({ timeout });
+        await element.waitForExist(3 * 1000);
         await element.setValue(value);
         await wait(3 * 1000);
         console.log(`Entered value '${value}' successfully.`);
@@ -142,11 +142,11 @@ async function pressVolumeButton(driver, direction = 'up') {
 }
 
 // 텍스트 인식 클릭
-async function waitForTextAndClick(driver, text, timeout = 5000) {
+async function waitForTextAndClick(driver, text) {
     try {
         const selector = uiSelectorText(text);
         const element = await driver.$(selector);
-        await element.waitForExist({ timeout });
+        await element.waitForExist(3 * 1000);
         await element.click();
         await wait(3 * 1000);
         console.log(`"${text}" 텍스트를 찾고 클릭했습니다.`);

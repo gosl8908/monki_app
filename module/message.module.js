@@ -23,7 +23,7 @@ async function message(phoneNumber) {
         // 1899-5678 번호에서 온 메시지 필터링
         for (let message of smsMessages) {
             // console.log('Current Message: ', message); // 각 메시지 출력
-            await utils.wait(5 * 1000);
+            await utils.wait(10 * 1000);
             if (message.includes(phoneNumber)) {
                 // 메시지에서 4자리 인증번호 추출 (정규식 사용)
                 const codeMatch = message.match(/\b\d{4}\b/);
