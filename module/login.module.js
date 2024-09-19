@@ -14,7 +14,7 @@ async function login(driver, email, password) {
         const eventBtn = await driver.$(utils.uiSelectorText('오늘하루 그만보기'));
         if (await eventBtn.isDisplayed()) {
             await utils.contains(driver, '오늘하루 그만보기');
-            await utils.click(driver, '오늘하루 그만보기');
+            await utils.click(driver, utils.uiSelectorText('오늘하루 그만보기'));
             await utils.wait(5000); // 5초 대기
         }
         await utils.contains(driver, '자주가는 먼키지점');

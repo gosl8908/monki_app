@@ -104,7 +104,7 @@ const btnText = text => `//android.widget.Button[@content-desc="${text}"]`;
 async function enterText(driver, selector, value) {
     try {
         const element = await driver.$(selector);
-        await element.waitForExist(3 * 1000);
+        await element.waitForExist({ timeout: 5 * 1000 });
         await element.setValue(value);
         await wait(3 * 1000);
         console.log(`Entered value '${value}' successfully.`);
@@ -114,11 +114,11 @@ async function enterText(driver, selector, value) {
     }
 }
 // 텍스트 지우기
-async function clearText(driver, selector, timeout = 5000) {
+async function clearText(driver, selector) {
     try {
         // Wait for the element to be displayed
         const element = await driver.$(selector);
-        await element.waitForDisplayed({ timeout });
+        await element.waitForDisplayed({ timeout: 5000 });
 
         // Clear the text
         await element.clearValue(); // `clear` is deprecated in WebdriverIO v5+, use `clearValue` instead
@@ -146,7 +146,8 @@ async function contains(driver, text) {
     try {
         const selector = uiSelectorText(text);
         const element = await driver.$(selector);
-        await element.waitForExist(10 * 1000);
+        await element.waitForExist({ timeout: 10000 });
+        await element.waitForDisplayed({ timeout: 10 * 1000 });
         console.log(`${text} 텍스트를 찾았습니다.`);
     } catch (error) {
         console.log(`${text} 텍스트를 찾지 못했습니다: ${error.message}`);
