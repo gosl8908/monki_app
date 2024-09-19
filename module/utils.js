@@ -141,28 +141,12 @@ async function pressVolumeButton(driver, direction = 'up') {
     }
 }
 
-// 텍스트 인식 클릭
-async function waitForTextAndClick(driver, text) {
-    try {
-        const selector = uiSelectorText(text);
-        const element = await driver.$(selector);
-        await element.waitForExist(3 * 1000);
-        await element.click();
-        await wait(3 * 1000);
-        console.log(`"${text}" 텍스트를 찾고 클릭했습니다.`);
-    } catch (error) {
-        console.log(`"${text}" 텍스트를 찾지 못했습니다: ${error.message}`);
-        throw error;
-    }
-}
-
 // 텍스트 확인
 async function contains(driver, text) {
     try {
         const selector = uiSelectorText(text);
         const element = await driver.$(selector);
-        await element.waitForExist(1 * 1000);
-        await wait(3 * 1000);
+        await element.waitForExist(10 * 1000);
         console.log(`${text} 텍스트를 찾았습니다.`);
     } catch (error) {
         console.log(`${text} 텍스트를 찾지 못했습니다: ${error.message}`);

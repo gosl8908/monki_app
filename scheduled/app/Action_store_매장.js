@@ -11,7 +11,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
     let driver;
     try {
         driver = await remote(action);
-        await utils.wait(3000);
+        await utils.wait(5 * 1000);
 
         /* 로그인 */
         await Module.loginModule.login(driver, env.email, env.password);
@@ -20,7 +20,8 @@ let TestFails = []; // 실패 원인을 저장할 변수
         // 배너 확인 및 클릭하기
         const eventBtn = await driver.$(utils.uiSelectorText('오늘하루 그만보기'));
         if (await eventBtn.isDisplayed()) {
-            await utils.waitForTextAndClick(driver, '오늘하루 그만보기');
+            await utils.contains(driver, '오늘하루 그만보기');
+            await utils.click(driver, '오늘하루 그만보기');
             await utils.wait(5000); // 5초 대기
         }
 
@@ -69,7 +70,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
         await utils.click(driver, utils.uiSelectorText('단순 변심'));
         await utils.wait(5000);
         await utils.click(driver, utils.uiSelectorText('취소하기'));
-        await utils.waitForTextAndClick(driver, '주문이 취소되었습니다.', 30000);
+        await utils.contains(driver, '주문이 취소되었습니다.');
         console.log('주문취소 완료 텍스트가 나타났습니다.');
 
         await utils.click(driver, utils.uiSelectorText('확인'));

@@ -91,7 +91,8 @@ let TestFails = []; // 실패 원인을 저장할 변수
 
         const eventBtn = await driver.$(utils.uiSelectorText('오늘하루 그만보기'));
         if (await eventBtn.isDisplayed()) {
-            await utils.waitForTextAndClick(driver, '오늘하루 그만보기');
+            await utils.contains(driver, '오늘하루 그만보기');
+            await utils.click(driver, '오늘하루 그만보기');
         }
 
         await Module.loginModule.signout(driver);
