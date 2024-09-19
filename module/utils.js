@@ -179,7 +179,6 @@ async function screenshot(driver, Screenshots) {
 //     enterText,
 //     clearText,
 //     pressVolumeButton,
-//     waitForTextAndClick,
 //     contains,
 // };
 
@@ -199,7 +198,6 @@ const utils = {
     enterText,
     clearText,
     pressVolumeButton,
-    waitForTextAndClick,
     contains,
     touchTap,
     screenshot,
