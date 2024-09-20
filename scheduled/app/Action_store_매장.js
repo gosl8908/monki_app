@@ -1,5 +1,5 @@
 const { remote } = require('webdriverio');
-const { options, action, env } = require('../../config.js');
+const { action, env } = require('../../config.js');
 const utils = require('../../module/utils.js');
 const Module = require('../../module/manager.module.js');
 
@@ -16,14 +16,6 @@ let TestFails = []; // 실패 원인을 저장할 변수
         /* 로그인 */
         await Module.loginModule.login(driver, env.email, env.password);
         await utils.wait(5 * 1000);
-
-        // 배너 확인 및 클릭하기
-        const eventBtn = await driver.$(utils.uiSelectorText('오늘하루 그만보기'));
-        if (await eventBtn.isDisplayed()) {
-            await utils.contains(driver, '오늘하루 그만보기');
-            await utils.click(driver, '오늘하루 그만보기');
-            await utils.wait(5000); // 5초 대기
-        }
 
         const store = await driver.$(utils.uiSelectorText('번개지점(stg)'));
         if (!(await store.isDisplayed())) {

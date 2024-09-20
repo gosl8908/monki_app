@@ -16,19 +16,19 @@ let TestFails = []; // 실패 원인을 저장할 배열
         /* 로그인 */
         await Module.loginModule.login(driver, env.email, env.password);
 
-        const store = await driver.$(utils.uiSelectorText('번개지점(stg)'));
+        const store = await driver.$(utils.uiSelectorText('번개지점'));
         if (!(await store.isDisplayed())) {
             await utils.click(driver, utils.uiSelectorText('변경'));
-            await utils.click(driver, utils.uiSelectorText('번개지점(stg)'));
+            await utils.click(driver, utils.uiSelectorText('번개지점'));
 
             await utils.click(driver, utils.uiSelector('선택'));
             await utils.wait(3 * 1000);
             await utils.click(driver, utils.uiSelectorText('무료배달'));
         }
-        await utils.click(driver, utils.uiSelectorText('번개지점(stg)'));
+        await utils.click(driver, utils.uiSelectorText('번개지점'));
         await utils.wait(10 * 1000);
         await utils.scroll(driver, 0.5, 0.6, 0.5, 0.0);
-        await utils.click(driver, utils.uiSelectorText('몬키지점stg'));
+        await utils.click(driver, utils.uiSelectorText('몬키지점'));
         console.log('검색 성공');
 
         // 메뉴
