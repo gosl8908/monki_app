@@ -15,22 +15,14 @@ let TestFails = []; // 실패 원인을 저장할 배열
         // await utils.scroll(driver, 0.5, 0.7, 0.5, 0.0);
         const selector = utils.uiSelectorText('번개지점(stg)3333');
         const element = await driver.$(selector);
-        // await element.waitForExist({ timeout: 10000 });
-        await element.isDisplayed({ timeout: 10000 });
+        await element.waitForExist({ timeout: 10000 });
+        // await element.isDisplayed({ timeout: 10000 });
     } catch (error) {
         console.error(error);
         TestFails.push(error.message);
         if (driver) await utils.screenshot(driver, Screenshots);
     } finally {
-        if (driver) {
-            try {
-                await driver.terminateApp('com.svcorps.mkitchen');
-                await driver.deleteSession();
-                console.log('Driver session ended.');
-            } catch (deleteSessionError) {
-                console.error('Error ending driver session:', deleteSessionError);
-            }
-        }
+        await utils.finish(driver, appoptions);
         await Module.emailModule.email({
             TestFails,
             EmailTitle: `[${env.AppEmailTitle}]`,

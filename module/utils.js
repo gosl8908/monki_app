@@ -69,24 +69,6 @@ async function touchTap(driver, xRatio, yRatio) {
     await wait(1000);
 }
 
-// async function scroll(driver, startX, startY, endX, endY, duration = 1000) {
-//     await driver.performActions([
-//         {
-//             type: 'pointer',
-//             id: 'finger1',
-//             parameters: { pointerType: 'touch' },
-//             actions: [
-//                 { type: 'pointerMove', duration: 0, x: startX, y: startY }, // 포인트 이동
-//                 { type: 'pointerDown', button: 0 }, // 다운
-//                 { type: 'pause', duration: 1000 }, // 정지
-//                 { type: 'pointerMove', duration, origin: 'viewport', x: endX, y: endY }, // 이동 위치
-//                 { type: 'pointerUp', button: 0 }, // 업
-//             ],
-//         },
-//     ]);
-//     await wait(3 * 1000);
-// }
-
 // 대기
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -119,7 +101,6 @@ async function clearText(driver, selector) {
         // Wait for the element to be displayed
         const element = await driver.$(selector);
         await element.waitForDisplayed({ timeout: 5000 });
-
         // Clear the text
         await element.clearValue(); // `clear` is deprecated in WebdriverIO v5+, use `clearValue` instead
         await wait(3 * 1000);
@@ -147,7 +128,6 @@ async function contains(driver, text) {
         const selector = uiSelectorText(text);
         const element = await driver.$(selector);
         await element.waitForExist({ timeout: 10000 });
-        await element.waitForDisplayed({ timeout: 10 * 1000 });
         console.log(`${text} 텍스트를 찾았습니다.`);
     } catch (error) {
         console.log(`${text} 텍스트를 찾지 못했습니다: ${error.message}`);
@@ -171,6 +151,21 @@ async function screenshot(driver, Screenshots) {
     return Screenshots; // 배열을 반환
 }
 
+async function finish(driver, appoptions) {
+    if (driver) {
+        try {
+            const appPackage = appoptions.capabilities['appium:appPackage'];
+            console.log('App Package:', appPackage);
+            await driver.terminateApp(appPackage);
+            await driver.deleteSession();
+            console.log('Driver session ended.');
+        } catch (deleteSessionError) {
+            console.error('Error ending driver session:', deleteSessionError);
+            throw error;
+        }
+    }
+}
+
 // module.exports = {
 //     click,
 //     scroll,
@@ -188,6 +183,7 @@ const utils = {
     click,
     scroll,
     uiedit,
+    finish,
     webText,
     containstext,
     wait,

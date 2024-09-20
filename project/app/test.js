@@ -33,15 +33,7 @@ describe('Appium Test Suite', function () {
         }
     });
     after(async function () {
-        if (driver) {
-            try {
-                await driver.terminateApp('com.svcorps.mkitchen');
-                await driver.deleteSession();
-                console.log('Driver session ended.');
-            } catch (deleteSessionError) {
-                console.error('Error ending driver session:', deleteSessionError);
-            }
-        }
+        await utils.finish(driver, appoptions);
         await Module.emailModule.email({
             TestFails,
             EmailTitle: `[${env.AppEmailTitle}]`,

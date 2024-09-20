@@ -79,15 +79,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
         TestFails.push(error.message);
         if (driver) await utils.screenshot(driver, Screenshots);
     } finally {
-        if (driver) {
-            try {
-                await driver.terminateApp('com.svcorps.mkitchen');
-                await driver.deleteSession();
-                console.log('Driver session ended.');
-            } catch (deleteSessionError) {
-                console.error('Error ending driver session:', deleteSessionError);
-            }
-        }
+        await utils.finish(driver, action);
         await Module.emailModule.email({
             TestFails,
             EmailTitle: `[${env.AppEmailTitle}]`,
