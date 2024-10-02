@@ -4,7 +4,7 @@ const { env } = require('../config.js');
 
 // 요소 클릭
 async function click(driver, selector) {
-    await driver.$(selector).click();
+    await driver.$(selector, { timeout: 5 * 1000 }).click({ timeout: 5 * 1000 });
 }
 
 // 스크롤 동작
@@ -125,9 +125,9 @@ async function pressVolumeButton(driver, direction = 'up') {
 // 텍스트 확인
 async function contains(driver, text) {
     try {
-        const selector = uiSelectorText(text);
-        const element = await driver.$(selector);
-        await element.waitForExist({ timeout: 10000 });
+        const selector = uiSelectorText(text, { timeout: 5 * 1000 });
+        const element = await driver.$(selector, { timeout: 5 * 1000 });
+        await element.waitForExist({ timeout: 5 * 1000 });
         console.log(`${text} 텍스트를 찾았습니다.`);
     } catch (error) {
         console.log(`${text} 텍스트를 찾지 못했습니다: ${error.message}`);

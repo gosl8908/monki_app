@@ -1,16 +1,16 @@
 const { remote } = require('webdriverio');
-const { appoptions, env } = require('../../config.js');
+const { action, env } = require('../../config.js');
 const utils = require('../../module/utils.js');
 const Module = require('../../module/manager.module.js');
 
-const serverUrl = 'http://localhost:4723';
+const serverUrl = 'http://localhost:4725';
 let Screenshots = []; // 스크린샷을 저장할 배열
 let TestFails = []; // 실패 원인을 저장할 변수
 
 (async () => {
     let driver;
     try {
-        driver = await remote(appoptions);
+        driver = await remote(action);
 
         await utils.wait(5 * 1000);
 
@@ -38,6 +38,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
         }
 
         await utils.click(driver, utils.uiSelectorText('인증하기'));
+
         const NotNumber = await driver.$(utils.uiSelectorText('휴대폰 인증코드가 일치하지 않습니다'));
 
         if (await NotNumber.isDisplayed()) {
@@ -53,7 +54,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
         await utils.enterText(driver, '//android.widget.EditText[@text="이메일 주소를 입력해 주세요"]', env.testemail);
         const buttons = await driver.$$(`android=new UiSelector().textContains("중복확인")`);
         await buttons[0].click();
-        await utils.wait(3 * 1000);
+        // await utils.click(driver, utils.uiSelectorText('중복확인'));
         const email = await driver.$(utils.uiSelectorText('email이 존재합니다'));
         if (await email.isDisplayed()) {
             await utils.enterText(driver, `//android.widget.EditText[@text="${env.testemail}"]`, '1' + env.testemail);
@@ -62,7 +63,8 @@ let TestFails = []; // 실패 원인을 저장할 변수
 
         await utils.enterText(driver, '//android.widget.EditText[@text="닉네임을 입력해 주세요"]', '몬키');
         await buttons[1].click();
-        await utils.wait(3 * 1000);
+
+        // await utils.click(driver, utils.uiSelectorText('중복확인'));
         const nickname = await driver.$(utils.uiSelectorText('닉네임이 존재합니다'));
         if (await nickname.isDisplayed()) {
             await utils.enterText(driver, '//android.widget.EditText[@text="몬키"]', env.testid);
@@ -76,10 +78,16 @@ let TestFails = []; // 실패 원인을 저장할 변수
             '//android.widget.EditText[@text="비밀번호 한번 더 입력해 주세요"]',
             env.password,
         );
+
         await utils.click(driver, utils.uiSelectorText('가입완료'));
+
         await utils.contains(driver, '회원가입이 완료되었습니다.');
+
         await utils.click(driver, utils.uiSelectorText('확인'));
+
         await utils.click(driver, utils.uiSelectorText('먼키홈으로 가기'));
+
+        await utils.wait(5 * 1000);
 
         const eventBtn = await driver.$(utils.uiSelectorText('오늘하루 그만보기'));
         if (await eventBtn.isDisplayed()) {

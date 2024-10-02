@@ -6,8 +6,7 @@ const Module = require('../../module/manager.module.js');
 const serverUrl = 'http://localhost:4723';
 let Screenshots = []; // 스크린샷을 저장할 배열
 let TestFails = []; // 실패 원인을 저장할 배열
-
-(async () => {
+return serverUrl(async () => {
     let driver;
     try {
         driver = await remote(appoptions);
