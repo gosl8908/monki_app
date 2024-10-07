@@ -77,13 +77,12 @@ let TestFails = []; // 실패 원인을 저장할 변수
             env.password,
         );
         await utils.click(driver, utils.uiSelectorText('가입완료'));
-        await utils.contains(driver, '회원가입이 완료되었습니다.');
+        await utils.contains(driver, utils.uiSelectorText('회원가입이 완료되었습니다.'));
         await utils.click(driver, utils.uiSelectorText('확인'));
         await utils.click(driver, utils.uiSelectorText('먼키홈으로 가기'));
 
         const eventBtn = await driver.$(utils.uiSelectorText('오늘하루 그만보기'));
         if (await eventBtn.isDisplayed()) {
-            await utils.contains(driver, '오늘하루 그만보기');
             await utils.click(driver, '오늘하루 그만보기');
         }
 

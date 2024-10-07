@@ -48,7 +48,7 @@ async function pay(driver, passwordDigits) {
 
         // 주문 완료 텍스트 확인 및 클릭
         await utils.wait(5000);
-        await utils.contains(driver, '주문완료');
+        await utils.contains(driver, utils.uiSelectorText('주문완료'));
         console.log('결제완료 & 주문완료 텍스트가 나타났습니다.');
 
         // 스크린샷 캡처

@@ -46,7 +46,7 @@ return serverUrl(async () => {
         await utils.click(driver, utils.uiSelectorText('단순 변심'));
         await utils.wait(5000);
         await utils.click(driver, utils.uiSelectorText('취소하기'));
-        await utils.contains(driver, '주문이 취소되었습니다.');
+        await utils.contains(driver, utils.uiSelectorText('주문이 취소되었습니다.'));
         console.log('주문취소 완료 텍스트가 나타났습니다.');
 
         await utils.click(driver, utils.uiSelectorText('확인'));

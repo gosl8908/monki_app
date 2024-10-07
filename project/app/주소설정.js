@@ -26,7 +26,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
 
         await utils.click(driver, utils.uiSelectorText('주소로 설정하기'));
 
-        await utils.contains(driver, '주소가 등록되었습니다.');
+        await utils.contains(driver, utils.uiSelectorText('주소가 등록되었습니다.'));
 
         await utils.click(driver, utils.uiSelectorText('확인'));
     } catch (error) {

@@ -43,7 +43,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
         await Module.emailModule.email({
             TestFails,
             EmailTitle: `[${env.TableorderEmailTitle}]`,
-            TestRange: '1. 테스트',
+            TestRange: '1. 테이블오더 로그아웃',
             Screenshots,
         });
     }

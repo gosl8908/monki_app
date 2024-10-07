@@ -12,8 +12,8 @@ let TestFails = []; // 실패 원인을 저장할 변수
     // for (let i = 0; i < 10; i++) {
     let driver;
     try {
-        driver = await remote(tableorderoptions, { timeout: 10 * 1000 });
-        // await utils.wait(10 * 1000);
+        driver = await remote(tableorderoptions);
+        await utils.wait(10 * 1000);
         const currentPackage = await driver.getCurrentPackage();
         const currentActivity = await driver.getCurrentActivity();
         console.log('Current app package:', currentPackage);
@@ -31,6 +31,8 @@ let TestFails = []; // 실패 원인을 저장할 변수
         await utils.click(driver, utils.check('물'));
         await utils.wait(3 * 1000);
         await utils.click(driver, utils.btnText('호출하기'));
+
+        await utils.contains(driver, utils.view('직원을 호출하였습니다.\n잠시만 기다려주세요.'));
     } catch (error) {
         console.error(error);
         TestFails.push(error.message);
@@ -40,7 +42,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
         await Module.emailModule.email({
             TestFails,
             EmailTitle: `[${env.TableorderEmailTitle}]`,
-            TestRange: '1. 테스트',
+            TestRange: '1. 테이블오더 직원호출',
             Screenshots,
         });
     }

@@ -126,16 +126,9 @@ async function pressVolumeButton(driver, direction = 'up') {
 }
 
 // 텍스트 확인
-async function contains(driver, text) {
-    try {
-        const selector = uiSelectorText(text, { timeout: 5 * 1000 });
-        const element = await driver.$(selector, { timeout: 5 * 1000 });
-        await element.waitForExist({ timeout: 5 * 1000 });
-        console.log(`${text} 텍스트를 찾았습니다.`);
-    } catch (error) {
-        console.log(`${text} 텍스트를 찾지 못했습니다: ${error.message}`);
-        throw error;
-    }
+async function contains(driver, type) {
+    const element = await driver.$(type, { timeout: 5 * 1000 });
+    await element.waitForExist({ timeout: 5 * 1000 });
 }
 
 /* 실패시 스크린샷 */

@@ -38,18 +38,6 @@ let TestFails = []; // 실패 원인을 저장할 변수
             await utils.wait(3 * 1000);
             await driver.$(utils.view('교촌치킨(stg)', { timeout: 10 * 1000 }));
         }
-        await utils.wait(3 * 1000);
-        await utils.click(driver, utils.view('음료'));
-        await utils.wait(3 * 1000);
-        await utils.click(driver, utils.ImageView('코카콜라\n2,500원'));
-        await utils.wait(3 * 1000);
-        await utils.click(driver, utils.btnText('2,500원 담기'));
-        await utils.wait(3 * 1000);
-        await utils.click(driver, utils.ImageView('장바구니\n1'));
-        await utils.wait(3 * 1000);
-        await utils.click(driver, utils.btnText('한번에 결제하기'));
-        await utils.wait(3 * 1000);
-        await utils.click(driver, utils.btnText('확인'));
     } catch (error) {
         console.error(error);
         TestFails.push(error.message);
@@ -59,7 +47,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
         await Module.emailModule.email({
             TestFails,
             EmailTitle: `[${env.TableorderEmailTitle}]`,
-            TestRange: '1. 테스트',
+            TestRange: '1. 테이블오더 로그인',
             Screenshots,
         });
     }
