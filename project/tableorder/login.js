@@ -9,7 +9,6 @@ let Screenshots = []; // 스크린샷을 저장할 배열
 let TestFails = []; // 실패 원인을 저장할 변수
 
 (async () => {
-    // for (let i = 0; i < 10; i++) {
     let driver;
     try {
         driver = await remote(tableorderoptions);
