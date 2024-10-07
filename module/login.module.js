@@ -10,6 +10,11 @@ async function login(driver, email, password) {
             await utils.click(driver, utils.uiSelectorText('로그인'));
             await utils.wait(5 * 1000); // 5초 대기
         }
+        const Text = await driver.$(utils.uiSelectorText('무료배달, 매장식사/포장, 브랜드관 등'));
+        if (await Text.isDisplayed()) {
+            await utils.wait(3 * 1000);
+            await utils.touchTap(driver, 0.1, 0.05);
+        }
         // 배너 확인 및 클릭하기
         const eventBtn = await driver.$(utils.uiSelectorText('오늘하루 그만보기'));
         if (await eventBtn.isDisplayed()) {

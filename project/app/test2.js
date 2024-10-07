@@ -12,6 +12,9 @@ let TestFails = []; // 실패 원인을 저장할 배열
     try {
         driver = await remote(appoptions);
         await utils.wait(5 * 1000);
+        await Module.bootModule.boot(driver);
+        await Module.loginModule.login(driver, env.email, env.password);
+        // await utils.touchTap(driver, 0.1, 0.05);
         // await utils.click(driver, utils.uiSelector('로그인'));
         // await utils.scroll(driver, 0.5, 0.7, 0.5, 0.0);
         // const selector = utils.uiSelectorText('번개지점(stg)3333');
@@ -23,7 +26,7 @@ let TestFails = []; // 실패 원인을 저장할 배열
         TestFails.push(error.message);
         if (driver) await utils.screenshot(driver, Screenshots);
     } finally {
-        await utils.finish(driver, appoptions);
+        // await utils.finish(driver, appoptions);
         await Module.emailModule.email({
             TestFails,
             EmailTitle: `[${env.AppEmailTitle}]`,

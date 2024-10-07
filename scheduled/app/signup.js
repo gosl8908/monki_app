@@ -12,6 +12,8 @@ let TestFails = []; // 실패 원인을 저장할 변수
     try {
         driver = await remote(action);
 
+        await Module.bootModule.boot(driver);
+
         await utils.wait(5 * 1000);
 
         await utils.click(driver, utils.uiSelectorText('간편회원가입'));

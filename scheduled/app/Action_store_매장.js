@@ -12,6 +12,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
     try {
         driver = await remote(action);
         await utils.wait(5 * 1000);
+        await Module.bootModule.boot(driver);
 
         /* 로그인 */
         await Module.loginModule.login(driver, env.email, env.password);
