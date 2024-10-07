@@ -5,26 +5,26 @@ async function boot(driver) {
         const boottext = await driver.$(
             utils.uiSelectorText('먼키오더에서 이 기기의 위치 정보에 액세스하도록 허용하시겠습니까?'),
         );
-        if (await boottext.isDisplayed) {
+        if (await boottext.isDisplayed()) {
             await utils.click(driver, utils.uiSelector('앱 사용 중에만 허용'));
             await utils.wait(1 * 1000);
         }
         const boottext2 = await driver.$(
             utils.uiSelectorText('먼키오더에서 기기의 사진과 동영상에 액세스하도록 허용하시겠습니까?'),
         );
-        if (await boottext2.isDisplayed) {
+        if (await boottext2.isDisplayed()) {
             await utils.click(driver, utils.uiSelector('모두 허용'));
             await utils.wait(1 * 1000);
         }
         const boottext3 = await driver.$(
             utils.uiSelectorText('먼키오더에서 사진을 촬영하고 동영상을 녹화하도록 허용하시겠습니까?'),
         );
-        if (await boottext3.isDisplayed) {
+        if (await boottext3.isDisplayed()) {
             await utils.click(driver, utils.uiSelector('앱 사용 중에만 허용'));
             await utils.wait(1 * 1000);
         }
         const boottext4 = await driver.$(utils.uiSelectorText('먼키오더에서 알림을 보내도록 허용하시겠습니까?'));
-        if (await boottext4.isDisplayed) {
+        if (await boottext4.isDisplayed()) {
             await utils.click(driver, utils.uiSelector('허용'));
             await utils.wait(1 * 1000);
         }
