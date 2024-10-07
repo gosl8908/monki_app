@@ -13,7 +13,7 @@ let TestFails = []; // 실패 원인을 저장할 배열
         driver = await remote(appoptions);
         await utils.wait(5 * 1000);
 
-        await Module.loginModule.login(driver, env.testemail, env.password);
+        await Module.loginModule.login(driver, env.email, env.password);
 
         // 검색
         await utils.click(driver, utils.uiSelectorText('무료배달'));

@@ -49,12 +49,14 @@ const Appcapabilities = {
 };
 const Tableordercapabilities = {
     'appium:platformName': 'Android',
-    'appium:udid': '10.10.239.152:40479',
     'appium:automationName': 'Uiautomator2',
-    'appium:appPackage': 'net.monki.tableorder',
-    'appium:appActivity': '.MainActivity',
+    'appium:deviceName': 'Galaxy Tab A8',
+    'appium:udid': 'R9YTB03PNMP',
+    'appium:platformVersion': '13',
+    'appium:appPackage': 'net.monki.tableorder.staging',
+    'appium:appActivity': 'net.monki.tableorder.MainActivity',
     'appium:appWaitActivity': 'net.monki.tableorder.MainActivity, net.monki.tableorder.*',
-    'appium:app': './apk/tableorder/app-staging-release-1.0.81+121.apk', // 앱 파일 경로
+    'appium:app': './apk/tableorder/app-staging-release-1.0.85+231.apk', // 앱 파일 경로
     'appium:noReset': true, // 앱 상태를 초기화하지 않고 유지
     'appium:fullReset': false, // 앱을 삭제하지 않고 유지
     'appium:autoGrantPermissions': true, // 권한 자동 부여
@@ -72,7 +74,7 @@ const appoptions = {
 };
 const tableorderoptions = {
     hostname: '127.0.0.1',
-    port: 4723,
+    port: 4724,
     path: '/',
     capabilities: Tableordercapabilities,
 };

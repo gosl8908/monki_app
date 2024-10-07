@@ -12,11 +12,11 @@ let TestFails = []; // 실패 원인을 저장할 배열
     try {
         driver = await remote(appoptions);
         await utils.wait(5 * 1000);
-        await utils.click(driver, utils.uiSelector('로그인'));
+        // await utils.click(driver, utils.uiSelector('로그인'));
         // await utils.scroll(driver, 0.5, 0.7, 0.5, 0.0);
         // const selector = utils.uiSelectorText('번개지점(stg)3333');
-        const element = await driver.$(selector);
-        await element.waitForExist({ timeout: 10000 });
+        // const element = await driver.$(selector);
+        // await element.waitForExist({ timeout: 10000 });
         // await element.isDisplayed({ timeout: 10000 });
     } catch (error) {
         console.error(error);

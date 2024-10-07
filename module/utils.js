@@ -81,6 +81,9 @@ const webText = text => `//*[text()="${text}"]`;
 const containstext = text => `//*[contains(text(), "${text}")]`;
 const webviewText = text => `//android.widget.TextView[@text="${text}"]`;
 const btnText = text => `//android.widget.Button[@content-desc="${text}"]`;
+const ImageView = text => `//android.widget.ImageView[@content-desc='${text}']`;
+const view = text => `//android.view.View[@content-desc="${text}"]`;
+const check = text => `//android.widget.CheckBox[@content-desc="${text}"]`;
 
 // 텍스트 입력
 async function enterText(driver, selector, value) {
@@ -188,13 +191,16 @@ const utils = {
     containstext,
     wait,
     webviewText,
+    check,
     uiSelector,
     uiSelectorText,
     uiSelectorBtnText,
     btnText,
+    view,
     enterText,
     clearText,
     pressVolumeButton,
+    ImageView,
     contains,
     touchTap,
     screenshot,
