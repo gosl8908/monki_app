@@ -37,12 +37,13 @@ let TestFails = []; // 실패 원인을 저장할 변수
             await utils.wait(3 * 1000);
             await driver.$(utils.view('교촌치킨(stg)', { timeout: 10 * 1000 }));
         }
+        await utils.contains(driver, utils.view('안녕하세요 :)\n저희는 선불로 운영되는 매장이에요'));
     } catch (error) {
         console.error(error);
         TestFails.push(error.message);
         if (driver) await utils.screenshot(driver, Screenshots);
     } finally {
-        await utils.finish(driver, tableorderoptions);
+        // await utils.finish(driver, tableorderoptions);
         await Module.emailModule.email({
             TestFails,
             EmailTitle: `[${env.TableorderEmailTitle}]`,

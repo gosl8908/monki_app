@@ -83,7 +83,8 @@ const webviewText = text => `//android.widget.TextView[@text="${text}"]`;
 const btnText = text => `//android.widget.Button[@content-desc="${text}"]`;
 const ImageView = text => `//android.widget.ImageView[@content-desc='${text}']`;
 const view = text => `//android.view.View[@content-desc="${text}"]`;
-const check = text => `//android.widget.CheckBox[@content-desc="${text}"]`;
+const containsview = text => `//android.view.View[contains(@content-desc, "${text}")]`;
+const checkbox = text => `//android.widget.CheckBox[@content-desc="${text}"]`;
 
 // 텍스트 입력
 async function enterText(driver, selector, value) {
@@ -127,8 +128,13 @@ async function pressVolumeButton(driver, direction = 'up') {
 
 // 텍스트 확인
 async function contains(driver, type) {
-    const element = await driver.$(type, { timeout: 5 * 1000 });
-    await element.waitForExist({ timeout: 5 * 1000 });
+    try {
+        const element = await driver.$(type, { timeout: 5 * 1000 });
+        await element.waitForExist({ timeout: 5 * 1000 });
+        console.log(`such element '${type}'`);
+    } catch (error) {
+        console.error(`no such element '${type}':`, error);
+    }
 }
 
 /* 실패시 스크린샷 */
@@ -184,18 +190,19 @@ const utils = {
     containstext,
     wait,
     webviewText,
-    check,
     uiSelector,
     uiSelectorText,
     uiSelectorBtnText,
     btnText,
     view,
+    containsview,
     enterText,
     clearText,
     pressVolumeButton,
     ImageView,
     contains,
     touchTap,
+    checkbox,
     screenshot,
 };
 

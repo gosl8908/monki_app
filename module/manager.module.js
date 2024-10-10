@@ -4,6 +4,7 @@ const payModule = require('./pay.module.js');
 const emailModule = require('./email.module.js');
 const messageModule = require('./message.module.js');
 const bootModule = require('./boot.module.js');
+const orderModule = require('./order.module.js');
 // 다른 모듈들도 필요한 경우 추가
 
 const Module = {
@@ -13,6 +14,7 @@ const Module = {
     messageModule,
     bootModule,
     emailModule,
+    orderModule,
 };
 
 module.exports = Module;

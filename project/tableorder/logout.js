@@ -18,18 +18,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
         console.log('Current app package:', currentPackage);
         console.log('Current app activity:', currentActivity);
 
-        await utils.touchTap(driver, 0.1, 0.05);
-        await utils.touchTap(driver, 0.1, 0.05);
-
-        await utils.click(driver, utils.view('1-3'));
-        await utils.click(driver, utils.view('1-3'));
-
-        for (let i = 0; i < 6; i++) {
-            await utils.click(driver, utils.view('1'));
-        }
-        await utils.click(driver, utils.btnText('확인'));
-        await utils.click(driver, utils.view('관리자 모드'));
-        await utils.click(driver, utils.btnText('확인'));
+        await Module.orderModule.adminMode(driver, '1-1');
 
         await utils.click(driver, utils.view('설정\n탭 5개 중 5번째')); // 시스템설정
         await utils.click(driver, utils.btnText('로그아웃'));

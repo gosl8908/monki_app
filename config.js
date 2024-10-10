@@ -51,7 +51,7 @@ const Tableordercapabilities = {
     'appium:platformName': 'Android',
     'appium:automationName': 'Uiautomator2',
     'appium:deviceName': 'Galaxy Tab A8',
-    'appium:udid': 'R9YTB03PNMP',
+    'appium:udid': '10.10.239.105:44267',
     'appium:platformVersion': '13',
     'appium:appPackage': 'net.monki.tableorder.staging',
     'appium:appActivity': 'net.monki.tableorder.MainActivity',
