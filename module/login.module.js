@@ -59,9 +59,34 @@ async function signout(driver) {
         throw error;
     }
 }
+async function TOlogin(driver, email, password) {
+    try {
+        const ID = await driver.$(`android=new UiSelector().className("android.widget.EditText")`);
+        const PASSWORD = await driver.$$(`android=new UiSelector().className("android.widget.EditText")`);
+        await utils.click(driver, ID);
+        await utils.enterText(driver, ID, email);
+        await utils.click(driver, PASSWORD[1]);
+        await utils.enterText(driver, PASSWORD[1], password);
+
+        await driver.pressKeyCode(66);
+
+        await utils.click(driver, utils.btnText('로그인'));
+
+        if (email === env.testid2) {
+            await utils.containsview('교촌치킨(stg)', { timeout: 10 * 1000 });
+        } else if (email === env.testid3) {
+            await utils.containsview('번개단골맛집-강남(stg)', { timeout: 10 * 1000 });
+        }
+        console.log('로그인 완료');
+    } catch (error) {
+        console.error(`로그인 중 오류 발생: ${error.message}`);
+        throw error;
+    }
+}
 
 module.exports = {
     login,
+    TOlogin,
     logout,
     signout,
 };

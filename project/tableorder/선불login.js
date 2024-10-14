@@ -12,30 +12,19 @@ let TestFails = []; // 실패 원인을 저장할 변수
     let driver;
     try {
         driver = await remote(tableorderoptions);
-        await utils.wait(3000);
+        await utils.wait(5 * 1000);
         const currentPackage = await driver.getCurrentPackage();
         const currentActivity = await driver.getCurrentActivity();
         console.log('Current app package:', currentPackage);
         console.log('Current app activity:', currentActivity);
 
-        const ID = await driver.$(`android=new UiSelector().className("android.widget.EditText")`);
-        await ID.click();
-        await ID.setValue('monkitest2');
-
-        const Password = await driver.$$(`android=new UiSelector().className("android.widget.EditText")`);
-        await Password[1].click();
-        await Password[1].setValue('test1234');
-        await driver.pressKeyCode(66);
-
-        await utils.click(driver, utils.btnText('로그인'));
-
-        await driver.$(utils.view('교촌치킨(stg)', { timeout: 10 * 1000 }));
+        await Module.loginModule.TOlogin(driver, env.testid2, env.testpwd2);
 
         const waiting = await driver.$(utils.view('주문하시려면 화면을 터치해 주세요'));
         if (await waiting.isDisplayed()) {
             await utils.click(driver, utils.ImageView('주문하기'));
             await utils.wait(3 * 1000);
-            await driver.$(utils.view('교촌치킨(stg)', { timeout: 10 * 1000 }));
+            await utils.containsview('교촌치킨(stg)', { timeout: 10 * 1000 });
         }
         await utils.contains(driver, utils.view('안녕하세요 :)\n저희는 선불로 운영되는 매장이에요'));
     } catch (error) {

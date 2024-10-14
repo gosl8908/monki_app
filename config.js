@@ -66,6 +66,25 @@ const Tableordercapabilities = {
     'appium:ignoreUnimportantViews': true, // UIAutomator가 중요하지 않은 뷰를 무시하도록 설정
     'appium:skipServerInstallation': false,
 };
+const Tableordercapabilities2 = {
+    'appium:platformName': 'Android',
+    'appium:automationName': 'Uiautomator2',
+    'appium:deviceName': 'Galaxy Tab S7 FE',
+    'appium:udid': 'R54W201LPYZ',
+    'appium:platformVersion': '14',
+    'appium:appPackage': 'net.monki.tableorder.staging',
+    'appium:appActivity': 'net.monki.tableorder.MainActivity',
+    'appium:appWaitActivity': 'net.monki.tableorder.MainActivity, net.monki.tableorder.*',
+    'appium:app': './apk/tableorder/app-staging-release-1.0.85+231.apk', // 앱 파일 경로
+    'appium:noReset': true, // 앱 상태를 초기화하지 않고 유지
+    'appium:fullReset': false, // 앱을 삭제하지 않고 유지
+    'appium:autoGrantPermissions': true, // 권한 자동 부여
+    'appium:ignoreHiddenApiPolicyError': true, // 숨겨진 API 오류 무시
+    'appium:disableWindowAnimation': true, // UI 애니메이션 비활성화
+    'appium:enablePerformanceLogging': true, // 성능 로그 활성화
+    'appium:ignoreUnimportantViews': true, // UIAutomator가 중요하지 않은 뷰를 무시하도록 설정
+    'appium:skipServerInstallation': false,
+};
 const appoptions = {
     hostname: '127.0.0.1',
     port: 4723,
@@ -84,6 +103,12 @@ const action = {
     port: 4725,
     path: '/',
     capabilities: Appcapabilities,
+};
+const tableorderoptions2 = {
+    hostname: '127.0.0.1',
+    port: 4726,
+    path: '/',
+    capabilities: Tableordercapabilities2,
 };
 
 function getFormattedTime() {
@@ -186,13 +211,18 @@ module.exports = {
     action,
     appoptions,
     tableorderoptions,
+    tableorderoptions2,
     getFormattedTime,
     sendEmail,
     env: {
         email: 'hskang@monki.net',
         testemail: 'monki@monki.net',
         testid: 'monkitest',
-        password: 'test123!',
+        testid2: 'monkitest2',
+        testid3: 'monkifav2',
+        testpwd: 'test123!',
+        testpwd2: 'test1234',
+        testpwd3: '0000',
         testphone: '01052012705',
         phone: '01020431653',
         cardPassword: ['9', '4', '0', '5', '1', '3'],

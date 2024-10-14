@@ -1,5 +1,5 @@
 const utils = require('../module/utils'); // utils 모듈을 가져옵니다.
-async function order(driver, menu, prise) {
+async function order(driver, menu, prise, type) {
     try {
         const waiting = await driver.$(utils.view('주문하시려면 화면을 터치해 주세요'));
         if (await waiting.isDisplayed()) {
@@ -19,7 +19,11 @@ async function order(driver, menu, prise) {
         await utils.wait(1 * 1000);
         await utils.click(driver, utils.ImageView('장바구니\n1'));
         await utils.wait(1 * 1000);
-        await utils.click(driver, utils.btnText('한번에 결제하기'));
+        if (type === '선불') {
+            await utils.click(driver, utils.btnText('한번에 결제하기'));
+        } else {
+            await utils.click(driver, utils.btnText('주문하기'));
+        }
         await utils.click(driver, utils.btnText('괜찮아요, 다음에 할게요.'));
         // await utils.wait(1 * 1000);
         // const clickSequence = async (driver, sequence) => {
@@ -37,10 +41,18 @@ async function order(driver, menu, prise) {
         // await utils.wait(1 * 1000);
         // await utils.click(driver, utils.btnText('확인'));
         await utils.wait(1 * 1000);
-        await utils.contains(driver, utils.view('결제완료', { timeout: 5 * 1000 }));
+        if (type === '선불') {
+            await utils.contains(driver, utils.view('결제완료', { timeout: 5 * 1000 }));
+        } else {
+            await utils.contains(driver, utils.view('주문완료', { timeout: 5 * 1000 }));
+        }
         await utils.wait(1 * 1000);
         await utils.click(driver, utils.btnText('확인'));
-        console.log('주문 완료');
+
+        await utils.click(driver, utils.view('주문내역'));
+        await utils.contains(driver, utils.containsview(`${menu}`));
+        await utils.click(driver, utils.btnText('닫기'));
+        await console.log('주문 완료');
     } catch (error) {
         console.error(`주문 완료 중 오류 발생: ${error.message}`);
         throw error;
