@@ -21,17 +21,17 @@ let TestFails = []; // 실패 원인을 저장할 변수
         const store = await driver.$(utils.uiSelectorText('번개지점(stg)'));
         const Notstore = await driver.$(utils.uiSelectorText('설정하기'));
         if (await Notstore.isDisplayed()) {
+            await utils.click(driver, utils.uiSelectorText('설정하기'));
+            await utils.scroll(driver, 0.5, 0.6, 0.5, 0.0);
+            await utils.click(driver, utils.uiSelectorText('번개지점(stg)'));
+            await utils.click(driver, utils.uiSelector('선택'));
+        } else if (!(await store.isDisplayed())) {
             await utils.click(driver, utils.uiSelectorText('변경'));
             await utils.click(driver, utils.uiSelectorText('번개지점(stg)'));
 
             await utils.click(driver, utils.uiSelector('선택'));
             await utils.wait(3 * 1000);
             await utils.click(driver, utils.uiSelectorText('무료배달'));
-        } else if (!(await store.isDisplayed())) {
-            await utils.click(driver, utils.uiSelectorText('설정하기'));
-            await utils.scroll(driver, 0.5, 0.6, 0.5, 0.0);
-            await utils.click(driver, utils.uiSelectorText('번개지점(stg)'));
-            await utils.click(driver, utils.uiSelector('선택'));
         }
         await utils.click(driver, utils.uiSelectorText('번개지점(stg)'));
         await utils.wait(10 * 1000);
