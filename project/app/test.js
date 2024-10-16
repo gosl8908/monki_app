@@ -1,5 +1,5 @@
 const { remote } = require('webdriverio');
-const { appoptions, env } = require('../../config.js');
+const { app, env } = require('../../config.js');
 const utils = require('../../module/utils.js');
 const Module = require('../../module/manager.module.js');
 const { allure } = require('allure-mocha/runtime');
@@ -12,7 +12,7 @@ describe('Appium Test Suite', function () {
     let TestFails = []; // 실패 원인을 저장할 변수
 
     before(async function () {
-        driver = await remote(appoptions);
+        driver = await remote(app(4723, env.GalaxyA24.deviceName, env.GalaxyA24.udid, env.GalaxyA24.platformVersion));
     });
 
     it('should login successfully', async function () {
@@ -33,7 +33,7 @@ describe('Appium Test Suite', function () {
         }
     });
     after(async function () {
-        await utils.finish(driver, appoptions);
+        await utils.finish(driver, app());
         await Module.emailModule.email({
             TestFails,
             EmailTitle: `[${env.AppEmailTitle}]`,

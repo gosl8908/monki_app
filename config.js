@@ -1,6 +1,7 @@
 // config.js
 const { defineConfig } = require('webdriverio'); // 필요한 경우 추가
 const nodemailer = require('nodemailer');
+const { application } = require('express');
 
 /* Email Account */
 const gmailEamilId = 'gosl8908@gmail.com';
@@ -9,31 +10,12 @@ const gmailEamilPwd = 'boft yzek iitd uuxa';
 const doorayEamilId = 'hskang@monki.net';
 const doorayEamilPwd = 'gotjd0215!';
 
-const devices = {
-    GalaxyNote20: {
-        deviceName: 'Galaxy Note 20 5G',
-        udid: 'R3CN80AK2MV',
-        platformVersion: '12.0',
-    },
-    GalaxyA24: {
-        deviceName: 'Galaxy A24',
-        udid: 'R59W800DBFD',
-        platformVersion: '13.0',
-    },
-    GalaxyS10: {
-        deviceName: 'Galaxy S10',
-        udid: 'R39M10EAHFH',
-        platformVersion: '12.0',
-    },
-    GalaxyZFlip: {
-        deviceName: 'Galaxy Z Flip',
-        udid: 'R39N301S8SV',
-        platformVersion: '13',
-    },
-};
-const Appcapabilities = {
+const Appcapabilities = (deviceName, udid, platformVersion) => ({
     'appium:platformName': 'Android',
     'appium:automationName': 'Uiautomator2',
+    'appium:deviceName': deviceName, // 장치 이름
+    'appium:udid': udid, // 장치 고유 ID
+    'appium:platformVersion': platformVersion, // 플랫폼 버전
     'appium:appPackage': 'com.svcorps.mkitchen',
     'appium:appWaitActivity': 'com.svcorps.mkitchen.MainActivity, com.svcorps.mkitchen.*',
     'appium:appActivity': 'com.svcorps.mkitchen.MainActivity',
@@ -46,13 +28,13 @@ const Appcapabilities = {
     'appium:enablePerformanceLogging': true, // 성능 로그 활성화
     'appium:ignoreUnimportantViews': true, // UIAutomator가 중요하지 않은 뷰를 무시하도록 설정
     'appium:skipServerInstallation': false,
-};
-const Tableordercapabilities = {
+});
+const Tableordercapabilities = (deviceName, udid, platformVersion) => ({
     'appium:platformName': 'Android',
     'appium:automationName': 'Uiautomator2',
-    'appium:deviceName': 'Galaxy Tab A8',
-    'appium:udid': '10.10.239.105:44267',
-    'appium:platformVersion': '13',
+    'appium:deviceName': deviceName, // 장치 이름
+    'appium:udid': udid, // 장치 고유 ID
+    'appium:platformVersion': platformVersion, // 플랫폼 버전
     'appium:appPackage': 'net.monki.tableorder.staging',
     'appium:appActivity': 'net.monki.tableorder.MainActivity',
     'appium:appWaitActivity': 'net.monki.tableorder.MainActivity, net.monki.tableorder.*',
@@ -65,51 +47,19 @@ const Tableordercapabilities = {
     'appium:enablePerformanceLogging': true, // 성능 로그 활성화
     'appium:ignoreUnimportantViews': true, // UIAutomator가 중요하지 않은 뷰를 무시하도록 설정
     'appium:skipServerInstallation': false,
-};
-const Tableordercapabilities2 = {
-    'appium:platformName': 'Android',
-    'appium:automationName': 'Uiautomator2',
-    'appium:deviceName': 'Galaxy Tab S7 FE',
-    'appium:udid': 'R54W201LPYZ',
-    'appium:platformVersion': '14',
-    'appium:appPackage': 'net.monki.tableorder.staging',
-    'appium:appActivity': 'net.monki.tableorder.MainActivity',
-    'appium:appWaitActivity': 'net.monki.tableorder.MainActivity, net.monki.tableorder.*',
-    'appium:app': './apk/tableorder/app-staging-release-1.0.85+231.apk', // 앱 파일 경로
-    'appium:noReset': true, // 앱 상태를 초기화하지 않고 유지
-    'appium:fullReset': false, // 앱을 삭제하지 않고 유지
-    'appium:autoGrantPermissions': true, // 권한 자동 부여
-    'appium:ignoreHiddenApiPolicyError': true, // 숨겨진 API 오류 무시
-    'appium:disableWindowAnimation': true, // UI 애니메이션 비활성화
-    'appium:enablePerformanceLogging': true, // 성능 로그 활성화
-    'appium:ignoreUnimportantViews': true, // UIAutomator가 중요하지 않은 뷰를 무시하도록 설정
-    'appium:skipServerInstallation': false,
-};
-const appoptions = {
+});
+const app = (port, deviceName, udid, platformVersion) => ({
     hostname: '127.0.0.1',
-    port: 4723,
+    port: port,
     path: '/',
-    capabilities: Appcapabilities,
-};
-const tableorderoptions = {
+    capabilities: Appcapabilities(deviceName, udid, platformVersion),
+});
+const tableorder = (port, deviceName, udid, platformVersion) => ({
     hostname: '127.0.0.1',
-    port: 4724,
+    port: port,
     path: '/',
-    capabilities: Tableordercapabilities,
-};
-
-const action = {
-    hostname: '127.0.0.1',
-    port: 4725,
-    path: '/',
-    capabilities: Appcapabilities,
-};
-const tableorderoptions2 = {
-    hostname: '127.0.0.1',
-    port: 4726,
-    path: '/',
-    capabilities: Tableordercapabilities2,
-};
+    capabilities: Tableordercapabilities(deviceName, udid, platformVersion),
+});
 
 function getFormattedTime() {
     const now = new Date(); // Move this line to the top
@@ -208,10 +158,9 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
     //     });
 }
 module.exports = {
-    action,
-    appoptions,
-    tableorderoptions,
-    tableorderoptions2,
+    app,
+    application,
+    tableorder,
     getFormattedTime,
     sendEmail,
     env: {
@@ -234,5 +183,40 @@ module.exports = {
         DateLabelWeek: getFormattedTime().DateLabelWeek,
         AppEmailTitle: getFormattedTime().AppEmailTitle,
         TableorderEmailTitle: getFormattedTime().TableorderEmailTitle,
+        GalaxyNote20: {
+            deviceName: 'Galaxy Note 20 5G',
+            udid: 'R3CN80AK2MV',
+            platformVersion: '12.0',
+        },
+        GalaxyNote10plus5G: {
+            deviceName: 'Galaxy Note 10+ 5G',
+            udid: 'R3CM80LQS6V',
+            platformVersion: '12.0',
+        },
+        GalaxyA24: {
+            deviceName: 'Galaxy A24',
+            udid: 'R59W800DBFD',
+            platformVersion: '13.0',
+        },
+        GalaxyS10: {
+            deviceName: 'Galaxy S10',
+            udid: 'R39M10EAHFH',
+            platformVersion: '12.0',
+        },
+        GalaxyZFlip: {
+            deviceName: 'Galaxy Z Flip',
+            udid: 'R39N301S8SV',
+            platformVersion: '13',
+        },
+        GalaxyTabA8: {
+            deviceName: 'Galaxy Tab A8',
+            udid: '10.10.239.105:44267',
+            platformVersion: '13',
+        },
+        GalaxyTabS7FE: {
+            deviceName: 'Galaxy Tab S7 FE',
+            udid: 'R54W201LPYZ',
+            platformVersion: '14',
+        },
     },
 };

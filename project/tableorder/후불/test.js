@@ -1,7 +1,7 @@
 const { remote } = require('webdriverio');
-const { tableorderoptions2, env } = require('../../config.js');
-const utils = require('../../module/utils.js');
-const Module = require('../../module/manager.module.js');
+const { tableorder, env } = require('../../../config.js');
+const utils = require('../../../module/utils.js');
+const Module = require('../../../module/manager.module.js');
 const { allure } = require('allure-mocha/runtime');
 
 const serverUrl = 'http://localhost:4726';
@@ -11,7 +11,9 @@ let TestFails = []; // 실패 원인을 저장할 변수
 (async () => {
     let driver;
     try {
-        driver = await remote(tableorderoptions2);
+        driver = await remote(
+            tableorder(4726, env.GalaxyTabS7FE.deviceName, env.GalaxyTabS7FE.udid, env.GalaxyTabS7FE.platformVersion),
+        );
         await utils.wait(5 * 1000);
         const currentPackage = await driver.getCurrentPackage();
         const currentActivity = await driver.getCurrentActivity();
@@ -32,7 +34,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
         TestFails.push(error.message);
         if (driver) await utils.screenshot(driver, Screenshots);
     } finally {
-        // await utils.finish(driver, tableorderoptions);
+        await utils.finish(driver, tableorder());
         await Module.emailModule.email({
             TestFails,
             EmailTitle: `[${env.TableorderEmailTitle}]`,

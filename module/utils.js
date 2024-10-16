@@ -153,12 +153,14 @@ async function screenshot(driver, Screenshots) {
     return Screenshots; // 배열을 반환
 }
 
-async function finish(driver, appoptions) {
+async function finish(driver, app) {
     if (driver) {
         try {
-            const appPackage = appoptions.capabilities['appium:appPackage'];
+            const appPackage = app.capabilities['appium:appPackage'];
             console.log('App Package:', appPackage);
             await driver.terminateApp(appPackage);
+            // await driver.removeApp(appPackage);
+            // console.log('App removed.');
             await driver.deleteSession();
             console.log('Driver session ended.');
         } catch (deleteSessionError) {
@@ -168,19 +170,6 @@ async function finish(driver, appoptions) {
     }
 }
 
-// module.exports = {
-//     click,
-//     scroll,
-//     wait,
-//     uiSelectorText,
-//     uiSelectorBtnText,
-//     enterText,
-//     clearText,
-//     pressVolumeButton,
-//     contains,
-// };
-
-// 모든 함수를 자동으로 export
 const utils = {
     click,
     scroll,

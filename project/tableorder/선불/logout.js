@@ -1,7 +1,7 @@
 const { remote } = require('webdriverio');
-const { tableorderoptions, env } = require('../../config.js');
-const utils = require('../../module/utils.js');
-const Module = require('../../module/manager.module.js');
+const { tableorder, env } = require('../../../config.js');
+const utils = require('../../../module/utils.js');
+const Module = require('../../../module/manager.module.js');
 const { allure } = require('allure-mocha/runtime');
 
 const serverUrl = 'http://localhost:4724';
@@ -11,24 +11,29 @@ let TestFails = []; // 실패 원인을 저장할 변수
 (async () => {
     let driver;
     try {
-        driver = await remote(tableorderoptions);
+        driver = await remote(
+            tableorder(4724, env.GalaxyTabA8.deviceName, env.GalaxyTabA8.udid, env.GalaxyTabA8.platformVersion),
+        );
+        await utils.wait(3000);
         const currentPackage = await driver.getCurrentPackage();
         const currentActivity = await driver.getCurrentActivity();
         console.log('Current app package:', currentPackage);
         console.log('Current app activity:', currentActivity);
 
-        await Module.orderModule.order(driver, '코카콜라', '2,500', '선불');
-        await Module.orderModule.payCancel(driver, '2,500', '1-1');
+        await Module.orderModule.adminMode(driver, '1-1');
+
+        await utils.click(driver, utils.view('설정\n탭 5개 중 5번째')); // 시스템설정
+        await utils.click(driver, utils.btnText('로그아웃'));
     } catch (error) {
         console.error(error);
         TestFails.push(error.message);
         if (driver) await utils.screenshot(driver, Screenshots);
     } finally {
-        await utils.finish(driver, tableorderoptions);
+        await utils.finish(driver, tableorder());
         await Module.emailModule.email({
             TestFails,
             EmailTitle: `[${env.TableorderEmailTitle}]`,
-            TestRange: '1. 테이블오더 주문',
+            TestRange: '1. 테이블오더 로그아웃',
             Screenshots,
         });
     }

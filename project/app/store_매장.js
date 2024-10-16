@@ -1,5 +1,5 @@
 const { remote } = require('webdriverio');
-const { appoptions, env } = require('../../config.js');
+const { app, env } = require('../../config.js');
 const utils = require('../../module/utils.js'); // utils 모듈 가져오기
 const Module = require('../../module/manager.module.js');
 
@@ -10,27 +10,29 @@ let TestFails = []; // 실패 원인을 저장할 배열
 (async () => {
     let driver;
     try {
-        driver = await remote(appoptions);
+        driver = await remote(app(4723, env.GalaxyA24.deviceName, env.GalaxyA24.udid, env.GalaxyA24.platformVersion));
         await utils.wait(5 * 1000);
 
         /* 로그인 */
         await Module.loginModule.login(driver, env.email, env.password);
 
+        const store = await driver.$(utils.uiSelectorText('번개지점(stg)'));
         const Notstore = await driver.$(utils.uiSelectorText('설정하기'));
-        if (!(await store.isDisplayed())) {
+        if (await Notstore.isDisplayed()) {
+            await utils.click(driver, utils.uiSelectorText('설정하기'));
+            await utils.wait(3 * 1000);
+            await utils.scroll(driver, 0.5, 0.6, 0.5, 0.0);
+            await utils.click(driver, utils.uiSelectorText('번개지점(stg)'));
+            await utils.click(driver, utils.uiSelector('선택'));
+        } else if (!(await store.isDisplayed())) {
             await utils.click(driver, utils.uiSelectorText('변경'));
             await utils.click(driver, utils.uiSelectorText('번개지점(stg)'));
 
             await utils.click(driver, utils.uiSelector('선택'));
             await utils.wait(3 * 1000);
             await utils.click(driver, utils.uiSelectorText('무료배달'));
-        } else if (await Notstore.isDisplayed()) {
-            await utils.click(driver, utils.uiSelectorText('설정하기'));
-            await utils.scroll(driver, 0.5, 0.6, 0.5, 0.0);
-            await utils.click(driver, utils.uiSelectorText('번개지점(stg)'));
-            await utils.click(driver, utils.uiSelector('선택'));
         }
-        await utils.click(driver, utils.uiSelectorText('번개지점'));
+        await utils.click(driver, utils.uiSelectorText('번개지점(stg)'));
         await utils.wait(10 * 1000);
         await utils.scroll(driver, 0.5, 0.6, 0.5, 0.0);
         await utils.click(driver, utils.uiSelectorText('몬키지점'));
@@ -75,7 +77,7 @@ let TestFails = []; // 실패 원인을 저장할 배열
         TestFails.push(error.message);
         if (driver) await utils.screenshot(driver, Screenshots);
     } finally {
-        await utils.finish(driver, appoptions);
+        await utils.finish(driver, app());
         await Module.emailModule.email({
             TestFails,
             EmailTitle: `[${env.AppEmailTitle}]`,
