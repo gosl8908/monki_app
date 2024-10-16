@@ -14,13 +14,14 @@ let TestFails = []; // 실패 원인을 저장할 변수
         driver = await remote(
             tableorder(4724, env.GalaxyTabA8.deviceName, env.GalaxyTabA8.udid, env.GalaxyTabA8.platformVersion),
         );
+        await utils.wait(10 * 1000);
         const currentPackage = await driver.getCurrentPackage();
         const currentActivity = await driver.getCurrentActivity();
         console.log('Current app package:', currentPackage);
         console.log('Current app activity:', currentActivity);
 
-        await Module.orderModule.order(driver, '코카콜라', '2,500', '선불');
-        await Module.orderModule.payCancel(driver, '2,500', '1-1');
+        await Module.loginModule.TOlogin(driver, env.testid2, env.testpwd2);
+        await Module.orderModule.order(driver, '음료', '코카콜라', '2,500', '선불', 'Y');
     } catch (error) {
         console.error(error);
         TestFails.push(error.message);

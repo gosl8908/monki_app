@@ -20,6 +20,8 @@ let TestFails = []; // 실패 원인을 저장할 변수
         console.log('Current app package:', currentPackage);
         console.log('Current app activity:', currentActivity);
 
+        await Module.loginModule.TOlogin(driver, env.testid2, env.testpwd2);
+
         await Module.orderModule.adminMode(driver, '1-1');
 
         await utils.click(driver, utils.btnText('테이블정리'));

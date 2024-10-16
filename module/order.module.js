@@ -1,17 +1,7 @@
 const utils = require('../module/utils'); // utils 모듈을 가져옵니다.
-async function order(driver, menu, prise, type) {
+async function order(driver, category, menu, prise, type, credit = undefined) {
     try {
-        const waiting = await driver.$(utils.view('주문하시려면 화면을 터치해 주세요'));
-        if (await waiting.isDisplayed()) {
-            await utils.click(driver, utils.ImageView('주문하기'));
-            await utils.wait(3 * 1000);
-            await driver.$(utils.view('교촌치킨(stg)', { timeout: 10 * 1000 }));
-            const text = await driver.$(utils.view('안녕하세요 :)\n저희는 선불로 운영되는 매장이에요'));
-            if (await text.isDisplayed()) {
-                await utils.click(driver, utils.btnText('확인'));
-            }
-        }
-        await utils.click(driver, utils.view('음료'));
+        await utils.click(driver, utils.view(category));
         await utils.wait(1 * 1000);
         await utils.click(driver, utils.ImageView(`${menu}\n${prise}원`));
         await utils.wait(1 * 1000);
@@ -24,22 +14,33 @@ async function order(driver, menu, prise, type) {
         } else {
             await utils.click(driver, utils.btnText('주문하기'));
         }
-        await utils.click(driver, utils.btnText('괜찮아요, 다음에 할게요.'));
-        // await utils.wait(1 * 1000);
-        // const clickSequence = async (driver, sequence) => {
-        //     for (const view of sequence) {
-        //         await utils.click(driver, utils.view(view));
-        //         await utils.wait(1000);
-        //     }
-        // };
+        if (credit === 'Y') {
+            await utils.wait(1 * 1000);
+            const clickSequence = async (driver, sequence) => {
+                for (const view of sequence) {
+                    await utils.click(driver, utils.view(view));
+                    await utils.wait(1000);
+                }
+            };
 
-        // await clickSequence(driver, ['2', '0', '4', '3', '1', '6', '5', '3']);
-        // await utils.wait(1 * 1000);
-        // await utils.click(driver, utils.view('에 동의합니다.'));
-        // await utils.wait(1 * 1000);
-        // await utils.click(driver, utils.view('이후 주문도 이 번호로 적립할게요.'));
-        // await utils.wait(1 * 1000);
-        // await utils.click(driver, utils.btnText('확인'));
+            // Click the sequence for the first part
+            await clickSequence(driver, ['2', '0', '4', '3', '1', '6', '5']);
+
+            // Now click the second occurrence of '3'
+            const viewsWithContentDesc3 = await driver.$$(`//android.view.View[@content-desc="3"]`);
+            if (viewsWithContentDesc3.length > 1) {
+                await utils.click(driver, viewsWithContentDesc3[1]); // Click the second occurrence
+                await utils.wait(1000);
+            }
+            await utils.wait(1 * 1000);
+            await utils.click(driver, utils.view('에 동의합니다.'));
+            await utils.wait(1 * 1000);
+            await utils.click(driver, utils.view('이후 주문도 이 번호로 적립할게요.'));
+            await utils.wait(1 * 1000);
+            await utils.click(driver, utils.btnText('확인'));
+        } else {
+            await utils.click(driver, utils.btnText('괜찮아요, 다음에 할게요.'));
+        }
         await utils.wait(1 * 1000);
         if (type === '선불') {
             await utils.contains(driver, utils.view('결제완료', { timeout: 5 * 1000 }));

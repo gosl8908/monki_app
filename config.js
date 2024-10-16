@@ -167,11 +167,11 @@ module.exports = {
         email: 'hskang@monki.net',
         testemail: 'monki@monki.net',
         testid: 'monkitest',
-        testid2: 'monkitest2',
-        testid3: 'monkifav2',
-        testpwd: 'test123!',
-        testpwd2: 'test1234',
-        testpwd3: '0000',
+        testid2: 'monkitest2', // 교촌치킨
+        testid3: 'monkifav2', // 강남점
+        testpwd: 'test123!', // 강남점
+        testpwd2: 'test1234', // 교촌치킨
+        testpwd3: '0000', // 강남점
         testphone: '01052012705',
         phone: '01020431653',
         cardPassword: ['9', '4', '0', '5', '1', '3'],
@@ -210,8 +210,9 @@ module.exports = {
         },
         GalaxyTabA8: {
             deviceName: 'Galaxy Tab A8',
-            udid: '10.10.239.105:44267',
-            platformVersion: '13',
+            udid: '10.10.239.105:38501',
+            // udid: 'R9YTB03PNMP',
+            platformVersion: '14',
         },
         GalaxyTabS7FE: {
             deviceName: 'Galaxy Tab S7 FE',

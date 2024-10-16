@@ -20,12 +20,8 @@ let TestFails = []; // 실패 원인을 저장할 변수
         console.log('Current app package:', currentPackage);
         console.log('Current app activity:', currentActivity);
 
-        const waiting = await driver.$(utils.view('주문하시려면 화면을 터치해 주세요'));
-        if (await waiting.isDisplayed()) {
-            await utils.click(driver, utils.ImageView('주문하기'));
-            await utils.wait(3 * 1000);
-            await driver.$(utils.view('교촌치킨(stg)', { timeout: 10 * 1000 }));
-        }
+        await Module.loginModule.TOlogin(driver, env.testid2, env.testpwd2);
+
         await utils.wait(3 * 1000);
         await utils.click(driver, utils.view('직원호출'));
         await utils.wait(3 * 1000);
