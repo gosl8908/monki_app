@@ -13,7 +13,7 @@ let TestFails = []; // 실패 원인을 저장할 배열
         driver = await remote(app(4723, env.GalaxyA24.deviceName, env.GalaxyA24.udid, env.GalaxyA24.platformVersion));
         await utils.wait(5 * 1000);
 
-        await Module.loginModule.login(driver, env.email, env.password);
+        await Module.loginModule.login(driver, env.email, env.testpwd);
 
         // 검색
         await Module.searchModule.search(driver, '번개');

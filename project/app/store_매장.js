@@ -14,7 +14,7 @@ let TestFails = []; // 실패 원인을 저장할 배열
         await utils.wait(5 * 1000);
 
         /* 로그인 */
-        await Module.loginModule.login(driver, env.email, env.password);
+        await Module.loginModule.login(driver, env.email, env.testpwd);
 
         const store = await driver.$(utils.uiSelectorText('번개지점(stg)'));
         const Notstore = await driver.$(utils.uiSelectorText('설정하기'));

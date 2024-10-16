@@ -12,7 +12,7 @@ return serverUrl(async () => {
         driver = await remote(app(4723, env.GalaxyA24.deviceName, env.GalaxyA24.udid, env.GalaxyA24.platformVersion));
         await utils.wait(5 * 1000);
 
-        await Module.loginModule.login(driver, env.email, env.password);
+        await Module.loginModule.login(driver, env.email, env.testpwd);
 
         // 검색
         // await Module.searchModule.search(driver, '번개');
