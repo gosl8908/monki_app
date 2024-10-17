@@ -1,55 +1,3 @@
-# name: Android Appium Tests
-
-# on:
-#     schedule:
-#         - cron: '0 23 * * 0-4' # UTC 기준 매주 일요일 ~ 수요일 23:00 (11:00 PM)에 실행 (KCT: 8:00 AM)
-#     push:
-#         branches:
-#             - main
-#     pull_request:
-#         branches:
-#             - main
-
-# jobs:
-#     build:
-#         runs-on: self-hosted
-#         env:
-#             TZ: 'Asia/Seoul'
-
-#         steps:
-#             - name: Checkout code
-#               uses: actions/checkout@v3
-
-#             - name: Set up Node.js
-#               uses: actions/setup-node@v3
-#               with:
-#                   node-version: '21.7.1' # 원하는 Node.js 버전으로 변경 가능
-
-#             - name: Install Appium
-#               run: npm install -g appium
-#               shell: cmd
-
-#             - name: Install Appium Drivers
-#               run: appium driver install uiautomator2
-#               shell: cmd
-
-#             - name: Install Dependencies
-#               run: npm install
-#               shell: cmd
-
-#             - name: Run App Test
-#               run: |
-#                   start /B appium --port 4725
-#                   echo "Running tests on a real device..."
-#                   node scheduled/app/Action_store_매장.js
-#               shell: cmd
-
-#             - name: Run Tableorder Test
-#               run: |
-#                   start /B appium --port 4727
-#                   echo "Running tests on a real device..."
-#                   node scheduled/tableorder/Action_order_후불.js
-#               shell: cmd
 name: Android Appium Tests
 
 on:
@@ -79,30 +27,43 @@ jobs:
 
             - name: Install Appium
               run: npm install -g appium
-              shell: bash # Change shell if required for your runner
+              shell: cmd
 
             - name: Install Appium Drivers
               run: appium driver install uiautomator2
-              shell: bash
+              shell: cmd
 
             - name: Install Dependencies
               run: npm install
-              shell: bash
+              shell: cmd
 
             - name: Run App Test
               run: |
-                  appium --port 4725 &
-                  echo "Waiting for Appium to start..."
-                  sleep 10 # Adjust time if needed for Appium initialization
-                  echo "Running tests on a real device..."
+                  start /B appium --port 4725
+                  echo Waiting for Appium to start...
+                  timeout /T 10 /NOBREAK > nul
+                  echo Running tests on a real device...
                   node scheduled/app/Action_store_매장.js
-              shell: bash
+              shell: cmd
 
             - name: Run Tableorder Test
               run: |
-                  appium --port 4727 &
-                  echo "Waiting for Appium to start..."
-                  sleep 10 # Adjust time for Appium initialization
-                  echo "Running tests on a real device..."
+                  start /B appium --port 4727
+                  echo Waiting for Appium to start...
+                  timeout /T 10 /NOBREAK > nul
+                  echo Running tests on a real device...
                   node scheduled/tableorder/Action_order_후불.js
-              shell: bash
+              shell: cmd
+            # - name: Run App Test
+            #   run: |
+            #       start /B appium --port 4725
+            #       echo "Running tests on a real device..."
+            #       node scheduled/app/Action_store_매장.js
+            #   shell: cmd
+
+            # - name: Run Tableorder Test
+            #   run: |
+            #       start /B appium --port 4727
+            #       echo "Running tests on a real device..."
+            #       node scheduled/tableorder/Action_order_후불.js
+            #   shell: cmd
