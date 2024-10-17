@@ -41,6 +41,7 @@ jobs:
               run: |
                   start /B appium --port 4725
                   echo "Running tests on a real device..."
+                  node scheduled/app/Action_store_매장.js
                   echo Stopping Appium...
                   taskkill /F /IM node.exe
               shell: cmd
@@ -50,6 +51,6 @@ jobs:
                   start /B appium --port 4727
                   echo "Running tests on a real device..."
                   node scheduled/tableorder/Action_order_후불.js
+                  echo Stopping Appium...
+                  taskkill /F /IM node.exe
               shell: cmd
-
-              # node scheduled/app/Action_store_매장.js
