@@ -40,30 +40,19 @@ jobs:
             - name: Run App Test
               run: |
                   start /B appium --port 4725
-                  echo Waiting for Appium to start...
-                  timeout /T 10 /NOBREAK > nul
-                  echo Running tests on a real device...
+                  echo "Running tests on a real device..."
                   node scheduled/app/Action_store_매장.js
+              shell: cmd
+
+            - name: Stop Appium (Port 4725)
+              run: |
+                  echo Stopping Appium on port 4725...
+                  for /f "tokens=5" %a in ('netstat -ano ^| findstr :4725') do taskkill /PID %a /F
               shell: cmd
 
             - name: Run Tableorder Test
               run: |
                   start /B appium --port 4727
-                  echo Waiting for Appium to start...
-                  timeout /T 10 /NOBREAK > nul
-                  echo Running tests on a real device...
+                  echo "Running tests on a real device..."
                   node scheduled/tableorder/Action_order_후불.js
               shell: cmd
-            # - name: Run App Test
-            #   run: |
-            #       start /B appium --port 4725
-            #       echo "Running tests on a real device..."
-            #       node scheduled/app/Action_store_매장.js
-            #   shell: cmd
-
-            # - name: Run Tableorder Test
-            #   run: |
-            #       start /B appium --port 4727
-            #       echo "Running tests on a real device..."
-            #       node scheduled/tableorder/Action_order_후불.js
-            #   shell: cmd
