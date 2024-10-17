@@ -41,7 +41,7 @@ jobs:
               run: |
                   start /B appium --port 4725
                   echo "Running tests on a real device..."
-                  shell: cmd
+              shell: cmd
 
             - name: Stop Appium (Port 4725)
               run: |
