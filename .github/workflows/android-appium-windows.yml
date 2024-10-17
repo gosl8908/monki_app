@@ -37,16 +37,16 @@ jobs:
               run: npm install
               shell: cmd
 
-            - name: Run Tests on Real Device
+            - name: Run App Test
               run: |
                   start /B appium --port 4725
                   echo "Running tests on a real device..."
                   node scheduled/app/Action_store_매장.js
               shell: cmd
 
-            # - name: Run Tests on Real Device
-            #   run: |
-            #       start /B appium --port 4727
-            #       echo "Running tests on a real device..."
-            #       node scheduled/tableorder/Action_order_후불.js
-            #   shell: cmd
+            - name: Run Tableorder Test
+              run: |
+                  start /B appium --port 4727
+                  echo "Running tests on a real device..."
+                  node scheduled/tableorder/Action_order_후불.js
+              shell: cmd

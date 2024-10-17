@@ -12,7 +12,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
     let driver;
     try {
         driver = await remote(
-            tableorder(4724, env.GalaxyTabS7FE.deviceName, env.GalaxyTabS7FE.udid, env.GalaxyTabS7FE.platformVersion),
+            tableorder(4726, env.GalaxyTabS7FE.deviceName, '10.10.239.29:32809', env.GalaxyTabS7FE.platformVersion),
         );
         await utils.wait(10 * 1000);
         const currentPackage = await driver.getCurrentPackage();
@@ -43,7 +43,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
         await utils.click(driver, utils.btnText('확인'));
 
         /* 주문 */
-        await Module.orderModule.order(driver, '음료', '코카콜라', '2,000', '후불', 'Y');
+        await Module.orderModule.order(driver, '음료', '코카콜라', '2,000', '후불');
 
         /* 관리자모드 */
         await Module.orderModule.adminMode(driver, '101');
