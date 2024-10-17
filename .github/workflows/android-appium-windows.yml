@@ -42,6 +42,8 @@ jobs:
                   start /B appium --port 4725
                   echo "Running tests on a real device..."
                   node scheduled/app/Action_store_매장.js
+                  echo "Stopping Appium for App Test"
+                  taskkill /F /IM node.exe /T
               shell: cmd
 
             - name: Run Tableorder Test
