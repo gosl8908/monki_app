@@ -12,7 +12,12 @@ let TestFails = []; // 실패 원인을 저장할 변수
     let driver;
     try {
         driver = await remote(
-            tableorder(4724, env.GalaxyTabA8.deviceName, env.GalaxyTabA8.udid, env.GalaxyTabA8.platformVersion),
+            tableorder(
+                4724,
+                env.GalaxyTabA8.deviceName,
+                env.GalaxyTabA8.port + ':42067',
+                env.GalaxyTabA8.platformVersion,
+            ),
         );
         await Module.loginModule.TOlogin(driver, env.testid2, env.testpwd2);
     } catch (error) {

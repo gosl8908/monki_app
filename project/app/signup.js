@@ -10,7 +10,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
 (async () => {
     let driver;
     try {
-        driver = await remote(app(4723, env.GalaxyA24.deviceName, env.GalaxyA24.udid, env.GalaxyA24.platformVersion));
+        driver = await remote(app(4723, env.GalaxyA24.deviceName, env.GalaxyA24.port, env.GalaxyA24.platformVersion));
 
         await utils.wait(5 * 1000);
 
@@ -26,7 +26,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
         // await utils.click(driver, utils.uiSelectorText('재전송'));
 
         // 인증번호를 읽어오는 함수
-        const verificationCode = await Module.messageModule.message('18995678');
+        const verificationCode = await Module.messageModule.message(env.GalaxyA24.port, '18995678');
 
         if (verificationCode) {
             // 인증번호 입력란에 입력
@@ -60,7 +60,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
             await buttons[0].click();
         }
 
-        await utils.enterText(driver, '//android.widget.EditText[@text="닉네임을 입력해 주세요"]', '몬키');
+        await utils.enterText(driver, '//android.widget.EditText[@text="닉네임을 입력해 주세요"]', 'stg몬키');
         await buttons[1].click();
         await utils.wait(3 * 1000);
         const nickname = await driver.$(utils.uiSelectorText('닉네임이 존재합니다'));

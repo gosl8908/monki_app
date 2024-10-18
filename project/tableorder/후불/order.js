@@ -12,7 +12,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
     let driver;
     try {
         driver = await remote(
-            tableorder(4727, env.GalaxyTabS7FE.deviceName, '10.10.239.29:5556', env.GalaxyTabS7FE.platformVersion),
+            tableorder(4727, env.GalaxyTabS7FE.deviceName, env.GalaxyTabS7FE.port, env.GalaxyTabS7FE.platformVersion),
         );
         await utils.wait(10 * 1000);
         const currentPackage = await driver.getCurrentPackage();
