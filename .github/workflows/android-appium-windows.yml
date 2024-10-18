@@ -46,6 +46,7 @@ jobs:
 
     tableorder-test:
         runs-on: self-hosted
+        needs: App-test # store-tests가 완료되면 실행
         env:
             TZ: 'Asia/Seoul'
 
