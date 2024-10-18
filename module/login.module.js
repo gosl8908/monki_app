@@ -75,9 +75,9 @@ async function TOlogin(driver, email, password) {
 
             await utils.click(driver, utils.btnText('로그인'));
 
-            if (email === 'env.testid2') {
+            if (email === 'monkitest2') {
                 await utils.containsview('교촌치킨(stg)', { timeout: 10 * 1000 });
-            } else if (email === 'env.testid3') {
+            } else if (email === 'monkifav2') {
                 await utils.containsview('번개단골맛집-강남(stg)', { timeout: 10 * 1000 });
             }
             console.log('로그인 완료');
@@ -88,18 +88,18 @@ async function TOlogin(driver, email, password) {
         if (await waiting.isDisplayed()) {
             await utils.click(driver, utils.ImageView('주문하기'));
             await utils.wait(3 * 1000);
-            if (email === 'env.testid2') {
-                const text = await driver.$(utils.view('안녕하세요 :)\n저희는 선불로 운영되는 매장이에요'));
-                if (await text.isDisplayed()) {
-                    await utils.click(driver, utils.btnText('확인'));
-                    await utils.contains(driver, utils.view('교촌치킨(stg)', { timeout: 5 * 1000 }));
-                }
-            } else if (email === 'env.testid3') {
-                const text = await driver.$(utils.view('안녕하세요 :) 메뉴 확인 후 바로 주문해 주세요'));
-                if (await text.isDisplayed()) {
-                    await utils.click(driver, utils.btnText('확인'));
-                    await utils.contains(driver, utils.view('번개단골맛집-강남(stg)', { timeout: 5 * 1000 }));
-                }
+        }
+        if (email === 'monkitest2') {
+            const text = await driver.$(utils.view('안녕하세요 :)\n저희는 선불로 운영되는 매장이에요'));
+            if (await text.isDisplayed()) {
+                await utils.click(driver, utils.btnText('확인'));
+                await utils.contains(driver, utils.view('교촌치킨(stg)', { timeout: 5 * 1000 }));
+            }
+        } else if (email === 'monkifav2') {
+            const text = await driver.$(utils.view('안녕하세요 :) 메뉴 확인 후 바로 주문해 주세요'));
+            if (await text.isDisplayed()) {
+                await utils.click(driver, utils.btnText('확인'));
+                await utils.contains(driver, utils.view('번개단골맛집-강남(stg)', { timeout: 5 * 1000 }));
             }
         }
     } catch (error) {

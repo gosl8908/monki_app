@@ -10,14 +10,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
 (async () => {
     let driver;
     try {
-        driver = await remote(
-            app(
-                4725,
-                env.GalaxyNote10plus5G.deviceName,
-                env.GalaxyNote10plus5G.udid,
-                env.GalaxyNote10plus5G.platformVersion,
-            ),
-        );
+        driver = await remote(app(4725, env.GalaxyA24.deviceName, env.GalaxyA24.udid, env.GalaxyA24.platformVersion));
         await utils.wait(5 * 1000);
         await Module.bootModule.boot(driver);
 
