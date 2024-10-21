@@ -75,11 +75,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
 
         await utils.enterText(driver, '//android.widget.EditText[@text="비밀번호를 입력해 주세요"]', env.testpwd);
 
-        await utils.enterText(
-            driver,
-            '//android.widget.EditText[@text="비밀번호 한번 더 입력해 주세요"]',
-            env.password,
-        );
+        await utils.enterText(driver, '//android.widget.EditText[@text="비밀번호 한번 더 입력해 주세요"]', env.testpwd);
 
         await utils.click(driver, utils.uiSelectorText('가입완료'));
 
