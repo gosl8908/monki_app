@@ -155,7 +155,7 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
     //     .catch(error => {
     //         console.error('이메일 전송 실패: ' + error);
     //         return false;
-    //     });
+    //     }); dnvmfpeh
 }
 module.exports = {
     app,

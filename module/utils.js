@@ -159,8 +159,10 @@ async function finish(driver, app) {
             const appPackage = app.capabilities['appium:appPackage'];
             console.log('App Package:', appPackage);
             await driver.terminateApp(appPackage);
-            // await driver.removeApp(appPackage);
-            // console.log('App removed.');
+            if (appPackage === 'com.svcorps.mkitchen') {
+                await driver.removeApp(appPackage);
+                console.log('App removed.');
+            }
             await driver.deleteSession();
             console.log('Driver session ended.');
         } catch (deleteSessionError) {
