@@ -4,7 +4,7 @@ const utils = require('../module/utils.js');
 
 async function message(deviceinfo, phoneNumber) {
     try {
-        await utils.wait(5 * 1000);
+        await utils.wait(10 * 1000);
         // Android 디바이스의 SMS inbox에서 메시지를 읽기 위해 ADB를 사용
         const devices = await client.listDevices();
         if (devices.length === 0) {
@@ -27,7 +27,7 @@ async function message(deviceinfo, phoneNumber) {
         const smsData = await adb.util.readAll(smsList);
         const smsMessages = smsData.toString().split('\n');
 
-        console.log('SMS Messages: ', smsMessages); // 전체 메시지 출력
+        // console.log('SMS Messages: ', smsMessages); // 전체 메시지 출력
         // 1899-5678 번호에서 온 메시지 필터링
         for (let message of smsMessages) {
             // console.log('Current Message: ', message); // 각 메시지 출력

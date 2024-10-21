@@ -48,7 +48,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
             await verificationInput.clearValue();
 
             // 인증번호를 읽어오는 함수
-            const verificationNewCode = await Module.messageModule.message('18995678');
+            const verificationNewCode = await Module.messageModule.message(env.GalaxyA24.udid, '18995678');
             await verificationInput.setValue(verificationNewCode);
             await utils.click(driver, utils.uiSelectorText('인증하기'));
         }
