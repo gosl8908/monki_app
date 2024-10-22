@@ -82,7 +82,7 @@ let TestFails = []; // 실패 원인을 저장할 변수
             await utils.click(driver, '오늘하루 그만보기');
         }
 
-        await Module.loginModule.login(driver, testemail, env.testpwd);
+        await Module.loginModule.login(driver, env.testemail, env.testpwd);
         await Module.loginModule.signout(driver);
     } catch (error) {
         console.error(error);
