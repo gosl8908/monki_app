@@ -5,7 +5,7 @@ const Module = require('../../module/manager.module.js');
 const { allure } = require('allure-mocha/runtime');
 
 describe('회원가입', function () {
-    this.timeout(30000); // 전체 테스트의 타임아웃 설정 (예: 30초)
+    this.timeout(60 * 1000);
     let driver;
     let Screenshots = []; // 스크린샷을 저장할 배열
     let TestFails = []; // 실패 원인을 저장할 변수
@@ -13,12 +13,7 @@ describe('회원가입', function () {
 
     beforeEach(async function () {
         driver = await remote(app(4725, env.GalaxyA24.deviceName, env.GalaxyA24.udid, env.GalaxyA24.platformVersion));
-        await utils.wait(5 * 1000);
-        await Module.bootModule.boot(driver);
-
-        /* 로그인 */
-        await Module.loginModule.login(driver, env.email, env.testpwd);
-        await utils.wait(5 * 1000);
+        await utils.wait(10 * 1000);
     });
     function run(testFunc) {
         return async function () {
@@ -33,6 +28,10 @@ describe('회원가입', function () {
     it(
         '회원가입',
         run(async function () {
+            await Module.bootModule.boot(driver);
+            /* 로그인 */
+            await Module.loginModule.login(driver, env.email, env.testpwd);
+
             await utils.click(driver, utils.uiSelectorText('간편회원가입'));
 
             await utils.click(driver, utils.uiSelectorText('약관에 모두 동의합니다.'));
