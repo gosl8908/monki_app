@@ -20,18 +20,11 @@ describe('Appium Test Suite', function () {
                 env.GalaxyNote10plus5G.platformVersion,
             ),
         );
-        // await utils.wait(5 * 1000);
-        // await Module.bootModule.boot(driver);
-
-        // /* 로그인 */
-        // await Module.loginModule.login(driver, env.email, env.testpwd);
-        // await utils.wait(5 * 1000);
     });
     function run(testFunc) {
         return async function () {
             try {
                 await testFunc();
-                console.log(`Test Passed: ${this.test.title}`);
             } catch (err) {
                 error(TestFails, FailureObj, err, this.test.title);
             }
@@ -72,7 +65,6 @@ describe('Appium Test Suite', function () {
     after('send Email', async function () {
         // await utils.finish(driver, app());
         const { title: describeTitle, tests: allTests } = this.test.parent;
-        // 실패한 테스트만 필터링
         await Module.emailModule.email2({
             TestFails,
             describeTitle,
