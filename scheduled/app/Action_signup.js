@@ -12,7 +12,7 @@ describe('회원가입', function () {
     let FailureObj = { Failure: false };
 
     beforeEach(async function () {
-        driver = await remote(app(4724, env.GalaxyA24.deviceName, env.GalaxyA24.udid, env.GalaxyA24.platformVersion));
+        driver = await remote(app(4725, env.GalaxyA24.deviceName, env.GalaxyA24.udid, env.GalaxyA24.platformVersion));
         await utils.wait(10 * 1000);
     });
     function run(testFunc) {

@@ -12,14 +12,7 @@ describe('회원가입', function () {
     let FailureObj = { Failure: false };
 
     beforeEach(async function () {
-        driver = await remote(
-            app(
-                4724,
-                env.GalaxyNote10plus5G.deviceName,
-                env.GalaxyNote10plus5G.udid,
-                env.GalaxyNote10plus5G.platformVersion,
-            ),
-        );
+        driver = await remote(app(4724, env.GalaxyA24.deviceName, env.GalaxyA24.port, env.GalaxyA24.platformVersion));
         await utils.wait(5 * 1000);
         await Module.bootModule.boot(driver);
 
