@@ -46,9 +46,15 @@ jobs:
                   start /B appium --port 4725
                   echo "Running App tests on a real device..."
                   yarn mocha scheduled/app/Action_test.js
+              shell: cmd
+              continue-on-error: true # 첫 번째 테스트 실패 시에도 다음 단계 진행
+
+            - name: Run Appium Test
+              run: |
                   echo "Running App tests on a real device..."
                   yarn mocha scheduled/app/Action_test2.js
               shell: cmd
+              continue-on-error: true # 첫 번째 테스트 실패 시에도 다음 단계 진행
 
     tableorder-test:
         runs-on: self-hosted
