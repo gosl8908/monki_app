@@ -12,7 +12,7 @@ describe('회원가입', function () {
     let FailureObj = { Failure: false };
 
     beforeEach(async function () {
-        driver = await remote(app(4725, env.GalaxyA24.deviceName, env.GalaxyA24.udid, env.GalaxyA24.platformVersion));
+        driver = await remote(app(4724, env.GalaxyA24.deviceName, env.GalaxyA24.udid, env.GalaxyA24.platformVersion));
         await utils.wait(10 * 1000);
     });
     function run(testFunc) {
@@ -30,7 +30,6 @@ describe('회원가입', function () {
         run(async function () {
             await Module.bootModule.boot(driver);
             /* 로그인 */
-            await Module.loginModule.login(driver, env.email, env.testpwd);
 
             await utils.click(driver, utils.uiSelectorText('간편회원가입'));
 
@@ -48,7 +47,7 @@ describe('회원가입', function () {
             // await utils.click(driver, utils.uiSelectorText('재전송'));
 
             // 인증번호를 읽어오는 함수
-            const verificationCode = await Module.messageModule.message(env.GalaxyA24.port, '18995678');
+            const verificationCode = await Module.messageModule.message(env.GalaxyA24.udid, '18995678');
 
             if (verificationCode) {
                 // 인증번호 입력란에 입력
@@ -67,7 +66,7 @@ describe('회원가입', function () {
                 await verificationInput.clearValue();
 
                 // 인증번호를 읽어오는 함수
-                const verificationNewCode = await Module.messageModule.message(env.GalaxyA24.port, '18995678');
+                const verificationNewCode = await Module.messageModule.message(env.GalaxyA24.udid, '18995678');
                 await verificationInput.setValue(verificationNewCode);
                 await utils.click(driver, utils.uiSelectorText('인증하기'));
             }
