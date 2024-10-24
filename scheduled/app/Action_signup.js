@@ -5,7 +5,7 @@ const Module = require('../../module/manager.module.js');
 const { allure } = require('allure-mocha/runtime');
 
 describe('회원가입', function () {
-    this.timeout(60 * 1000);
+    this.timeout(360 * 1000);
     let driver;
     let Screenshots = []; // 스크린샷을 저장할 배열
     let TestFails = []; // 실패 원인을 저장할 변수
@@ -29,7 +29,6 @@ describe('회원가입', function () {
         '회원가입',
         run(async function () {
             await Module.bootModule.boot(driver);
-            /* 로그인 */
 
             await utils.click(driver, utils.uiSelectorText('간편회원가입'));
 

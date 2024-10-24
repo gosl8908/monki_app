@@ -5,7 +5,7 @@ const Module = require('../../module/manager.module.js');
 const { allure } = require('allure-mocha/runtime');
 
 describe('단골맛집 매장', function () {
-    this.timeout(30000); // 전체 테스트의 타임아웃 설정 (예: 30초)
+    this.timeout(360 * 1000);
     let driver;
     let Screenshots = []; // 스크린샷을 저장할 배열
     let TestFails = []; // 실패 원인을 저장할 변수

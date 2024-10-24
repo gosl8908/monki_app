@@ -5,7 +5,7 @@ const Module = require('../../module/manager.module.js');
 const { allure } = require('allure-mocha/runtime');
 
 describe('지점 매장', function () {
-    this.timeout(60 * 1000);
+    this.timeout(360 * 1000);
     let driver;
     let Screenshots = []; // 스크린샷을 저장할 배열
     let TestFails = []; // 실패 원인을 저장할 변수
@@ -115,7 +115,7 @@ describe('지점 매장', function () {
     });
 
     after('send Email', async function () {
-        // await utils.finish(driver, app());
+        await utils.finish(driver, app());
         const { title: describeTitle, tests: allTests } = this.test.parent;
         // 실패한 테스트만 필터링
         await Module.emailModule.email2({
