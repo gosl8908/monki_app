@@ -45,8 +45,9 @@ jobs:
               run: |
                   start /B appium --port 4725
                   echo "Running App tests on a real device..."
-                  yarn mocha scheduled/app/Action_signup.js
-                  yarn mocha scheduled/app/Action_store_매장.js
+                  yarn mocha scheduled/app/Action_test.js
+                  echo "Running App tests on a real device..."
+                  yarn mocha scheduled/app/Action_test2.js
               shell: cmd
 
     tableorder-test:

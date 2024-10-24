@@ -19,7 +19,6 @@ describe('회원가입', function () {
         return async function () {
             try {
                 await testFunc();
-                console.log(`Test Passed: ${this.test.title}`);
             } catch (err) {
                 error(TestFails, FailureObj, err, this.test.title);
             }
@@ -134,7 +133,6 @@ describe('회원가입', function () {
     after('send Email', async function () {
         await utils.finish(driver, app());
         const { title: describeTitle, tests: allTests } = this.test.parent;
-        // 실패한 테스트만 필터링
         await Module.emailModule.email2({
             TestFails,
             describeTitle,
