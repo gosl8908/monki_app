@@ -42,14 +42,14 @@ describe('테스트2', function () {
         'Pass1',
         run(async function () {
             await utils.wait(3000);
-            await utils.contains(driver, utils.uiSelector('로그인'));
+            await utils.contains(driver, utils.uiSelector('확인'));
         }),
     );
     it(
         'Pass2',
         run(async function () {
             await utils.wait(3000);
-            await utils.contains(driver, utils.uiSelector('로그인'));
+            await utils.contains(driver, utils.uiSelector('확인'));
         }),
     );
     afterEach('Status Check', async function () {
