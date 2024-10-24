@@ -1,7 +1,7 @@
 const { remote } = require('webdriverio');
-const { tableorder, env, error } = require('../../../config.js');
-const utils = require('../../../module/utils.js');
-const Module = require('../../../module/manager.module.js');
+const { tableorder, env, error } = require('../../config.js');
+const utils = require('../../module/utils.js');
+const Module = require('../../module/manager.module.js');
 const { allure } = require('allure-mocha/runtime');
 
 describe('Appium Test Suite', function () {
@@ -35,7 +35,7 @@ describe('Appium Test Suite', function () {
         };
     }
     it(
-        '테이블 주문',
+        '후불매장 테이블 주문',
         run(async function () {
             await Module.orderModule.order(driver, '음료', '코카콜라', '2,000', '후불', 'Y');
         }),
@@ -53,7 +53,7 @@ describe('Appium Test Suite', function () {
             describeTitle,
             EmailTitle: `[${env.TableorderEmailTitle}]`,
             TestRange:
-                '테이블오더 주문' + `\n${allTests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
+                '후불_테이블오더 주문' + `\n${allTests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
             Screenshots,
         });
     });
