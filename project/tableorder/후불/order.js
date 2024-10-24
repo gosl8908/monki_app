@@ -1,19 +1,21 @@
 const { remote } = require('webdriverio');
-const { tableorder, env } = require('../../../config.js');
+const { tableorder, env, error } = require('../../../config.js');
 const utils = require('../../../module/utils.js');
 const Module = require('../../../module/manager.module.js');
 const { allure } = require('allure-mocha/runtime');
 
-const serverUrl = 'http://localhost:4727';
-let Screenshots = []; // 스크린샷을 저장할 배열
-let TestFails = []; // 실패 원인을 저장할 변수
-
-(async () => {
+describe('Appium Test Suite', function () {
+    this.timeout(30000); // 전체 테스트의 타임아웃 설정 (예: 30초)
     let driver;
-    try {
+    let Screenshots = []; // 스크린샷을 저장할 배열
+    let TestFails = []; // 실패 원인을 저장할 변수
+    let FailureObj = { Failure: false };
+
+    beforeEach(async function () {
         driver = await remote(
-            tableorder(4727, env.GalaxyTabS7FE.deviceName, env.GalaxyTabS7FE.port, env.GalaxyTabS7FE.platformVersion),
+            tableorder(4726, env.GalaxyTabS7FE.deviceName, env.GalaxyTabS7FE.port, env.GalaxyTabS7FE.platformVersion),
         );
+
         await utils.wait(10 * 1000);
         const currentPackage = await driver.getCurrentPackage();
         const currentActivity = await driver.getCurrentActivity();
@@ -21,18 +23,38 @@ let TestFails = []; // 실패 원인을 저장할 변수
         console.log('Current app activity:', currentActivity);
 
         await Module.loginModule.TOlogin(driver, env.testid3, env.testpwd3);
-        await Module.orderModule.order(driver, '음료', '코카콜라', '2,000', '후불', 'Y');
-    } catch (error) {
-        console.error(error);
-        TestFails.push(error.message);
-        if (driver) await utils.screenshot(driver, Screenshots);
-    } finally {
+    });
+    function run(testFunc) {
+        return async function () {
+            try {
+                await testFunc();
+                console.log(`Test Passed: ${this.test.title}`);
+            } catch (err) {
+                error(TestFails, FailureObj, err, this.test.title);
+            }
+        };
+    }
+    it(
+        '테이블 주문',
+        run(async function () {
+            await Module.orderModule.order(driver, '음료', '코카콜라', '2,000', '후불', 'Y');
+        }),
+    );
+    afterEach('Status Check', async function () {
+        await Module.emailModule.screenshot2(driver, FailureObj, Screenshots, this.currentTest);
+    });
+
+    after('send Email', async function () {
         await utils.finish(driver, tableorder());
-        await Module.emailModule.email({
+        const { title: describeTitle, tests: allTests } = this.test.parent;
+        // 실패한 테스트만 필터링
+        await Module.emailModule.email2({
             TestFails,
+            describeTitle,
             EmailTitle: `[${env.TableorderEmailTitle}]`,
-            TestRange: '1. 테이블오더 주문',
+            TestRange:
+                '테이블오더 주문' + `\n${allTests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
             Screenshots,
         });
-    }
-})();
+    });
+});

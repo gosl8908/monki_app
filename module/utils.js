@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { env } = require('../config.js');
+const { time } = require('console');
 
 // 요소 클릭
 async function click(driver, selector) {
@@ -129,11 +130,12 @@ async function pressVolumeButton(driver, direction = 'up') {
 // 텍스트 확인
 async function contains(driver, type) {
     try {
-        const element = await driver.$(type, { timeout: 5 * 1000 });
-        await element.waitForExist({ timeout: 5 * 1000 });
+        const element = await driver.$(type, { timeout: 1 * 1000 });
+        await element.waitForExist({ timeout: 1 * 1000 });
         console.log(`such element '${type}'`);
     } catch (error) {
         console.error(`no such element '${type}':`, error);
+        throw error;
     }
 }
 

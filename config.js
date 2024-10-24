@@ -226,4 +226,23 @@ module.exports = {
             platformVersion: '14',
         },
     },
+
+    error: function (TestFails, FailureObj, err, testTitle) {
+        const errorMessage = err.message || '에러 메시지 없음'; // 에러 메시지가 없으면 기본값 설정
+
+        // TestFails에 실패 정보 추가
+        TestFails.push({
+            title: testTitle || '제목 없음', // testTitle이 없으면 기본값 설정
+            error: errorMessage,
+        });
+
+        // 실패 여부 기록
+        FailureObj.Failure = true;
+
+        // 에러 객체를 확장하여 title과 error 메시지를 포함한 커스텀 에러를 던짐
+        const customError = new Error(errorMessage);
+        customError.title = testTitle || '제목 없음';
+        customError.message = `${testTitle || '제목 없음'}: ${errorMessage}`; // testTitle과 errorMessage를 함께 메시지로 설정
+        throw customError;
+    },
 };
