@@ -11,9 +11,12 @@ describe('지점 매장', function () {
     let TestFails = []; // 실패 원인을 저장할 변수
     let FailureObj = { Failure: false };
 
-    beforeEach(async function () {
+    before('remote', async function () {
         driver = await remote(app(4725, env.GalaxyA24.deviceName, env.GalaxyA24.udid, env.GalaxyA24.platformVersion));
         await utils.wait(10 * 1000);
+        await Module.bootModule.boot(driver);
+        /* 로그인 */
+        await Module.loginModule.login(driver, env.email, env.testpwd);
     });
     function run(testFunc) {
         return async function () {
@@ -27,11 +30,6 @@ describe('지점 매장', function () {
     it(
         '검색',
         run(async function () {
-            await Module.bootModule.boot(driver);
-            /* 로그인 */
-            await Module.loginModule.login(driver, env.email, env.testpwd);
-
-            await utils.wait(5 * 1000);
             const store = await driver.$(utils.uiSelectorText('번개지점(stg)'));
             const Notstore = await driver.$(utils.uiSelectorText('설정하기'));
             if (await Notstore.isDisplayed()) {
@@ -73,9 +71,8 @@ describe('지점 매장', function () {
             await utils.wait(10 * 1000);
             await utils.scroll(driver, 0.5, 0.75, 0.5, 0.0);
             await utils.click(driver, utils.uiSelectorText('기본'));
-            await utils.wait(5 * 1000);
             await utils.click(driver, utils.uiSelectorText('장바구니 담기'));
-            await utils.wait(5 * 1000);
+            await utils.wait(10 * 1000);
             await utils.click(driver, utils.uiSelectorText('장바구니 보기'));
             await utils.wait(5 * 1000);
             await utils.click(driver, utils.uiSelectorText('매장식사 주문'));
@@ -87,6 +84,7 @@ describe('지점 매장', function () {
         run(async function () {
             // 결제
             await Module.payModule.order(driver);
+            console.log('결제 진입 성공');
         }),
     );
     it(
@@ -94,6 +92,7 @@ describe('지점 매장', function () {
         run(async function () {
             // 카드 입력 & 주문완료 확인
             await Module.payModule.pay(driver, env.cardPassword);
+            console.log('결제 성공 & 주문완료');
         }),
     );
     it(
@@ -107,7 +106,7 @@ describe('지점 매장', function () {
             await utils.click(driver, utils.uiSelectorText('취소하기'));
             await utils.contains(driver, utils.uiSelectorText('주문이 취소되었습니다.'));
             await utils.click(driver, utils.uiSelectorText('확인'));
-            console.log('주문취소 완료 텍스트가 나타났습니다.');
+            console.log('주문취소 완료 성공');
         }),
     );
     afterEach('Status Check', async function () {

@@ -11,7 +11,7 @@ describe('Appium Test Suite', function () {
     let TestFails = []; // 실패 원인을 저장할 변수
     let FailureObj = { Failure: false };
 
-    beforeEach(async function () {
+    before(async function () {
         driver = await remote(
             tableorder(4727, env.GalaxyTabS7FE.deviceName, env.GalaxyTabS7FE.udid, env.GalaxyTabS7FE.platformVersion),
         );

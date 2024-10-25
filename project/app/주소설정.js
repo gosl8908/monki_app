@@ -11,21 +11,20 @@ describe('주소 설정', function () {
     let TestFails = []; // 실패 원인을 저장할 변수
     let FailureObj = { Failure: false };
 
-    beforeEach(async function () {
+    before('remote', async function () {
         driver = await remote(
             app(
-                4724,
+                4725,
                 env.GalaxyNote10plus5G.deviceName,
                 env.GalaxyNote10plus5G.udid,
                 env.GalaxyNote10plus5G.platformVersion,
             ),
         );
-        // await utils.wait(5 * 1000);
-        // await Module.bootModule.boot(driver);
+        await utils.wait(10 * 1000);
+        await Module.bootModule.boot(driver);
 
-        // /* 로그인 */
-        // await Module.loginModule.login(driver, env.email, env.testpwd);
-        // await utils.wait(5 * 1000);
+        /* 로그인 */
+        await Module.loginModule.login(driver, env.email, env.testpwd);
     });
     function run(testFunc) {
         return async function () {

@@ -11,21 +11,20 @@ describe('Appium Test Suite', function () {
     let TestFails = []; // 실패 원인을 저장할 변수
     let FailureObj = { Failure: false };
 
-    beforeEach(async function () {
+    before('remote', async function () {
         driver = await remote(
             app(
-                4724,
+                4725,
                 env.GalaxyNote10plus5G.deviceName,
                 env.GalaxyNote10plus5G.udid,
                 env.GalaxyNote10plus5G.platformVersion,
             ),
         );
-        await utils.wait(5 * 1000);
+        await utils.wait(10 * 1000);
         await Module.bootModule.boot(driver);
 
         /* 로그인 */
         await Module.loginModule.login(driver, env.email, env.testpwd);
-        await utils.wait(5 * 1000);
     });
     function run(testFunc) {
         return async function () {
@@ -84,7 +83,7 @@ describe('Appium Test Suite', function () {
             await utils.click(driver, utils.uiSelectorText('특대'));
 
             await utils.click(driver, utils.uiSelectorText('장바구니 담기'));
-
+            await utils.wait(10 * 1000);
             await utils.click(driver, utils.uiSelectorText('장바구니 보기'));
 
             await utils.click(driver, utils.uiSelectorText('무료배달 주문'));

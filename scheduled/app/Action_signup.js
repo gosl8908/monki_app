@@ -11,9 +11,10 @@ describe('회원가입', function () {
     let TestFails = []; // 실패 원인을 저장할 변수
     let FailureObj = { Failure: false };
 
-    beforeEach(async function () {
+    befor('remote', async function () {
         driver = await remote(app(4725, env.GalaxyA24.deviceName, env.GalaxyA24.udid, env.GalaxyA24.platformVersion));
         await utils.wait(10 * 1000);
+        await Module.bootModule.boot(driver);
     });
     function run(testFunc) {
         return async function () {
@@ -27,8 +28,6 @@ describe('회원가입', function () {
     it(
         '회원가입',
         run(async function () {
-            await Module.bootModule.boot(driver);
-
             await utils.click(driver, utils.uiSelectorText('간편회원가입'));
 
             await utils.click(driver, utils.uiSelectorText('약관에 모두 동의합니다.'));
