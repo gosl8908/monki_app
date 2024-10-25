@@ -47,6 +47,9 @@ async function logout(driver) {
 async function signout(driver) {
     try {
         await utils.click(driver, utils.uiSelectorText('My먼키'));
+
+        await utils.contains(driver, utils.uiSelector('stg몬키'));
+
         await utils.click(driver, utils.uiSelectorText('내정보'));
         await utils.scroll(driver, 0.5, 0.8, 0.5, 0.0);
         await utils.click(driver, utils.uiSelectorText('회원탈퇴'));
