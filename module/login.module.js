@@ -9,8 +9,8 @@ async function login(driver, email, password) {
             await utils.enterText(driver, utils.uiSelector('이메일을 입력해 주세요'), email);
             await utils.enterText(driver, utils.uiSelector('비밀번호를 입력해 주세요'), password);
             await utils.click(driver, utils.uiSelectorText('로그인'));
-            await utils.wait(5 * 1000); // 5초 대기
         }
+        await utils.wait(10 * 1000);
         const Text = await driver.$(utils.uiSelectorText('무료배달, 매장식사/포장, 브랜드관 등'));
         if (await Text.isDisplayed()) {
             await utils.wait(3 * 1000);

@@ -81,7 +81,7 @@ describe('지점 매장', function () {
             await utils.scroll(driver, 0.5, 0.75, 0.5, 0.0);
             await utils.click(driver, utils.uiSelectorText('기본'));
             await utils.click(driver, utils.uiSelectorText('장바구니 담기'));
-            await utils.wait(10 * 1000);
+            await utils.wait(15 * 1000);
             await utils.click(driver, utils.uiSelectorText('장바구니 보기'));
             await utils.wait(5 * 1000);
             await utils.click(driver, utils.uiSelectorText('매장식사 주문'));
