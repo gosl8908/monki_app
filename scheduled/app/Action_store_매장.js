@@ -46,6 +46,7 @@ describe('지점 매장', function () {
 
                 await utils.click(driver, utils.uiSelector('선택'));
                 await utils.wait(3 * 1000);
+                await utils.scroll(driver, 0.5, 0.1, 0.5, 0.8);
                 await utils.click(driver, utils.uiSelectorText('무료배달'));
             }
             await utils.click(driver, utils.uiSelectorText('번개지점(stg)'));

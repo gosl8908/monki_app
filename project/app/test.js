@@ -33,29 +33,7 @@ describe('Appium Test Suite', function () {
     it(
         'Fail1',
         run(async function () {
-            await utils.wait(3000);
-            await utils.contains(driver, utils.uiSelector('Fail1'));
-        }),
-    );
-    it(
-        'Fail2',
-        run(async function () {
-            await utils.wait(3000);
-            await utils.contains(driver, utils.uiSelector('Fail2'));
-        }),
-    );
-    it(
-        'Pass1',
-        run(async function () {
-            await utils.wait(3000);
-            await utils.contains(driver, utils.uiSelector('로그인'));
-        }),
-    );
-    it(
-        'Pass2',
-        run(async function () {
-            await utils.wait(3000);
-            await utils.contains(driver, utils.uiSelector('로그인'));
+            await utils.scroll(driver, 0.5, 0.1, 0.5, 0.8);
         }),
     );
     afterEach('Status Check', async function () {
