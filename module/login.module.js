@@ -81,7 +81,7 @@ async function TOlogin(driver, email, password) {
             if (email === 'monkitest2') {
                 await utils.containsview('교촌치킨(stg)', { timeout: 10 * 1000 });
             } else if (email === 'monkifav2') {
-                await utils.containsview('번개단골맛집-강남(stg)', { timeout: 10 * 1000 });
+                await utils.containsview('KIS 매장(STG)', { timeout: 10 * 1000 });
             }
             console.log('로그인 완료');
         }
@@ -102,7 +102,7 @@ async function TOlogin(driver, email, password) {
             const text = await driver.$(utils.view('안녕하세요 :) 메뉴 확인 후 바로 주문해 주세요'));
             if (await text.isDisplayed()) {
                 await utils.click(driver, utils.btnText('확인'));
-                await utils.contains(driver, utils.view('번개단골맛집-강남(stg)', { timeout: 5 * 1000 }));
+                await utils.contains(driver, utils.view('KIS 매장(STG)', { timeout: 5 * 1000 }));
             }
         }
     } catch (error) {
