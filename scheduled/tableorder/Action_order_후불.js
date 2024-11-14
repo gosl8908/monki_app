@@ -22,7 +22,7 @@ describe('Appium Test Suite', function () {
         console.log('Current app package:', currentPackage);
         console.log('Current app activity:', currentActivity);
 
-        await Module.loginModule.TOlogin(driver, env.testid3, env.testpwd3);
+        await Module.loginModule.TOlogin(driver, env.testid3, env.testpwd2);
     });
     function run(testFunc) {
         return async function () {
