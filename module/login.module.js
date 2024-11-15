@@ -78,11 +78,11 @@ async function TOlogin(driver, email, password) {
 
             await utils.click(driver, utils.btnText('로그인'));
 
-            if (email === 'monkitest2') {
-                await utils.containsview('교촌치킨(stg)', { timeout: 10 * 1000 });
-            } else if (email === 'monkifav2') {
-                await utils.containsview('KIS 매장(STG)', { timeout: 10 * 1000 });
-            }
+            // if (email === 'monkitest2') {
+            //     await utils.containsview('교촌치킨(stg)', { timeout: 10 * 1000 });
+            // } else if (email === 'monkifav2') {
+            //     await utils.containsview('KIS 매장(STG)', { timeout: 10 * 1000 });
+            // }
             console.log('로그인 완료');
         }
 
@@ -92,18 +92,13 @@ async function TOlogin(driver, email, password) {
             await utils.click(driver, utils.ImageView('주문하기'));
             await utils.wait(3 * 1000);
         }
-        if (email === 'monkitest2') {
-            const text = await driver.$(utils.view('안녕하세요 :)\n저희는 선불로 운영되는 매장이에요'));
-            if (await text.isDisplayed()) {
-                await utils.click(driver, utils.btnText('확인'));
-                await utils.contains(driver, utils.view('교촌치킨(stg)', { timeout: 5 * 1000 }));
-            }
-        } else if (email === 'monkifav2') {
-            const text = await driver.$(utils.view('안녕하세요 :) 메뉴 확인 후 바로 주문해 주세요'));
-            if (await text.isDisplayed()) {
-                await utils.click(driver, utils.btnText('확인'));
-                await utils.contains(driver, utils.view('KIS 매장(STG)', { timeout: 5 * 1000 }));
-            }
+        const Prepaid = await driver.$(utils.view('안녕하세요 :)\n저희는 선불로 운영되는 매장이에요'));
+        const Postpaid = await driver.$(utils.view('안녕하세요 :) 메뉴 확인 후 바로 주문해 주세요'));
+
+        if (await Prepaid.isDisplayed()) {
+            await utils.click(driver, utils.btnText('확인'));
+        } else if (await Postpaid.isDisplayed) {
+            await utils.click(driver, utils.btnText('확인'));
         }
     } catch (error) {
         console.error(`로그인 중 오류 발생: ${error.message}`);

@@ -21,8 +21,6 @@ describe('Appium Test Suite', function () {
         const currentActivity = await driver.getCurrentActivity();
         console.log('Current app package:', currentPackage);
         console.log('Current app activity:', currentActivity);
-
-        await Module.loginModule.TOlogin(driver, env.testid3, env.testpwd2);
     });
     function run(testFunc) {
         return async function () {
@@ -37,7 +35,8 @@ describe('Appium Test Suite', function () {
     it(
         '후불매장 테이블 주문',
         run(async function () {
-            await Module.orderModule.order(driver, '음료', '코카콜라', '2,000', '후불', 'Y');
+            await Module.loginModule.TOlogin(driver, env.testid3, env.testpwd2);
+            await Module.orderModule.order(driver, '음료', '코카콜라', '2,000', 'Y');
         }),
     );
     afterEach('Status Check', async function () {
