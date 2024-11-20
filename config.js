@@ -198,7 +198,7 @@ module.exports = {
         GalaxyA24: {
             deviceName: 'Galaxy A24',
             udid: 'R59W800DBFD',
-            port: '10.10.239.38:5557',
+            port: '10.10.239.9:5555',
             platformVersion: '13.0',
         },
         GalaxyS10: {
