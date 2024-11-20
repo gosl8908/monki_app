@@ -167,11 +167,11 @@ module.exports = {
         email: 'hskang@monki.net',
         testemail: 'monki@monki.net',
         testid: 'monkitest',
-        testid2: 'monkitest2', // 교촌치킨
-        testid3: 'monkifav2', // 강남점
-        testpwd: 'test123!', // 강남점
-        testpwd2: 'test1234', // 교촌치킨
-        testpwd3: '0000', // 강남점
+        testid2: 'monkitest2',
+        testid3: 'monkifav2',
+        testpwd: 'test123!',
+        testpwd2: 'test1234',
+        testpwd3: '0000',
         testphone: '01052012705',
         phone: '01020431653',
         cardPassword: ['9', '4', '0', '5', '1', '3'],
@@ -222,7 +222,7 @@ module.exports = {
         GalaxyTabS7FE: {
             deviceName: 'Galaxy Tab S7 FE',
             udid: 'R54W201LPYZ',
-            port: '10.10.239.29:5556',
+            port: '10.10.239.13:43255',
             platformVersion: '14',
         },
     },
