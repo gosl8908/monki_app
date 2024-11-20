@@ -13,7 +13,7 @@ describe('Appium Test Suite', function () {
 
     before(async function () {
         driver = await remote(
-            tableorder(4727, env.GalaxyTabS7FE.deviceName, env.GalaxyTabS7FE.udid, env.GalaxyTabS7FE.platformVersion),
+            tableorder(4727, env.GalaxyTabS7FE.deviceName, env.GalaxyTabS7FE.port, env.GalaxyTabS7FE.platformVersion),
         );
 
         await utils.wait(10 * 1000);
