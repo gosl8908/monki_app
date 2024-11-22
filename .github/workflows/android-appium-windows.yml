@@ -16,7 +16,7 @@ jobs:
         env:
             TZ: 'Asia/Seoul'
             DOORAY_EMAIL_ID: ${{ secrets.DOORAY_EMAIL_ID }}
-            DOORAY_EMAIL_PASSWORD: ${{ secrets.DOORAY_EMAIL_PASSWORD }}
+            DOORAY_EMAIL_PASSWORD: ${{ secrets.DOORAY_EMAIL_PWD }}
 
         steps:
             - name: Checkout code
@@ -64,6 +64,8 @@ jobs:
         needs: App-test # store-tests가 완료되면 실행
         env:
             TZ: 'Asia/Seoul'
+            DOORAY_EMAIL_ID: ${{ secrets.DOORAY_EMAIL_ID }}
+            DOORAY_EMAIL_PASSWORD: ${{ secrets.DOORAY_EMAIL_PWD }}
 
         steps:
             - name: Checkout code
