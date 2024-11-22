@@ -3,12 +3,10 @@ const { defineConfig } = require('webdriverio'); // 필요한 경우 추가
 const nodemailer = require('nodemailer');
 const { application } = require('express');
 
-/* Email Account */
-const gmailEamilId = 'gosl8908@gmail.com';
-const gmailEamilPwd = 'boft yzek iitd uuxa';
-/* Email Account */
-const doorayEamilId = 'hskang@monki.net';
-const doorayEamilPwd = 'gotjd0215!';
+const gmailEmailId = process.env.GMAIL_EMAIL_ID;
+const gmailEmailPwd = process.env.GMAIL_EMAIL_PWD;
+const doorayEmailId = process.env.DOORAY_EMAIL_ID;
+const doorayEmailPwd = process.env.DOORAY_EMAIL_PWD;
 
 const Appcapabilities = (deviceName, udid, platformVersion) => ({
     'appium:platformName': 'Android',
@@ -107,13 +105,13 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
         port: 465,
         secure: true, // STARTTLS
         auth: {
-            user: doorayEamilId,
-            pass: doorayEamilPwd,
+            user: doorayEmailId,
+            pass: doorayEmailPwd,
         },
     });
     const dooraymailOptions = {
-        from: doorayEamilId,
-        to: doorayEamilId,
+        from: doorayEmailId,
+        to: doorayEmailId,
         subject: subject,
         text: body,
         attachments: attachments,
@@ -133,14 +131,14 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
     //     port: 587,
     //     secure: false,
     //     auth: {
-    //         user: gmailEamilId,
-    //         pass: gmailEamilPwd,
+    //         user: gmailEmailId,
+    //         pass: gmailEmailPwd,
     //     },
     // });
 
     // const gmailmailOptions = {
-    //     from: gmailEamilId,
-    //     to: gmailEamilId,
+    //     from: gmailEmailId,
+    //     to: gmailEmailId,
     //     subject: subject,
     //     text: body,
     //     attachments: attachments,
