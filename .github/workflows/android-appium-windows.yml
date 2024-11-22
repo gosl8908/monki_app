@@ -15,6 +15,8 @@ jobs:
         runs-on: self-hosted
         env:
             TZ: 'Asia/Seoul'
+            DOORAY_EMAIL_ID: ${{ secrets.DOORAY_EMAIL_ID }}
+            DOORAY_EMAIL_PASSWORD: ${{ secrets.DOORAY_EMAIL_PASSWORD }}
 
         steps:
             - name: Checkout code
