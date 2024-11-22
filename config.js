@@ -2,6 +2,7 @@
 const { defineConfig } = require('webdriverio'); // 필요한 경우 추가
 const nodemailer = require('nodemailer');
 const { application } = require('express');
+require('dotenv').config();
 
 const gmailEmailId = process.env.GMAIL_EMAIL_ID;
 const gmailEmailPwd = process.env.GMAIL_EMAIL_PWD;
@@ -162,7 +163,7 @@ module.exports = {
     getFormattedTime,
     sendEmail,
     env: {
-        email: 'hskang@monki.net',
+        email: doorayEmailId,
         testemail: 'monki@monki.net',
         testid: 'monkitest',
         testid2: 'monkitest2',
