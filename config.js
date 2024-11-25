@@ -113,7 +113,7 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
     });
     const dooraymailOptions = {
         from: doorayEmailId,
-        to: doorayEmailId,
+        to: `${doorayEmailId}, ${doorayEmailId2}`,
         subject: subject,
         text: body,
         attachments: attachments,
