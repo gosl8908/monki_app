@@ -7,6 +7,7 @@ require('dotenv').config();
 const gmailEmailId = process.env.GMAIL_EMAIL_ID;
 const gmailEmailPwd = process.env.GMAIL_EMAIL_PWD;
 const doorayEmailId = process.env.DOORAY_EMAIL_ID;
+const doorayEmailId2 = process.env.DOORAY_EMAIL_ID2;
 const doorayEmailPwd = process.env.DOORAY_EMAIL_PWD;
 const Phone = process.env.PHONE;
 
