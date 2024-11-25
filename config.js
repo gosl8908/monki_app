@@ -8,6 +8,7 @@ const gmailEmailId = process.env.GMAIL_EMAIL_ID;
 const gmailEmailPwd = process.env.GMAIL_EMAIL_PWD;
 const doorayEmailId = process.env.DOORAY_EMAIL_ID;
 const doorayEmailPwd = process.env.DOORAY_EMAIL_PWD;
+const Phone = process.env.PHONE;
 
 const Appcapabilities = (deviceName, udid, platformVersion) => ({
     'appium:platformName': 'Android',
@@ -172,7 +173,7 @@ module.exports = {
         testpwd2: 'test1234',
         testpwd3: '0000',
         testphone: '01052012705',
-        phone: '01020431653',
+        phone: Phone,
         cardPassword: ['9', '4', '0', '5', '1', '3'],
         /* content */
         EmailBody: `App 자동화 테스트가 성공적으로 완료되었습니다`,
