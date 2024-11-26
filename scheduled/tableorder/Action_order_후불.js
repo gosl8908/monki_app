@@ -19,7 +19,6 @@ describe('Appium Test Suite', function () {
                 error(TestFails, FailureObj, err, this.test.title);
             }
         };
-
     before(
         run(async () => {
             driver = await remote(
