@@ -10,8 +10,8 @@ describe('Appium Test Suite', function () {
     let Screenshots = []; // 스크린샷을 저장할 배열
     let TestFails = []; // 실패 원인을 저장할 변수
     let FailureObj = { Failure: false };
-    function run(testFunc) {
-        return async function () {
+    const run = testFunc =>
+        async function () {
             try {
                 await testFunc();
                 console.log(`Test Passed: ${this.test.title}`);
@@ -19,12 +19,11 @@ describe('Appium Test Suite', function () {
                 error(TestFails, FailureObj, err, this.test.title);
             }
         };
-    }
     before(
-        run(async function () {
+        run(async () => {
             driver = await remote(
                 tableorder(
-                    4724,
+                    4723,
                     env.GalaxyTabS7FE.deviceName,
                     env.GalaxyTabS7FE.udid,
                     env.GalaxyTabS7FE.platformVersion,
@@ -41,25 +40,23 @@ describe('Appium Test Suite', function () {
     );
     it(
         '후불매장 테이블 주문',
-        run(async function () {
+        run(async () => {
             await Module.loginModule.TOlogin(driver, env.testid3, env.testpwd2);
-            await Module.orderModule.order(driver, '음료', '코카콜라', '2,000', 'Y');
+            await Module.orderModule.order(driver, '음료', '코카콜라', '2,000', 'N');
         }),
     );
     afterEach('Status Check', async function () {
         await Module.emailModule.screenshot2(driver, FailureObj, Screenshots, this.currentTest);
     });
 
-    after('send Email', async function () {
+    after('Send Email', async function () {
         await utils.finish(driver, tableorder());
-        const { title: describeTitle, tests: allTests } = this.test.parent;
-        // 실패한 테스트만 필터링
+        const TestRange = `후불_테이블오더 주문\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`;
         await Module.emailModule.email2({
             TestFails,
-            describeTitle,
+            describeTitle: this.test.parent.title,
             EmailTitle: `[${env.TableorderEmailTitle}]`,
-            TestRange:
-                '후불_테이블오더 주문' + `\n${allTests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
+            TestRange,
             Screenshots,
         });
     });
