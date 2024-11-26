@@ -10,7 +10,6 @@ describe('지점 매장', function () {
     let Screenshots = []; // 스크린샷을 저장할 배열
     let TestFails = []; // 실패 원인을 저장할 변수
     let FailureObj = { Failure: false };
-
     function run(testFunc) {
         return async function () {
             try {
@@ -120,13 +119,11 @@ describe('지점 매장', function () {
 
     after('send Email', async function () {
         await utils.finish(driver, app());
-        const { title: describeTitle, tests: allTests } = this.test.parent;
         await Module.emailModule.email2({
             TestFails,
-            describeTitle,
+            describeTitle: this.test.parent.title,
             EmailTitle: `[${env.AppEmailTitle}]`,
-            TestRange:
-                '지점 매장식사 결제' + `\n${allTests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
+            TestRange: `지점 매장식사 결제\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
             Screenshots,
         });
     });

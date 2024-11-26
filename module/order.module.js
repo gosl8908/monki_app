@@ -114,9 +114,28 @@ async function adminMode(driver, tableNo) {
         throw error;
     }
 }
+async function orderCancel(driver, tableNo) {
+    try {
+        await utils.click(driver, utils.containsview(`${tableNo}`));
+        await utils.wait(1 * 1000);
+        await utils.click(driver, utils.btnText('주문취소'));
+        await utils.wait(3 * 1000);
+        await utils.touchTap(driver, 0.33, 0.18);
+        await utils.wait(3 * 1000);
+        await utils.click(driver, utils.btnText('취소'));
+        await utils.wait(1 * 1000);
+        await utils.contains(driver, utils.btnText('영수증'));
+        await utils.wait(1 * 1000);
+        console.log('주문취소 완료');
+    } catch (error) {
+        console.error(`주문취소 중 오류 발생: ${error.message}`);
+        throw error;
+    }
+}
 
 module.exports = {
     order,
     payCancel,
     adminMode,
+    orderCancel,
 };

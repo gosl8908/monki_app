@@ -38,11 +38,19 @@ describe('Appium Test Suite', function () {
             console.log('Current app activity:', currentActivity);
         }),
     );
+
     it(
-        '후불매장 테이블 주문',
+        'test',
         run(async () => {
             await Module.loginModule.TOlogin(driver, env.testid3, env.testpwd2);
             await Module.orderModule.order(driver, '음료', '코카콜라', '2,000', 'N');
+        }),
+    );
+    it(
+        'test2',
+        run(async () => {
+            await Module.orderModule.adminMode(driver, '103');
+            await Module.orderModule.orderCancel(driver, '103');
         }),
     );
     afterEach('Status Check', async function () {
@@ -51,12 +59,11 @@ describe('Appium Test Suite', function () {
 
     after('Send Email', async function () {
         await utils.finish(driver, tableorder());
-        const TestRange = `후불_테이블오더 주문\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`;
         await Module.emailModule.email2({
             TestFails,
             describeTitle: this.test.parent.title,
             EmailTitle: `[${env.TableorderEmailTitle}]`,
-            TestRange,
+            TestRange: `후불_테이블오더 주문\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
             Screenshots,
         });
     });
