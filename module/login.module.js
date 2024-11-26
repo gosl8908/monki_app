@@ -97,7 +97,8 @@ async function TOlogin(driver, email, password) {
 
         if (await Prepaid.isDisplayed()) {
             await utils.click(driver, utils.btnText('확인'));
-        } else if (await Postpaid.isDisplayed()) {
+        }
+        if (await Postpaid.isDisplayed()) {
             await utils.click(driver, utils.btnText('확인'));
         }
     } catch (error) {
