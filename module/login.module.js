@@ -93,7 +93,7 @@ async function TOlogin(driver, email, password) {
             await utils.wait(3 * 1000);
         }
         const Prepaid = await driver.$(utils.view('안녕하세요 :)\n저희는 선불로 운영되는 매장이에요'));
-        const Postpaid = await driver.$(utils.view('안녕하세요 :) 메뉴 확인 후 바로 주문해 주세요'));
+        const Postpaid = await driver.$(utils.view('안녕하세요 :)\n메뉴 확인 후 바로 주문해 주세요'));
 
         if (await Prepaid.isDisplayed()) {
             await utils.click(driver, utils.btnText('확인'));
