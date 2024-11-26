@@ -61,7 +61,6 @@ const tableorder = (port, deviceName, udid, platformVersion) => ({
     path: '/',
     capabilities: Tableordercapabilities(deviceName, udid, platformVersion),
 });
-
 function getFormattedTime() {
     const now = new Date(); // Move this line to the top
     const daysOfWeek = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];

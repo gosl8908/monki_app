@@ -11,21 +11,6 @@ describe('단골맛집 매장', function () {
     let TestFails = []; // 실패 원인을 저장할 변수
     let FailureObj = { Failure: false };
 
-    before('remote', async function () {
-        driver = await remote(
-            app(
-                4725,
-                env.GalaxyNote10plus5G.deviceName,
-                env.GalaxyNote10plus5G.udid,
-                env.GalaxyNote10plus5G.platformVersion,
-            ),
-        );
-        await utils.wait(10 * 1000);
-        await Module.bootModule.boot(driver);
-
-        /* 로그인 */
-        await Module.loginModule.login(driver, env.email, env.testpwd);
-    });
     function run(testFunc) {
         return async function () {
             try {
@@ -36,6 +21,24 @@ describe('단골맛집 매장', function () {
             }
         };
     }
+    before(
+        'remote',
+        run(async function () {
+            driver = await remote(
+                app(
+                    4725,
+                    env.GalaxyNote10plus5G.deviceName,
+                    env.GalaxyNote10plus5G.udid,
+                    env.GalaxyNote10plus5G.platformVersion,
+                ),
+            );
+            await utils.wait(10 * 1000);
+            await Module.bootModule.boot(driver);
+
+            /* 로그인 */
+            await Module.loginModule.login(driver, env.email, env.testpwd);
+        }),
+    );
     it(
         '검색',
         run(async function () {

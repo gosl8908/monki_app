@@ -10,25 +10,6 @@ describe('Appium Test Suite', function () {
     let Screenshots = []; // 스크린샷을 저장할 배열
     let TestFails = []; // 실패 원인을 저장할 변수
     let FailureObj = { Failure: false };
-
-    beforeEach(async function () {
-        driver = await remote(
-            tableorder(
-                4724,
-                env.GalaxyTabA8.deviceName,
-                env.GalaxyTabA8.port + ':42067',
-                env.GalaxyTabA8.platformVersion,
-            ),
-        );
-
-        await utils.wait(10 * 1000);
-        const currentPackage = await driver.getCurrentPackage();
-        const currentActivity = await driver.getCurrentActivity();
-        console.log('Current app package:', currentPackage);
-        console.log('Current app activity:', currentActivity);
-
-        await Module.loginModule.TOlogin(driver, env.testid2, env.testpwd2);
-    });
     function run(testFunc) {
         return async function () {
             try {
@@ -39,6 +20,27 @@ describe('Appium Test Suite', function () {
             }
         };
     }
+
+    beforeEach(
+        run(async function () {
+            driver = await remote(
+                tableorder(
+                    4724,
+                    env.GalaxyTabA8.deviceName,
+                    env.GalaxyTabA8.port + ':42067',
+                    env.GalaxyTabA8.platformVersion,
+                ),
+            );
+
+            await utils.wait(10 * 1000);
+            const currentPackage = await driver.getCurrentPackage();
+            const currentActivity = await driver.getCurrentActivity();
+            console.log('Current app package:', currentPackage);
+            console.log('Current app activity:', currentActivity);
+
+            await Module.loginModule.TOlogin(driver, env.testid2, env.testpwd2);
+        }),
+    );
     it(
         'Fail1',
         run(async function () {

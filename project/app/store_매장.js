@@ -11,14 +11,6 @@ describe('지점 매장', function () {
     let TestFails = []; // 실패 원인을 저장할 변수
     let FailureObj = { Failure: false };
 
-    before('remote', async function () {
-        driver = await remote(app(4723, env.GalaxyA24.deviceName, env.GalaxyA24.port, env.GalaxyA24.platformVersion));
-        await utils.wait(10 * 1000);
-        await Module.bootModule.boot(driver);
-
-        /* 로그인 */
-        await Module.loginModule.login(driver, env.email, env.testpwd);
-    });
     function run(testFunc) {
         return async function () {
             try {
@@ -29,6 +21,19 @@ describe('지점 매장', function () {
             }
         };
     }
+    before(
+        'remote',
+        run(async function () {
+            driver = await remote(
+                app(4723, env.GalaxyA24.deviceName, env.GalaxyA24.port, env.GalaxyA24.platformVersion),
+            );
+            await utils.wait(10 * 1000);
+            await Module.bootModule.boot(driver);
+
+            /* 로그인 */
+            await Module.loginModule.login(driver, env.email, env.testpwd);
+        }),
+    );
     it(
         '검색',
         run(async function () {

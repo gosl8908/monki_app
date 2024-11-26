@@ -11,19 +11,6 @@ describe('테스트1', function () {
     let TestFails = []; // 실패 원인을 저장할 변수
     let FailureObj = { Failure: false };
 
-    before(async function () {
-        driver = await remote(
-            tableorder(4727, env.GalaxyTabS7FE.deviceName, env.GalaxyTabS7FE.udid, env.GalaxyTabS7FE.platformVersion),
-        );
-
-        await utils.wait(10 * 1000);
-        const currentPackage = await driver.getCurrentPackage();
-        const currentActivity = await driver.getCurrentActivity();
-        console.log('Current app package:', currentPackage);
-        console.log('Current app activity:', currentActivity);
-
-        await Module.loginModule.TOlogin(driver, env.testid3, env.testpwd3);
-    });
     function run(testFunc) {
         return async function () {
             try {
@@ -34,6 +21,26 @@ describe('테스트1', function () {
             }
         };
     }
+    before(
+        run(async function () {
+            driver = await remote(
+                tableorder(
+                    4727,
+                    env.GalaxyTabS7FE.deviceName,
+                    env.GalaxyTabS7FE.udid,
+                    env.GalaxyTabS7FE.platformVersion,
+                ),
+            );
+
+            await utils.wait(10 * 1000);
+            const currentPackage = await driver.getCurrentPackage();
+            const currentActivity = await driver.getCurrentActivity();
+            console.log('Current app package:', currentPackage);
+            console.log('Current app activity:', currentActivity);
+
+            await Module.loginModule.TOlogin(driver, env.testid3, env.testpwd3);
+        }),
+    );
     it(
         'Fail1',
         run(async function () {

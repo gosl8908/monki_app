@@ -11,10 +11,6 @@ describe('회원가입', function () {
     let TestFails = []; // 실패 원인을 저장할 변수
     let FailureObj = { Failure: false };
 
-    before('remote', async function () {
-        driver = await remote(app(4724, env.GalaxyA24.deviceName, env.GalaxyA24.port, env.GalaxyA24.platformVersion));
-        await utils.wait(10 * 1000);
-    });
     function run(testFunc) {
         return async function () {
             try {
@@ -25,6 +21,15 @@ describe('회원가입', function () {
             }
         };
     }
+    before(
+        'remote',
+        run(async function () {
+            driver = await remote(
+                app(4724, env.GalaxyA24.deviceName, env.GalaxyA24.port, env.GalaxyA24.platformVersion),
+            );
+            await utils.wait(10 * 1000);
+        }),
+    );
     it(
         '회원가입',
         run(async function () {
