@@ -222,7 +222,7 @@ module.exports = {
         GalaxyTabS7FE: {
             deviceName: 'Galaxy Tab S7 FE',
             udid: 'R54W201LPYZ',
-            port: '10.10.239.13:45845',
+            port: '10.10.239.13:',
             platformVersion: '14',
         },
     },
