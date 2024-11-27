@@ -26,11 +26,12 @@ describe('Appium Test Suite', function () {
                 tableorder(
                     4727,
                     env.GalaxyTabS7FE.deviceName,
-                    env.GalaxyTabS7FE.port + '36223',
+                    env.GalaxyTabS7FE.port + '43819',
                     env.GalaxyTabS7FE.platformVersion,
                 ),
             );
             await utils.wait(10 * 1000);
+
             const currentPackage = await driver.getCurrentPackage();
             const currentActivity = await driver.getCurrentActivity();
             console.log('Current app package:', currentPackage);
