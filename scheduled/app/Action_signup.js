@@ -136,10 +136,9 @@ describe('회원가입', function () {
 
     after('send Email', async function () {
         await utils.finish(driver, app());
-        const { title: describeTitle, tests: allTests } = this.test.parent;
         await Module.emailModule.email2({
             TestFails,
-            describeTitle,
+            describeTitle: this.test.parent.title,
             EmailTitle: `[${env.AppEmailTitle}]`,
             TestRange:
                 '1. 회원가입, 2. 회원탈퇴' +
