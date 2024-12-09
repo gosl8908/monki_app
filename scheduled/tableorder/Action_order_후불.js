@@ -48,8 +48,8 @@ describe('Appium Test Suite', function () {
     it(
         '주문취소',
         run(async () => {
-            await Module.orderModule.adminMode(driver, '103');
-            await Module.orderModule.orderCancel(driver, '103');
+            await Module.orderModule.adminMode(driver, '203');
+            await Module.orderModule.orderCancel(driver, '203');
         }),
     );
     afterEach('Status Check', async function () {
