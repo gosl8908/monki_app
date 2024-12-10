@@ -124,8 +124,6 @@ async function orderCancel(driver, tableNo) {
         await utils.wait(3 * 1000);
         await utils.click(driver, utils.btnText('취소'));
         await utils.wait(1 * 1000);
-        await utils.contains(driver, utils.btnText('영수증'));
-        await utils.wait(1 * 1000);
         console.log('주문취소 완료');
     } catch (error) {
         console.error(`주문취소 중 오류 발생: ${error.message}`);

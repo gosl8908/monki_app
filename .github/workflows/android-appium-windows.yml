@@ -48,7 +48,7 @@ jobs:
     #           run: |
     #               start /B appium --port 4725
     #               echo "Running App signup tests on a real device..."
-    #               yarn mocha scheduled/app/Action_signup.js
+    #               yarn mocha scheduled/app/signup.js
     #           shell: cmd
     #           continue-on-error: true # 첫 번째 테스트 실패 시에도 다음 단계 진행
 
@@ -56,7 +56,7 @@ jobs:
     #           run: |
     #               start /B appium --port 4725
     #               echo "Running App store_order tests on a real device..."
-    #               yarn mocha scheduled/app/Action_store_매장.js
+    #               yarn mocha scheduled/app/store_매장.js
     #           shell: cmd
     #           continue-on-error: true # 첫 번째 테스트 실패 시에도 다음 단계 진행
 
@@ -98,5 +98,5 @@ jobs:
               run: |
                   start /B appium --port 4727
                   echo "Running Tableorder tests on a real device..."
-                  yarn mocha scheduled/tableorder/Action_order_후불.js
+                  yarn mocha scheduled/tableorder/order_후불.js
               shell: cmd
