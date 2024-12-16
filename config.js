@@ -72,7 +72,7 @@ function ensureAdbConnection(deviceId, udid) {
 }
 
 const app = (port, deviceName, udid, platformVersion) => {
-    ensureAdbConnection(deviceName, udid, port);
+    ensureAdbConnection(deviceName, udid);
 
     return {
         hostname: '127.0.0.1',
@@ -82,7 +82,7 @@ const app = (port, deviceName, udid, platformVersion) => {
     };
 };
 const tableorder = (port, deviceName, udid, platformVersion) => {
-    ensureAdbConnection(deviceName, udid, port);
+    ensureAdbConnection(deviceName, udid);
 
     return {
         hostname: '127.0.0.1',
