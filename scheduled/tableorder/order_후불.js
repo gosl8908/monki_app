@@ -43,6 +43,13 @@ describe('Appium Test Suite', function () {
         run(async () => {
             await Module.loginModule.TOlogin(driver, env.testid3, env.testpwd2);
             await Module.orderModule.order(driver, '먼슬리키친 테스트', '테스트1', '2,000', 'N');
+
+            // 엑세스 토큰을 가져옴
+            const accessToken = await Module.apiModule.token('monkitest4'); // 엑세스 토큰을 변수에 저장
+            console.log('엑세스 토큰:', accessToken); // 콘솔 로그로 확인
+
+            // 주문 API 호출
+            await Module.apiModule.order(accessToken); // 저장된 엑세스 토큰을 사용하여 주문 API 호출
         }),
     );
     it(
