@@ -1,5 +1,5 @@
 const { remote } = require('webdriverio');
-const { app, env, error } = require('../../config.js');
+const { app, env, error } = require('../../config.js'); // Import from config.js
 const utils = require('../../module/utils.js');
 const Module = require('../../module/manager.module.js');
 const { allure } = require('allure-mocha/runtime');
@@ -7,49 +7,46 @@ const { allure } = require('allure-mocha/runtime');
 describe('Appium Test Suite', function () {
     this.timeout(360 * 1000);
     let driver;
-    let Screenshots = []; // 스크린샷을 저장할 배열
-    let TestFails = []; // 실패 원인을 저장할 변수
+    let Screenshots = []; // Array to store screenshots
+    let TestFails = []; // Variable to store failure reasons
     let FailureObj = { Failure: false };
-
-    function run(testFunc) {
-        return async function () {
+    const run = testFunc =>
+        async function () {
             try {
                 await testFunc();
+                console.log(`Test Passed: ${this.test.title}`);
             } catch (err) {
                 error(TestFails, FailureObj, err, this.test.title);
             }
         };
-    }
+
     before(
         'remote',
-        run(async function () {
+        run(async () => {
             driver = await remote(
-                app(
-                    4725,
-                    env.GalaxyNote10plus5G.deviceName,
-                    env.GalaxyNote10plus5G.udid,
-                    env.GalaxyNote10plus5G.platformVersion,
-                ),
+                app(4723, env.GalaxyA24.deviceName, `${env.GalaxyA24.port}${'34023'}`, env.GalaxyA24.platformVersion),
             );
             await utils.wait(10 * 1000);
             await Module.bootModule.boot(driver);
 
-            /* 로그인 */
+            // Login
             await Module.loginModule.login(driver, env.email, env.testpwd);
         }),
     );
+
     it(
         'Fail1',
-        run(async function () {
+        run(async () => {
+            // Test scroll action
             await utils.scroll(driver, 0.5, 0.1, 0.5, 0.8);
         }),
     );
+
     afterEach('Status Check', async function () {
         await Module.emailModule.screenshot2(driver, FailureObj, Screenshots, this.currentTest);
     });
 
     after('send Email', async function () {
-        // await utils.finish(driver, app());
         const { title: describeTitle, tests: allTests } = this.test.parent;
         await Module.emailModule.email2({
             TestFails,

@@ -2,6 +2,7 @@
 const { defineConfig } = require('webdriverio'); // 필요한 경우 추가
 const nodemailer = require('nodemailer');
 const { application } = require('express');
+const { execSync } = require('child_process');
 require('dotenv').config();
 
 const gmailEmailId = process.env.GMAIL_EMAIL_ID;
@@ -10,6 +11,7 @@ const doorayEmailId = process.env.DOORAY_EMAIL_ID;
 const doorayEmailId2 = process.env.DOORAY_EMAIL_ID2;
 const doorayEmailPwd = process.env.DOORAY_EMAIL_PWD;
 const Phone = process.env.PHONE;
+const adbPath = 'C:/Users/monthlykitchen/Documents/platform-tools/adb'; // full path to adb
 
 const Appcapabilities = (deviceName, udid, platformVersion) => ({
     'appium:platformName': 'Android',
@@ -49,18 +51,46 @@ const Tableordercapabilities = (deviceName, udid, platformVersion) => ({
     'appium:ignoreUnimportantViews': true, // UIAutomator가 중요하지 않은 뷰를 무시하도록 설정
     'appium:skipServerInstallation': false,
 });
-const app = (port, deviceName, udid, platformVersion) => ({
-    hostname: '127.0.0.1',
-    port: port,
-    path: '/',
-    capabilities: Appcapabilities(deviceName, udid, platformVersion),
-});
-const tableorder = (port, deviceName, udid, platformVersion) => ({
-    hostname: '127.0.0.1',
-    port: port,
-    path: '/',
-    capabilities: Tableordercapabilities(deviceName, udid, platformVersion),
-});
+
+function ensureAdbConnection(deviceId, udid) {
+    try {
+        const devicesOutput = execSync(`${adbPath} devices`).toString();
+        const connected = devicesOutput.includes(`${deviceId}:${udid}`);
+
+        if (!connected) {
+            console.log(`Device ${deviceId}:${udid} is not connected. Attempting to reconnect...`);
+            // Correct the adb connect command to only use the IP and port
+            execSync(`${adbPath} connect ${udid}`);
+            console.log(`Device ${deviceId}:${udid} successfully connected.`);
+        } else {
+            console.log(`Device ${deviceId}:${udid} is already connected.`);
+        }
+    } catch (err) {
+        console.error('Error ensuring ADB connection:', err.message);
+        throw new Error('Failed to connect to the device via ADB.');
+    }
+}
+
+const app = (port, deviceName, udid, platformVersion) => {
+    ensureAdbConnection(deviceName, udid, port);
+
+    return {
+        hostname: '127.0.0.1',
+        port: port,
+        path: '/',
+        capabilities: Appcapabilities(deviceName, udid, platformVersion),
+    };
+};
+const tableorder = (port, deviceName, udid, platformVersion) => {
+    ensureAdbConnection(deviceName, udid, port);
+
+    return {
+        hostname: '127.0.0.1',
+        port: port,
+        path: '/',
+        capabilities: Tableordercapabilities(deviceName, udid, platformVersion),
+    };
+};
 function getFormattedTime() {
     const now = new Date(); // Move this line to the top
     const daysOfWeek = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
@@ -163,6 +193,7 @@ module.exports = {
     tableorder,
     getFormattedTime,
     sendEmail,
+    ensureAdbConnection,
     env: {
         email: doorayEmailId,
         testemail: 'monki@monki.net',
@@ -198,7 +229,7 @@ module.exports = {
         GalaxyA24: {
             deviceName: 'Galaxy A24',
             udid: 'R59W800DBFD',
-            port: '10.10.239.9:5555',
+            port: '10.10.239.9:',
             platformVersion: '13.0',
         },
         GalaxyS10: {
