@@ -26,7 +26,7 @@ describe('Appium Test Suite', function () {
                 tableorder(
                     4727,
                     env.GalaxyTabS7FE.deviceName,
-                    `${env.GalaxyTabS7FE.port} + ${'46729'}`,
+                    `${env.GalaxyTabS7FE.port}${'46729'}`,
                     env.GalaxyTabS7FE.platformVersion,
                 ),
             );
