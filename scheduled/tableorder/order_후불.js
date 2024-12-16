@@ -42,14 +42,14 @@ describe('Appium Test Suite', function () {
         '후불매장 테이블 주문',
         run(async () => {
             await Module.loginModule.TOlogin(driver, env.testid3, env.testpwd2);
-            await Module.orderModule.order(driver, '음료', '코카콜라', '2,000', 'N');
+            await Module.orderModule.order(driver, '먼슬리키친 테스트', '테스트1', '2,000', 'N');
         }),
     );
     it(
         '주문취소',
         run(async () => {
-            await Module.orderModule.adminMode(driver, '203');
-            await Module.orderModule.orderCancel(driver, '203');
+            await Module.orderModule.adminMode(driver, '6');
+            await Module.orderModule.orderCancel(driver, '6');
         }),
     );
     afterEach('Status Check', async function () {
