@@ -20,6 +20,7 @@ describe('Appium Test Suite', function () {
             }
         };
     before(
+        'remote',
         run(async () => {
             driver = await remote(
                 tableorder(
