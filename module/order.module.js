@@ -10,6 +10,8 @@ async function order(driver, category, menu, prise, credit = undefined) {
         await utils.click(driver, utils.ImageView('장바구니\n1'));
         await utils.wait(1 * 1000);
 
+        // const options = await dirver.$(utils.view('옵션 최대 1개 선택'))
+
         const Prepaid = await driver.$(utils.btnText('한번에 결제하기', { timeout: 5 * 1000 }));
         if (await Prepaid.isDisplayed()) {
             await utils.click(driver, utils.btnText('한번에 결제하기'));

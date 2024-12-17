@@ -42,14 +42,24 @@ describe('Appium Test Suite', function () {
         '후불매장 테이블 주문',
         run(async () => {
             await Module.loginModule.TOlogin(driver, env.monkitest[3], env.testpwd2);
-            await Module.orderModule.order(driver, '먼슬리키친 테스트', '테스트1', '2,000', 'N');
-
-            // 엑세스 토큰을 가져옴
             const accessToken = await Module.apiModule.token(env.monkitest[3], env.testpwd2); // 엑세스 토큰을 변수에 저장
+            // 엑세스 토큰을 가져옴
             console.log('엑세스 토큰:', accessToken); // 콘솔 로그로 확인
 
-            // 주문 API 호출
-            await Module.apiModule.order(accessToken); // 저장된 엑세스 토큰을 사용하여 주문 API 호출
+            const products = await Module.apiModule.products(accessToken); // 첫 번째 상품명 반환
+
+            if (products && products.length > 0) {
+                const { categoryNm, menuNm, menuPrice } = products[1]; // 2 번째 항목 가져오기
+                const formattedPrice = menuPrice.toLocaleString(); // 천 단위 콤마 추가
+                console.log(`카테고리: ${categoryNm}, 상품명: ${menuNm}, 가격: ${formattedPrice}`);
+
+                // Step 3: order 함수에 menuNm과 menuPrice 전달
+                await Module.orderModule.order(driver, categoryNm, menuNm, formattedPrice, 'N'); // 저장된 엑세스 토큰을 사용하여 주문 API 호출
+                // 주문 API 호출
+                await Module.apiModule.order(accessToken);
+            } else {
+                console.log('상품이 존재하지 않습니다.');
+            }
         }),
     );
     it(

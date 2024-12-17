@@ -3,6 +3,7 @@ const crypto = require('crypto'); // Node.js crypto 모듈
 const assert = require('assert'); // 필요에 따라 API 응답 검증용
 const { env } = require('../config.js');
 const BaseUrl = 'http://staging-to-api.monthlykitchen.kr';
+const storeNo = 658;
 
 async function token(userId, userPass) {
     // 3. 엑세스 토큰 발급
@@ -29,7 +30,6 @@ async function token(userId, userPass) {
 
 async function order(accessToken) {
     // 4. 주문 API 호출
-    const storeNo = 658;
     const apiUrl = `${BaseUrl}/common/orders/${storeNo}`;
     const params = {
         day: env.Date,
@@ -54,7 +54,36 @@ async function order(accessToken) {
     }
 }
 
+// Products 호출 함수
+async function products(accessToken) {
+    const url = `${BaseUrl}/common/products/${storeNo}`;
+    const appType = 'tableorder_app';
+
+    try {
+        const response = await axios.get(url, {
+            params: { appType },
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+        // 데이터에서 menuNm과 menuPrice 추출
+        const tableorderApp = response.data.tableorderApp;
+
+        const result = tableorderApp.map(item => ({
+            categoryNm: item.categoryNm,
+            menuNm: item.menuNm,
+            menuPrice: item.menuPrice,
+        }));
+        console.log('상품 목록:', result); // 확인용 로그
+        return result; // menuNm과 menuPrice 목록 반환
+    } catch (error) {
+        console.error('상품 API 호출 오류:', error.message);
+        throw error;
+    }
+}
+
 module.exports = {
     token,
     order,
+    products,
 };
