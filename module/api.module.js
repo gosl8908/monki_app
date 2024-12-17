@@ -66,16 +66,48 @@ async function products(accessToken) {
                 Authorization: `Bearer ${accessToken}`,
             },
         });
+
         // 데이터에서 menuNm과 menuPrice 추출
         const tableorderApp = response.data.tableorderApp;
 
-        const result = tableorderApp.map(item => ({
-            categoryNm: item.categoryNm,
-            menuNm: item.menuNm,
-            menuPrice: item.menuPrice,
-        }));
+        const result = tableorderApp.map(item => {
+            const { categoryNm, menuNm, menuPrice, menuOptions } = item;
+
+            // 첫 번째 서브옵션 가격을 가져옴 (서브옵션이 없으면 0)
+            let firstSubOptionPrice = 0;
+
+            if (menuOptions && menuOptions.length > 0) {
+                // 메뉴 옵션이 있을 때
+                const firstOption = menuOptions[0]; // 첫 번째 옵션 (옵션1)
+
+                console.log('첫 번째 옵션:', firstOption); // 첫 번째 옵션 정보 로그로 출력
+
+                if (firstOption.subOption && firstOption.subOption.length > 0) {
+                    // 서브옵션이 있을 경우
+                    firstSubOptionPrice = firstOption.subOption[0].optionPrice || 0; // 서브옵션 가격
+                }
+            }
+
+            // 메뉴 가격에 첫 번째 서브옵션 가격을 더함
+            const totalPrice = menuPrice + firstSubOptionPrice;
+
+            // 가격 포맷팅 (천 단위 콤마 추가)
+            const formattedPrice = menuPrice.toLocaleString(); // 옵션을 더하지 않은 기본 가격 포맷팅
+            const formattedOptionPrice = totalPrice.toLocaleString(); // 옵션을 더한 최종 가격 포맷팅
+
+            // 결과 반환 (옵션이 포함된 가격도 함께 포함)
+            return {
+                categoryNm,
+                menuNm,
+                menuPrice,
+                menuOptions,
+                formattedPrice,
+                formattedOptionPrice,
+            };
+        });
+
         console.log('상품 목록:', result); // 확인용 로그
-        return result; // menuNm과 menuPrice 목록 반환
+        return result; // 메뉴 이름과 포맷된 가격을 포함한 결과 반환
     } catch (error) {
         console.error('상품 API 호출 오류:', error.message);
         throw error;

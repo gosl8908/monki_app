@@ -43,18 +43,16 @@ describe('Appium Test Suite', function () {
         run(async () => {
             await Module.loginModule.TOlogin(driver, env.monkitest[3], env.testpwd2);
             const accessToken = await Module.apiModule.token(env.monkitest[3], env.testpwd2); // 엑세스 토큰을 변수에 저장
-            // 엑세스 토큰을 가져옴
-            console.log('엑세스 토큰:', accessToken); // 콘솔 로그로 확인
 
             const products = await Module.apiModule.products(accessToken); // 첫 번째 상품명 반환
 
             if (products && products.length > 0) {
-                const { categoryNm, menuNm, menuPrice } = products[1]; // 2 번째 항목 가져오기
-                const formattedPrice = menuPrice.toLocaleString(); // 천 단위 콤마 추가
-                console.log(`카테고리: ${categoryNm}, 상품명: ${menuNm}, 가격: ${formattedPrice}`);
+                // 2 번째 항목 (사이드) 가져오기
+                const { categoryNm, menuNm, formattedPrice, formattedOptionPrice } = products[1];
 
-                // Step 3: order 함수에 menuNm과 menuPrice 전달
-                await Module.orderModule.order(driver, categoryNm, menuNm, formattedPrice, 'N'); // 저장된 엑세스 토큰을 사용하여 주문 API 호출
+                // Step 3: order 함수에 menuNm과 formattedPrice, formattedOptionPrice 전달
+                await Module.orderModule.order(driver, categoryNm, menuNm, formattedPrice, formattedOptionPrice); // 저장된 엑세스 토큰을 사용하여 주문 API 호출
+
                 // 주문 API 호출
                 await Module.apiModule.order(accessToken);
             } else {
@@ -62,13 +60,13 @@ describe('Appium Test Suite', function () {
             }
         }),
     );
-    // it(
-    //     '주문취소',
-    //     run(async () => {
-    //         await Module.orderModule.adminMode(driver, '6');
-    //         await Module.orderModule.orderCancel(driver, '6');
-    //     }),
-    // );
+    it(
+        '주문취소',
+        run(async () => {
+            await Module.orderModule.adminMode(driver, '6');
+            await Module.orderModule.orderCancel(driver, '6');
+        }),
+    );
     afterEach('Status Check', async function () {
         await Module.emailModule.screenshot2(driver, FailureObj, Screenshots, this.currentTest);
     });

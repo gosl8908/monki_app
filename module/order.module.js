@@ -1,16 +1,18 @@
 const utils = require('../module/utils'); // utils 모듈을 가져옵니다.
-async function order(driver, category, menu, prise, credit = undefined) {
+async function order(driver, category, menu, prise, priseOption = undefined, credit = undefined) {
     try {
         await utils.click(driver, utils.view(category));
         await utils.wait(1 * 1000);
         await utils.click(driver, utils.ImageView(`${menu}\n${prise}원`));
         await utils.wait(1 * 1000);
-        await utils.click(driver, utils.btnText(`${prise}원 담기`));
+        if (priseOption) {
+            await utils.click(driver, utils.btnText(`${priseOption}원 담기`));
+        } else {
+            await utils.click(driver, utils.btnText(`${prise}원 담기`));
+        }
         await utils.wait(1 * 1000);
         await utils.click(driver, utils.ImageView('장바구니\n1'));
         await utils.wait(1 * 1000);
-
-        // const options = await dirver.$(utils.view('옵션 최대 1개 선택'))
 
         const Prepaid = await driver.$(utils.btnText('한번에 결제하기', { timeout: 5 * 1000 }));
         if (await Prepaid.isDisplayed()) {

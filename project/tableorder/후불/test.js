@@ -43,17 +43,12 @@ describe('Appium Test Suite', function () {
     it(
         'test',
         run(async () => {
-            await Module.loginModule.TOlogin(driver, env.testid3, env.testpwd2);
-            await Module.orderModule.order(driver, '음료', '코카콜라', '2,000', 'N');
+            const options = await dirver.$(utils.view('옵션 최대 1개 선택'));
+            if (await options.isDisplayed()) {
+            }
         }),
     );
-    it(
-        'test2',
-        run(async () => {
-            await Module.orderModule.adminMode(driver, '103');
-            await Module.orderModule.orderCancel(driver, '103');
-        }),
-    );
+
     afterEach('Status Check', async function () {
         await Module.emailModule.screenshot2(driver, FailureObj, Screenshots, this.currentTest);
     });
