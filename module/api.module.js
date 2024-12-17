@@ -1,17 +1,19 @@
 const axios = require('axios'); // HTTP 요청을 위한 axios 라이브러리
+const crypto = require('crypto'); // Node.js crypto 모듈
 const assert = require('assert'); // 필요에 따라 API 응답 검증용
 const { env } = require('../config.js');
 const BaseUrl = 'http://staging-to-api.monthlykitchen.kr';
 
-async function token(userId) {
+async function token(userId, userPass) {
     // 3. 엑세스 토큰 발급
+    const hashedPass = crypto.createHash('sha256').update(userPass).digest('hex');
     const authUrl = `${BaseUrl}/auth/token`;
 
     const authBody = {
         appType: 'tableorder_app',
         grantType: 'password',
         userId: userId,
-        userPass: '937e8d5fbb48bd4949536cd65b8d35c426b80d2f830c5c308e2cdec422ae2244',
+        userPass: hashedPass, // 변환된 해시값 사용
     };
     try {
         // POST 요청으로 토큰 발급

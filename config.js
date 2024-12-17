@@ -197,9 +197,8 @@ module.exports = {
     env: {
         email: doorayEmailId,
         testemail: 'monki@monki.net',
-        testid: 'monkitest',
-        testid2: 'monkitest2',
-        testid3: 'monkifav2',
+        monkifav: Array.from({ length: 5 }, (_, i) => `monkifav${i + 1}`),
+        monkitest: Array.from({ length: 10 }, (_, i) => `monkitest${i + 1}`),
         testpwd: 'test123!',
         testpwd2: 'test1234',
         testpwd3: '0000',
