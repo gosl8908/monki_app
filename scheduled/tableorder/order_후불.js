@@ -8,6 +8,7 @@ describe('Appium Test Suite', function () {
     this.timeout(360 * 1000);
     let driver;
     let accessToken;
+    let formattedPrice;
     let Screenshots = []; // 스크린샷을 저장할 배열
     let TestFails = []; // 실패 원인을 저장할 변수
     let FailureObj = { Failure: false };
@@ -51,7 +52,8 @@ describe('Appium Test Suite', function () {
         run(async () => {
             const products = await Module.apiModule.products(accessToken); // 첫 번째 상품명 반환
             if (products && products.length > 0) {
-                const { categoryNm, menuNm, formattedPrice, formattedOptionPrice } = products[0];
+                const { categoryNm, menuNm, formattedPrice: price, formattedOptionPrice } = products[0];
+                formattedPrice = price;
                 await Module.orderModule.order(driver, categoryNm, menuNm, formattedPrice, formattedOptionPrice); // 저장된 엑세스 토큰을 사용하여 주문 API 호출
                 await Module.apiModule.order(accessToken);
             } else {
@@ -70,7 +72,7 @@ describe('Appium Test Suite', function () {
         '주문취소',
         run(async () => {
             await Module.orderModule.adminMode(driver, '2');
-            await Module.orderModule.orderCancel(driver, '2');
+            await Module.orderModule.orderCancel(driver, '2', formattedPrice, formattedPrice);
         }),
     );
     afterEach('Status Check', async function () {

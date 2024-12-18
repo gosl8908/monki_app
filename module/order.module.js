@@ -125,22 +125,37 @@ async function adminMode(driver, tableNo) {
         throw error;
     }
 }
-async function orderCancel(driver, tableNo) {
+async function orderCancel(driver, tableNo, prise, formattedOptionPrice = undefined) {
     try {
-        await utils.click(driver, utils.containsview(`${tableNo}`));
-        await utils.wait(1 * 1000);
-        await utils.click(driver, utils.btnText('주문취소'));
-        await utils.wait(3 * 1000);
-        await utils.touchTap(driver, 0.33, 0.18);
-        await utils.wait(3 * 1000);
-        await utils.click(driver, utils.btnText('취소'));
-        await utils.wait(1 * 1000);
+        // 클릭할 텍스트 결정: formattedOptionPrice가 있으면 그것을 클릭, 없으면 prise 클릭
+        const targetText = formattedOptionPrice
+            ? `${tableNo}\n${formattedOptionPrice}원` // formattedOptionPrice 클릭
+            : `${tableNo}\n${prise}원`; // prise 클릭
+
+        try {
+            // View를 먼저 시도
+            await utils.click(driver, utils.view(targetText));
+        } catch (error) {
+            // View가 없으면 ImageView로 시도
+            await utils.click(driver, utils.ImageView(targetText));
+        }
+
+        // 추가 작업: 주문 취소 프로세스
+        await utils.wait(1000); // 1초 대기
+        await utils.click(driver, utils.btnText('주문취소')); // '주문취소' 버튼 클릭
+        await utils.wait(3000); // 3초 대기
+        await utils.touchTap(driver, 0.33, 0.18); // 특정 좌표 클릭
+        await utils.wait(3000); // 3초 대기
+        await utils.click(driver, utils.btnText('취소')); // '취소' 버튼 클릭
+        await utils.wait(1000); // 1초 대기
+
         console.log('주문취소 완료');
     } catch (error) {
-        console.error(`주문취소 중 오류 발생: ${error.message}`);
-        throw error;
+        console.error(`주문 취소 중 오류 발생: ${error.message}`);
+        throw error; // 오류를 다시 던져 호출한 곳에서 처리
     }
 }
+
 async function orderCheck(driver) {
     try {
         await utils.click(driver, utils.view('결제내역\n탭 5개 중 3번째'));

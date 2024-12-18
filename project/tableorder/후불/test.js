@@ -7,6 +7,8 @@ const { allure } = require('allure-mocha/runtime');
 describe('Appium Test Suite', function () {
     this.timeout(360 * 1000);
     let driver;
+    let accessToken;
+    let formattedPrice;
     let Screenshots = []; // 스크린샷을 저장할 배열
     let TestFails = []; // 실패 원인을 저장할 변수
     let FailureObj = { Failure: false };
@@ -26,7 +28,7 @@ describe('Appium Test Suite', function () {
                 tableorder(
                     4723,
                     env.GalaxyTabS7FE.deviceName,
-                    env.GalaxyTabS7FE.udid,
+                    `${env.GalaxyTabS7FE.port}${'46729'}`,
                     env.GalaxyTabS7FE.platformVersion,
                 ),
             );
@@ -34,18 +36,14 @@ describe('Appium Test Suite', function () {
 
             const currentPackage = await driver.getCurrentPackage();
             const currentActivity = await driver.getCurrentActivity();
-
             console.log('Current app package:', currentPackage);
             console.log('Current app activity:', currentActivity);
         }),
     );
-
     it(
         'test',
         run(async () => {
-            const options = await dirver.$(utils.view('옵션 최대 1개 선택'));
-            if (await options.isDisplayed()) {
-            }
+            await utils.click(driver, utils.ImageView('2\n1,000원'));
         }),
     );
 
@@ -54,7 +52,7 @@ describe('Appium Test Suite', function () {
     });
 
     after('Send Email', async function () {
-        await utils.finish(driver, tableorder());
+        // await utils.finish(driver, tableorder());
         await Module.emailModule.email2({
             TestFails,
             describeTitle: this.test.parent.title,
