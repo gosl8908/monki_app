@@ -135,9 +135,23 @@ async function orderCancel(driver, tableNo) {
     }
 }
 
+async function staffCall(driver, staff) {
+    try {
+        await utils.click(driver, utils.view('직원호출'));
+        await utils.wait(1 * 1000);
+        await utils.click(driver, utils.checkbox(staff));
+        await utils.wait(1 * 1000);
+        await utils.click(driver, utils.btnText('호출하기'));
+    } catch (error) {
+        console.error(`직원호출 중 에러 발생 : ${error.message}`);
+        throw error;
+    }
+}
+
 module.exports = {
     order,
     payCancel,
     adminMode,
     orderCancel,
+    staffCall,
 };

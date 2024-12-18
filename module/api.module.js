@@ -53,6 +53,29 @@ async function order(accessToken) {
         throw error; // 테스트 실패 처리
     }
 }
+async function staff(accessToken) {
+    // 4. 주문 API 호출
+    const apiUrl = `${BaseUrl}/tableorders/employee-calls/${storeNo}/employeecallitem`;
+    try {
+        const staffResponse = await axios.get(apiUrl, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`, // 토큰 포함
+            },
+        });
+
+        // 응답 데이터 출력
+        console.log('직원호출 리스트트 API 호출 성공');
+        console.log('직원호출 API 응답 데이터:', staffResponse.data);
+        // 첫 번째 itemName 추출
+        const firstItemName = staffResponse.data[1]?.itemName || null;
+
+        // 첫 번째 itemName 반환
+        return firstItemName;
+    } catch (error) {
+        console.error('직원호출출 API 호출 실패:', error.message);
+        throw error;
+    }
+}
 
 // Products 호출 함수
 async function products(accessToken) {
@@ -118,4 +141,5 @@ module.exports = {
     token,
     order,
     products,
+    staff,
 };

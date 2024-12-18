@@ -42,17 +42,12 @@ describe('Appium Test Suite', function () {
         '후불매장 테이블 주문',
         run(async () => {
             await Module.loginModule.TOlogin(driver, env.monkitest[3], env.testpwd2);
-            const accessToken = await Module.apiModule.token(env.monkitest[3], env.testpwd2); // 엑세스 토큰을 변수에 저장
-
-            const products = await Module.apiModule.products(accessToken); // 첫 번째 상품명 반환
+            const accessToken = await Module.apiModule.token(env.monkitest[3], env.testpwd2);
+            const products = await Module.apiModule.products(accessToken);
 
             if (products && products.length > 0) {
-                // 2 번째 항목 (사이드) 가져오기
                 const { categoryNm, menuNm, formattedPrice, formattedOptionPrice } = products[1];
-
-                // Step 3: order 함수에 menuNm과 formattedPrice, formattedOptionPrice 전달
-                await Module.orderModule.order(driver, categoryNm, menuNm, formattedPrice, formattedOptionPrice); // 저장된 엑세스 토큰을 사용하여 주문 API 호출
-                // 주문 API 호출
+                await Module.orderModule.order(driver, categoryNm, menuNm, formattedPrice, formattedOptionPrice);
                 await Module.apiModule.order(accessToken);
             } else {
                 console.log('상품이 존재하지 않습니다.');

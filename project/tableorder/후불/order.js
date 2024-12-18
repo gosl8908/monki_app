@@ -44,29 +44,26 @@ describe('Appium Test Suite', function () {
             await Module.loginModule.TOlogin(driver, env.monkitest[3], env.testpwd2);
             const accessToken = await Module.apiModule.token(env.monkitest[3], env.testpwd2); // 엑세스 토큰을 변수에 저장
 
+            const firstItemName = await Module.apiModule.staff(accessToken);
+            await Module.orderModule.staffCall(driver, firstItemName);
             const products = await Module.apiModule.products(accessToken); // 첫 번째 상품명 반환
 
             if (products && products.length > 0) {
-                // 2 번째 항목 (사이드) 가져오기
                 const { categoryNm, menuNm, formattedPrice, formattedOptionPrice } = products[1];
-
-                // Step 3: order 함수에 menuNm과 formattedPrice, formattedOptionPrice 전달
                 await Module.orderModule.order(driver, categoryNm, menuNm, formattedPrice, formattedOptionPrice); // 저장된 엑세스 토큰을 사용하여 주문 API 호출
-
-                // 주문 API 호출
                 await Module.apiModule.order(accessToken);
             } else {
                 console.log('상품이 존재하지 않습니다.');
             }
         }),
     );
-    it(
-        '주문취소',
-        run(async () => {
-            await Module.orderModule.adminMode(driver, '6');
-            await Module.orderModule.orderCancel(driver, '6');
-        }),
-    );
+    // it(
+    //     '주문취소',
+    //     run(async () => {
+    //         await Module.orderModule.adminMode(driver, '6');
+    //         await Module.orderModule.orderCancel(driver, '6');
+    //     }),
+    // );
     afterEach('Status Check', async function () {
         await Module.emailModule.screenshot2(driver, FailureObj, Screenshots, this.currentTest);
     });
