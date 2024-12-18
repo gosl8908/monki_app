@@ -3,7 +3,14 @@ async function order(driver, category, menu, prise, priseOption = undefined, cre
     try {
         await utils.click(driver, utils.view(category));
         await utils.wait(1 * 1000);
-        await utils.click(driver, utils.ImageView(`${menu}\n${prise}원`));
+        try {
+            // 먼저 ImageView를 찾고 클릭 시도
+            await utils.click(driver, utils.ImageView(`${menu}\n${prise}원`));
+        } catch (error) {
+            console.log(`ImageView를 찾을 수 없어 View를 찾습니다. 에러: ${error.message}`);
+            // ImageView가 없을 경우 View로 클릭 시도
+            await utils.click(driver, utils.view(`${menu}\n${prise}원`));
+        }
         await utils.wait(1 * 1000);
         if (priseOption) {
             await utils.click(driver, utils.btnText(`${priseOption}원 담기`));

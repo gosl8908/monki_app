@@ -51,7 +51,7 @@ describe('Appium Test Suite', function () {
         run(async () => {
             const products = await Module.apiModule.products(accessToken); // 첫 번째 상품명 반환
             if (products && products.length > 0) {
-                const { categoryNm, menuNm, formattedPrice, formattedOptionPrice } = products[1];
+                const { categoryNm, menuNm, formattedPrice, formattedOptionPrice } = products[0];
                 await Module.orderModule.order(driver, categoryNm, menuNm, formattedPrice, formattedOptionPrice); // 저장된 엑세스 토큰을 사용하여 주문 API 호출
                 await Module.apiModule.order(accessToken);
             } else {
