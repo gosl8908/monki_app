@@ -134,6 +134,22 @@ async function orderCancel(driver, tableNo) {
         throw error;
     }
 }
+async function orderCheck(driver) {
+    try {
+        await utils.click(driver, utils.view('결제내역\n탭 5개 중 3번째'));
+        await utils.wait(1 * 1000);
+        await utils.click(driver, utils.btnText('전체 테이블'));
+        await utils.wait(3 * 1000);
+        await utils.click(driver, utils.containsview(`${tableNo}`));
+        await utils.wait(3 * 1000);
+        await utils.click(driver, utils.btnText('취소'));
+        await utils.wait(1 * 1000);
+        console.log('주문취소 완료');
+    } catch (error) {
+        console.error(`주문취소 중 오류 발생: ${error.message}`);
+        throw error;
+    }
+}
 
 async function staffCall(driver, staff) {
     try {
@@ -154,4 +170,5 @@ module.exports = {
     adminMode,
     orderCancel,
     staffCall,
+    orderCheck,
 };

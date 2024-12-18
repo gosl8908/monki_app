@@ -7,6 +7,7 @@ const { allure } = require('allure-mocha/runtime');
 describe('Appium Test Suite', function () {
     this.timeout(360 * 1000);
     let driver;
+    let accessToken;
     let Screenshots = []; // 스크린샷을 저장할 배열
     let TestFails = []; // 실패 원인을 저장할 변수
     let FailureObj = { Failure: false };
@@ -39,15 +40,19 @@ describe('Appium Test Suite', function () {
         }),
     );
     it(
-        '후불매장 테이블 주문',
+        '로그인',
         run(async () => {
             await Module.loginModule.TOlogin(driver, env.monkitest[3], env.testpwd2);
-            const accessToken = await Module.apiModule.token(env.monkitest[3], env.testpwd2);
-            const products = await Module.apiModule.products(accessToken);
-
+            accessToken = await Module.apiModule.token(env.monkitest[3], env.testpwd2); // 엑세스 토큰을 변수에 저장
+        }),
+    );
+    it(
+        '후불매장 테이블 주문',
+        run(async () => {
+            const products = await Module.apiModule.products(accessToken); // 첫 번째 상품명 반환
             if (products && products.length > 0) {
                 const { categoryNm, menuNm, formattedPrice, formattedOptionPrice } = products[1];
-                await Module.orderModule.order(driver, categoryNm, menuNm, formattedPrice, formattedOptionPrice);
+                await Module.orderModule.order(driver, categoryNm, menuNm, formattedPrice, formattedOptionPrice); // 저장된 엑세스 토큰을 사용하여 주문 API 호출
                 await Module.apiModule.order(accessToken);
             } else {
                 console.log('상품이 존재하지 않습니다.');
@@ -55,10 +60,17 @@ describe('Appium Test Suite', function () {
         }),
     );
     it(
+        '직원 호출',
+        run(async () => {
+            const firstItemName = await Module.apiModule.staff(accessToken);
+            await Module.orderModule.staffCall(driver, firstItemName);
+        }),
+    );
+    it(
         '주문취소',
         run(async () => {
-            await Module.orderModule.adminMode(driver, '6');
-            await Module.orderModule.orderCancel(driver, '6');
+            await Module.orderModule.adminMode(driver, '2');
+            await Module.orderModule.orderCancel(driver, '2');
         }),
     );
     afterEach('Status Check', async function () {
