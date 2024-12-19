@@ -44,14 +44,14 @@ describe('Appium Test Suite', function () {
     it(
         '테이블 로그인',
         run(async function () {
-            const waiting = await driver.$(utils.view('주문하시려면 화면을 터치해 주세요'));
+            const waiting = await driver.$(utils.android('주문하시려면 화면을 터치해 주세요'));
             if (await waiting.isDisplayed()) {
-                await utils.click(driver, utils.ImageView('주문하기'));
+                await utils.click(driver, utils.android('주문하기'));
                 await utils.wait(3 * 1000);
-                await utils.containsview('번개단골맛집-강남(stg)', { timeout: 10 * 1000 });
+                await utils.android('번개단골맛집-강남(stg)', { timeout: 10 * 1000 });
             }
 
-            await utils.contains(driver, utils.view('안녕하세요 :) 메뉴 확인 후 바로 주문해 주세요'));
+            await utils.contains(driver, utils.android('안녕하세요 :) 메뉴 확인 후 바로 주문해 주세요'));
         }),
     );
     afterEach('Status Check', async function () {

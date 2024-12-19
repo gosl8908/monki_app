@@ -46,8 +46,8 @@ describe('Appium Test Suite', function () {
         run(async function () {
             await Module.orderModule.adminMode(driver, '1-1');
 
-            await utils.click(driver, utils.view('설정\n탭 5개 중 5번째')); // 시스템설정
-            await utils.click(driver, utils.btnText('로그아웃'));
+            await utils.click(driver, utils.android('설정\n탭 5개 중 5번째')); // 시스템설정
+            await utils.click(driver, utils.android('로그아웃'));
         }),
     );
     afterEach('Status Check', async function () {

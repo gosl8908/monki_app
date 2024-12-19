@@ -46,11 +46,11 @@ describe('Appium Test Suite', function () {
         run(async function () {
             await Module.orderModule.adminMode(driver, '1-1');
 
-            await utils.click(driver, utils.btnText('테이블정리'));
-            await utils.click(driver, utils.checkbox('1-1'));
-            await utils.click(driver, utils.btnText('적용'));
-            await utils.click(driver, utils.containsview('주문내역을 초기화 할까요?'));
-            await utils.click(driver, utils.btnText('네'));
+            await utils.click(driver, utils.android('테이블정리'));
+            await utils.click(driver, utils.android('1-1'));
+            await utils.click(driver, utils.android('적용'));
+            await utils.click(driver, utils.android('주문내역을 초기화 할까요?'));
+            await utils.click(driver, utils.android('네'));
         }),
     );
     afterEach('Status Check', async function () {

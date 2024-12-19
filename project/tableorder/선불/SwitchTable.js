@@ -49,12 +49,12 @@ describe('Appium Test Suite', function () {
             await Module.orderModule.adminMode(driver, '1-1');
 
             /* 자리교환 */
-            await utils.click(driver, utils.btnText('자리변경'));
-            await utils.click(driver, utils.view('1-1'));
-            await utils.click(driver, utils.view('1-2'));
-            await utils.click(driver, utils.btnText('이동'));
+            await utils.click(driver, utils.android('자리변경'));
+            await utils.click(driver, utils.android('1-1'));
+            await utils.click(driver, utils.android('1-2'));
+            await utils.click(driver, utils.android('이동'));
 
-            await utils.contains(driver, utils.containsview('1-2'));
+            await utils.contains(driver, utils.android('1-2', true));
         }),
     );
     afterEach('Status Check', async function () {

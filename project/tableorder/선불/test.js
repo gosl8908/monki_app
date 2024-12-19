@@ -45,28 +45,28 @@ describe('Appium Test Suite', function () {
         'Fail1',
         run(async function () {
             await utils.wait(3000);
-            await utils.contains(driver, utils.uiSelector('Fail1'));
+            await utils.contains(driver, utils.android('Fail1', true));
         }),
     );
     it(
         'Fail2',
         run(async function () {
             await utils.wait(3000);
-            await utils.contains(driver, utils.uiSelector('Fail2'));
+            await utils.contains(driver, utils.android('Fail2', true));
         }),
     );
     it(
         'Pass1',
         run(async function () {
             await utils.wait(3000);
-            await utils.contains(driver, utils.uiSelector('로그인'));
+            await utils.contains(driver, utils.android('로그인', true));
         }),
     );
     it(
         'Pass2',
         run(async function () {
             await utils.wait(3000);
-            await utils.contains(driver, utils.uiSelector('로그인'));
+            await utils.contains(driver, utils.android('로그인', true));
         }),
     );
     afterEach('Status Check', async function () {

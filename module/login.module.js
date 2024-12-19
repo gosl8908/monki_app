@@ -76,24 +76,24 @@ async function TOlogin(driver, email, password) {
 
             await driver.pressKeyCode(66);
 
-            await utils.click(driver, utils.btnText('로그인'));
+            await utils.click(driver, utils.android('로그인'));
             console.log('로그인 완료');
         }
 
         /* 대기 이미지 */
-        const waiting = await driver.$(utils.view('주문하시려면 화면을 터치해 주세요'));
+        const waiting = await driver.$(utils.android('주문하시려면 화면을 터치해 주세요'));
         if (await waiting.isDisplayed()) {
-            await utils.click(driver, utils.ImageView('주문하기'));
+            await utils.click(driver, utils.android('주문하기'));
             await utils.wait(3 * 1000);
         }
-        const Prepaid = await driver.$(utils.view('안녕하세요 :)\n저희는 선불로 운영되는 매장이에요'));
-        const Postpaid = await driver.$(utils.view('안녕하세요 :)\n메뉴 확인 후 바로 주문해 주세요'));
+        const Prepaid = await driver.$(utils.android('안녕하세요 :)\n저희는 선불로 운영되는 매장이에요'));
+        const Postpaid = await driver.$(utils.android('안녕하세요 :)\n메뉴 확인 후 바로 주문해 주세요'));
 
         if (await Prepaid.isDisplayed()) {
-            await utils.click(driver, utils.btnText('확인'));
+            await utils.click(driver, utils.android('확인'));
         }
         if (await Postpaid.isDisplayed()) {
-            await utils.click(driver, utils.btnText('확인'));
+            await utils.click(driver, utils.android('확인'));
         }
     } catch (error) {
         console.error(`로그인 중 오류 발생: ${error.message}`);

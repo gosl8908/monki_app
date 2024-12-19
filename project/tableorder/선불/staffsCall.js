@@ -45,13 +45,13 @@ describe('Appium Test Suite', function () {
         '테이블 직원호출',
         run(async function () {
             await utils.wait(3 * 1000);
-            await utils.click(driver, utils.view('직원호출'));
+            await utils.click(driver, utils.android('직원호출'));
             await utils.wait(3 * 1000);
-            await utils.click(driver, utils.check('물'));
+            await utils.click(driver, utils.android('물'));
             await utils.wait(3 * 1000);
-            await utils.click(driver, utils.btnText('호출하기'));
+            await utils.click(driver, utils.android('호출하기'));
 
-            await utils.contains(driver, utils.view('직원을 호출하였습니다.\n잠시만 기다려주세요.'));
+            await utils.contains(driver, utils.android('직원을 호출하였습니다.\n잠시만 기다려주세요.', true));
         }),
     );
     afterEach('Status Check', async function () {

@@ -35,14 +35,10 @@ async function order(driver, category, menu, prise, priseOption = undefined, cre
                     await utils.wait(1000);
                 }
             };
-
-            // Click the sequence for the first part
             await clickSequence(driver, ['2', '0', '4', '3', '1', '6', '5']);
-
-            // Now click the second occurrence of '3'
             const viewsWithContentDesc3 = await driver.$$(`//android.view.View[@content-desc="3"]`);
             if (viewsWithContentDesc3.length > 1) {
-                await utils.click(driver, viewsWithContentDesc3[1]); // Click the second occurrence
+                await utils.click(driver, viewsWithContentDesc3[1]);
                 await utils.wait(1000);
             }
             await utils.wait(1 * 1000);
@@ -101,14 +97,14 @@ async function payCancel(driver, prise, tableNo) {
         throw error;
     }
 }
-async function adminMode(driver, tableNo) {
+async function adminMode(driver) {
     try {
         /* 결제취소 */
         await utils.touchTap(driver, 0.1, 0.05);
         await utils.touchTap(driver, 0.1, 0.05);
 
-        await utils.click(driver, utils.android(`${tableNo}`));
-        await utils.click(driver, utils.android(`${tableNo}`));
+        await utils.click(driver, utils.android('테이블번호'));
+        await utils.click(driver, utils.android('테이블번호'));
 
         for (let i = 0; i < 6; i++) {
             await utils.click(driver, utils.android('1'));
@@ -141,6 +137,7 @@ async function orderCancel(driver, tableNo, prise, formattedOptionPrice = undefi
         }
 
         // 추가 작업: 주문 취소 프로세스
+        await utils.click(driver, utils.android('완료'));
         await utils.wait(1000); // 1초 대기
         await utils.click(driver, utils.android('주문취소')); // '주문취소' 버튼 클릭
         await utils.wait(3000); // 3초 대기
@@ -164,10 +161,10 @@ async function orderCancel(driver, tableNo, prise, formattedOptionPrice = undefi
         const Postpaid = await driver.$(utils.view('안녕하세요 :)\n메뉴 확인 후 바로 주문해 주세요'));
 
         if (await Prepaid.isDisplayed()) {
-            await utils.click(driver, utils.btnText('확인'));
+            await utils.click(driver, utils.android('확인'));
         }
         if (await Postpaid.isDisplayed()) {
-            await utils.click(driver, utils.btnText('확인'));
+            await utils.click(driver, utils.android('확인'));
         }
         console.log('메인화면 진입 완료');
     } catch (error) {
@@ -176,19 +173,20 @@ async function orderCancel(driver, tableNo, prise, formattedOptionPrice = undefi
     }
 }
 
-async function orderCheck(driver) {
+async function orderCheck(driver, tableNo, prise, formattedOptionPrice = undefined) {
     try {
-        await utils.click(driver, utils.view('결제내역\n탭 5개 중 3번째'));
-        await utils.wait(1 * 1000);
-        await utils.click(driver, utils.btnText('전체 테이블'));
-        await utils.wait(3 * 1000);
-        await utils.click(driver, utils.containsview(`${tableNo}`));
-        await utils.wait(3 * 1000);
-        await utils.click(driver, utils.btnText('취소'));
-        await utils.wait(1 * 1000);
-        console.log('주문취소 완료');
+        const targetText = formattedOptionPrice ? `${tableNo}\n${formattedOptionPrice}원` : `${tableNo}\n${prise}원`;
+
+        try {
+            await utils.click(driver, utils.android(targetText));
+        } catch (error) {
+            await utils.click(driver, utils.android(targetText));
+        }
+        await utils.wait(1000);
+        await utils.click(driver, utils.android('완료'));
+        console.log('주문 완료');
     } catch (error) {
-        console.error(`주문취소 중 오류 발생: ${error.message}`);
+        console.error(`주문 완료 중 오류 발생: ${error.message}`);
         throw error;
     }
 }

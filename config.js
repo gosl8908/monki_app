@@ -59,7 +59,6 @@ function ensureAdbConnection(deviceId, udid) {
 
         if (!connected) {
             console.log(`Device ${deviceId}:${udid} is not connected. Attempting to reconnect...`);
-            // Correct the adb connect command to only use the IP and port
             execSync(`${adbPath} connect ${udid}`);
             console.log(`Device ${deviceId}:${udid} successfully connected.`);
         } else {

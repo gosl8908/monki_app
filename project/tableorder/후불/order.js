@@ -71,8 +71,8 @@ describe('Appium Test Suite', function () {
     it(
         '주문취소',
         run(async () => {
-            await Module.orderModule.adminMode(driver, '2');
-            await Module.orderModule.orderCancel(driver, '2', formattedPrice, formattedPrice);
+            await Module.orderModule.adminMode(driver);
+            await Module.orderModule.orderCancel(driver, '1', formattedPrice, formattedPrice);
         }),
     );
     afterEach('Status Check', async function () {
