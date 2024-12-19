@@ -43,7 +43,7 @@ describe('Appium Test Suite', function () {
     it(
         'test',
         run(async () => {
-            await utils.contains(driver, utils.android(`테스트2`, true));
+            await utils.touchTap(driver, 0.05, 0.15);
         }),
     );
 

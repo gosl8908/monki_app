@@ -149,11 +149,16 @@ async function orderCancel(driver, tableNo, prise, formattedOptionPrice = undefi
         await utils.click(driver, utils.android('취소')); // '취소' 버튼 클릭
         await utils.wait(1000); // 1초 대기
 
+        await utils.touchTap(driver, 0.05, 0.15);
+        await utils.wait(1000); // 1초 대기
+
         console.log('주문취소 완료');
 
         /* 메인 화면 진입 */
-        await utils.click(driver, utils.android('결제내역\n탭 5개 중 5번째'));
+        await utils.click(driver, utils.android('설정\n탭 5개 중 5번째'));
+        await utils.wait(1000); // 1초 대기
         await utils.click(driver, utils.android('테이블 모드 전환'));
+        await utils.wait(1000); // 1초 대기
 
         const Prepaid = await driver.$(utils.view('안녕하세요 :)\n저희는 선불로 운영되는 매장이에요'));
         const Postpaid = await driver.$(utils.view('안녕하세요 :)\n메뉴 확인 후 바로 주문해 주세요'));

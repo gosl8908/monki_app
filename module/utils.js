@@ -14,9 +14,12 @@ const view = text => `//android.view.View[@content-desc="${text}"]`;
 const containsview = text => `//android.view.View[contains(@content-desc, "${text}")]`;
 const checkbox = text => `//android.widget.CheckBox[@content-desc="${text}"]`;
 
-const android = (text, contains = false) => {
+const android = (text, contains = false, startsWith = false) => {
     if (contains) {
         return `//*[contains(@content-desc, "${text}") or contains(@text, "${text}")]`;
+    }
+    if (startsWith) {
+        return `//*[starts-with(@content-desc, "${text}") or starts-with(@text, "${text}")]`;
     }
     return `//*[@content-desc="${text}" or @text="${text}"]`;
 };
