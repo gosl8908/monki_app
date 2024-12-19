@@ -77,12 +77,6 @@ async function TOlogin(driver, email, password) {
             await driver.pressKeyCode(66);
 
             await utils.click(driver, utils.btnText('로그인'));
-
-            // if (email === 'monkitest2') {
-            //     await utils.containsview('교촌치킨(stg)', { timeout: 10 * 1000 });
-            // } else if (email === 'monkifav2') {
-            //     await utils.containsview('KIS 매장(STG)', { timeout: 10 * 1000 });
-            // }
             console.log('로그인 완료');
         }
 

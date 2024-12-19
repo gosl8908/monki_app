@@ -14,6 +14,13 @@ const view = text => `//android.view.View[@content-desc="${text}"]`;
 const containsview = text => `//android.view.View[contains(@content-desc, "${text}")]`;
 const checkbox = text => `//android.widget.CheckBox[@content-desc="${text}"]`;
 
+const android = (text, contains = false) => {
+    if (contains) {
+        return `//*[contains(@content-desc, "${text}") or contains(@text, "${text}")]`;
+    }
+    return `//*[@content-desc="${text}" or @text="${text}"]`;
+};
+
 // 요소 클릭
 async function click(driver, selector) {
     await driver.$(selector).click();
@@ -184,6 +191,7 @@ const utils = {
     contains,
     touchTap,
     checkbox,
+    android,
 };
 
 module.exports = utils;

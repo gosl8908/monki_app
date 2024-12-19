@@ -1,37 +1,37 @@
 const utils = require('../module/utils'); // utils 모듈을 가져옵니다.
 async function order(driver, category, menu, prise, priseOption = undefined, credit = undefined) {
     try {
-        await utils.click(driver, utils.view(category));
+        await utils.click(driver, utils.android(category));
         await utils.wait(1 * 1000);
         try {
             // 먼저 ImageView를 찾고 클릭 시도
-            await utils.click(driver, utils.ImageView(`${menu}\n${prise}원`));
+            await utils.click(driver, utils.android(`${menu}\n${prise}원`));
         } catch (error) {
             console.log(`ImageView를 찾을 수 없어 View를 찾습니다. 에러: ${error.message}`);
             // ImageView가 없을 경우 View로 클릭 시도
-            await utils.click(driver, utils.view(`${menu}\n${prise}원`));
+            await utils.click(driver, utils.android(`${menu}\n${prise}원`));
         }
         await utils.wait(1 * 1000);
         if (priseOption) {
-            await utils.click(driver, utils.btnText(`${priseOption}원 담기`));
+            await utils.click(driver, utils.android(`${priseOption}원 담기`));
         } else {
-            await utils.click(driver, utils.btnText(`${prise}원 담기`));
+            await utils.click(driver, utils.android(`${prise}원 담기`));
         }
         await utils.wait(1 * 1000);
-        await utils.click(driver, utils.ImageView('장바구니\n1'));
+        await utils.click(driver, utils.android('장바구니\n1'));
         await utils.wait(1 * 1000);
 
-        const Prepaid = await driver.$(utils.btnText('한번에 결제하기', { timeout: 5 * 1000 }));
+        const Prepaid = await driver.$(utils.android('한번에 결제하기', { timeout: 5 * 1000 }));
         if (await Prepaid.isDisplayed()) {
-            await utils.click(driver, utils.btnText('한번에 결제하기'));
+            await utils.click(driver, utils.android('한번에 결제하기'));
         } else {
-            await utils.click(driver, utils.btnText('주문하기'));
+            await utils.click(driver, utils.android('주문하기'));
         }
         if (credit === 'Y') {
             await utils.wait(1 * 1000);
             const clickSequence = async (driver, sequence) => {
                 for (const view of sequence) {
-                    await utils.click(driver, utils.view(view));
+                    await utils.click(driver, utils.android(view));
                     await utils.wait(1000);
                 }
             };
@@ -46,28 +46,28 @@ async function order(driver, category, menu, prise, priseOption = undefined, cre
                 await utils.wait(1000);
             }
             await utils.wait(1 * 1000);
-            await utils.click(driver, utils.view('에 동의합니다.'));
+            await utils.click(driver, utils.android('에 동의합니다.'));
             await utils.wait(1 * 1000);
-            await utils.click(driver, utils.view('이후 주문도 이 번호로 적립할게요.'));
+            await utils.click(driver, utils.android('이후 주문도 이 번호로 적립할게요.'));
             await utils.wait(1 * 1000);
-            await utils.click(driver, utils.btnText('확인'));
+            await utils.click(driver, utils.android('확인'));
         } else {
-            await utils.click(driver, utils.btnText('괜찮아요, 다음에 할게요.'));
+            await utils.click(driver, utils.android('괜찮아요, 다음에 할게요.'));
         }
         await utils.wait(1 * 1000);
 
-        const Completed = await driver.$(utils.view('결제완료', { timeout: 5 * 1000 }));
+        const Completed = await driver.$(utils.android('결제완료', { timeout: 5 * 1000 }));
         if (await Completed.isDisplayed()) {
-            await utils.contains(driver, utils.view('결제완료', { timeout: 5 * 1000 }));
+            await utils.contains(driver, utils.android('결제완료', { timeout: 5 * 1000 }));
         } else {
-            await utils.contains(driver, utils.view('주문완료', { timeout: 5 * 1000 }));
+            await utils.contains(driver, utils.android('주문완료', { timeout: 5 * 1000 }));
         }
         await utils.wait(1 * 1000);
-        await utils.click(driver, utils.btnText('확인'));
+        await utils.click(driver, utils.android('확인'));
 
-        await utils.click(driver, utils.view('주문내역'));
-        await utils.contains(driver, utils.containsview(`${menu}`));
-        await utils.click(driver, utils.btnText('닫기'));
+        await utils.click(driver, utils.android('주문내역'));
+        await utils.contains(driver, utils.android(`${menu}`, true));
+        await utils.click(driver, utils.android('닫기'));
         await console.log('주문 완료');
     } catch (error) {
         console.error(`주문 완료 중 오류 발생: ${error.message}`);
@@ -79,21 +79,21 @@ async function payCancel(driver, prise, tableNo) {
         await adminMode(driver, tableNo);
         /* 결제취소 */
 
-        await utils.click(driver, utils.view('결제내역\n탭 5개 중 4번째')); // 결제내역
+        await utils.click(driver, utils.android('결제내역\n탭 5개 중 4번째')); // 결제내역
 
-        await utils.click(driver, utils.containsview(`${prise}`));
+        await utils.click(driver, utils.android(`${prise}`));
         await utils.wait(1 * 1000);
-        await utils.click(driver, utils.btnText('결제취소'));
+        await utils.click(driver, utils.android('결제취소'));
         await utils.wait(1 * 1000);
         await utils.touchTap(driver, 0.349, 0.292);
         await utils.wait(1 * 1000);
-        await utils.click(driver, utils.btnText('결제취소'));
+        await utils.click(driver, utils.android('결제취소'));
         await utils.wait(1 * 1000);
-        await utils.click(driver, utils.btnText('네'));
+        await utils.click(driver, utils.btnTandroidext('네'));
         await utils.wait(1 * 1000);
-        await utils.contains(driver, utils.containsview('결제가 취소되었습니다.'));
+        await utils.contains(driver, utils.android('결제가 취소되었습니다.', true));
         await utils.wait(1 * 1000);
-        await utils.click(driver, utils.btnText('확인'));
+        await utils.click(driver, utils.android('확인'));
         await utils.wait(1 * 1000);
         console.log('결제 취소 완료');
     } catch (error) {
@@ -107,18 +107,18 @@ async function adminMode(driver, tableNo) {
         await utils.touchTap(driver, 0.1, 0.05);
         await utils.touchTap(driver, 0.1, 0.05);
 
-        await utils.click(driver, utils.view(`${tableNo}`));
-        await utils.click(driver, utils.view(`${tableNo}`));
+        await utils.click(driver, utils.android(`${tableNo}`));
+        await utils.click(driver, utils.android(`${tableNo}`));
 
         for (let i = 0; i < 6; i++) {
-            await utils.click(driver, utils.view('1'));
+            await utils.click(driver, utils.android('1'));
         }
-        await utils.click(driver, utils.btnText('확인'));
+        await utils.click(driver, utils.android('확인'));
         await utils.wait(1 * 1000);
         // await utils.click(driver, utils.view('관리자 모드'));
         await utils.touchTap(driver, 0.3698, 0.5917);
         await utils.wait(1 * 1000);
-        await utils.click(driver, utils.btnText('확인'));
+        await utils.click(driver, utils.android('확인'));
         console.log('관리자모드 진입 완료');
     } catch (error) {
         console.error(`관리자모드 진입 중 오류 발생: ${error.message}`);
@@ -134,22 +134,37 @@ async function orderCancel(driver, tableNo, prise, formattedOptionPrice = undefi
 
         try {
             // View를 먼저 시도
-            await utils.click(driver, utils.view(targetText));
+            await utils.click(driver, utils.android(targetText));
         } catch (error) {
             // View가 없으면 ImageView로 시도
-            await utils.click(driver, utils.ImageView(targetText));
+            await utils.click(driver, utils.android(targetText));
         }
 
         // 추가 작업: 주문 취소 프로세스
         await utils.wait(1000); // 1초 대기
-        await utils.click(driver, utils.btnText('주문취소')); // '주문취소' 버튼 클릭
+        await utils.click(driver, utils.android('주문취소')); // '주문취소' 버튼 클릭
         await utils.wait(3000); // 3초 대기
         await utils.touchTap(driver, 0.33, 0.18); // 특정 좌표 클릭
         await utils.wait(3000); // 3초 대기
-        await utils.click(driver, utils.btnText('취소')); // '취소' 버튼 클릭
+        await utils.click(driver, utils.android('취소')); // '취소' 버튼 클릭
         await utils.wait(1000); // 1초 대기
 
         console.log('주문취소 완료');
+
+        /* 메인 화면 진입 */
+        await utils.click(driver, utils.android('결제내역\n탭 5개 중 5번째'));
+        await utils.click(driver, utils.android('테이블 모드 전환'));
+
+        const Prepaid = await driver.$(utils.view('안녕하세요 :)\n저희는 선불로 운영되는 매장이에요'));
+        const Postpaid = await driver.$(utils.view('안녕하세요 :)\n메뉴 확인 후 바로 주문해 주세요'));
+
+        if (await Prepaid.isDisplayed()) {
+            await utils.click(driver, utils.btnText('확인'));
+        }
+        if (await Postpaid.isDisplayed()) {
+            await utils.click(driver, utils.btnText('확인'));
+        }
+        console.log('메인화면 진입 완료');
     } catch (error) {
         console.error(`주문 취소 중 오류 발생: ${error.message}`);
         throw error; // 오류를 다시 던져 호출한 곳에서 처리
@@ -175,11 +190,11 @@ async function orderCheck(driver) {
 
 async function staffCall(driver, staff) {
     try {
-        await utils.click(driver, utils.view('직원호출'));
+        await utils.click(driver, utils.android('직원호출'));
         await utils.wait(1 * 1000);
-        await utils.click(driver, utils.checkbox(staff));
+        await utils.click(driver, utils.android(staff));
         await utils.wait(1 * 1000);
-        await utils.click(driver, utils.btnText('호출하기'));
+        await utils.click(driver, utils.android('호출하기'));
     } catch (error) {
         console.error(`직원호출 중 에러 발생 : ${error.message}`);
         throw error;

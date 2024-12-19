@@ -43,7 +43,7 @@ describe('Appium Test Suite', function () {
     it(
         'test',
         run(async () => {
-            await utils.click(driver, utils.ImageView('2\n1,000원'));
+            await utils.contains(driver, utils.android(`테스트2`, true));
         }),
     );
 
