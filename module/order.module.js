@@ -187,7 +187,7 @@ async function orderCancel(driver, tableNo, prise, formattedOptionPrice = undefi
     }
 }
 
-async function orderCheck(driver, tableNo, prise, formattedOptionPrice = undefined) {
+async function orderPay(driver, tableNo, prise, formattedOptionPrice = undefined) {
     try {
         const targetText = formattedOptionPrice ? `${tableNo}\n${formattedOptionPrice}원` : `${tableNo}\n${prise}원`;
 
@@ -198,9 +198,20 @@ async function orderCheck(driver, tableNo, prise, formattedOptionPrice = undefin
         }
         await utils.wait(1000);
         await utils.click(driver, utils.android('완료'));
-        console.log('주문 완료');
+        await utils.wait(1000);
+        await utils.click(driver, utils.android('현금'));
+        await utils.wait(1000);
+        await utils.click(driver, utils.android('+50,000'));
+        await utils.wait(1000);
+        await utils.click(driver, utils.android('자진발급'));
+        await utils.wait(1000);
+        await utils.click(driver, utils.android('결제'));
+        await utils.wait(1000);
+        await utils.contains(driver, utils.android('카드결제 완료', true));
+
+        console.log('결제 완료');
     } catch (error) {
-        console.error(`주문 완료 중 오류 발생: ${error.message}`);
+        console.error(`결제제 중 오류 발생: ${error.message}`);
         throw error;
     }
 }
@@ -224,5 +235,5 @@ module.exports = {
     adminMode,
     orderCancel,
     staffCall,
-    orderCheck,
+    orderPay,
 };
