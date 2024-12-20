@@ -44,7 +44,7 @@ describe('Appium Test Suite', function () {
     it(
         '테이블 로그아웃',
         run(async function () {
-            await Module.orderModule.adminMode(driver, '101');
+            await Module.orderModule.adminMode(driver);
 
             await utils.click(driver, utils.android('설정\n탭 5개 중 5번째')); // 시스템설정
             await utils.click(driver, utils.android('로그아웃'));
