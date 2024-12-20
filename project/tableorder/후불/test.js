@@ -41,9 +41,30 @@ describe('Appium Test Suite', function () {
         }),
     );
     it(
-        'test',
+        '로그인',
         run(async () => {
-            await utils.touchTap(driver, 0.05, 0.15);
+            await Module.loginModule.TOlogin(driver, env.monkitest[3], env.testpwd2);
+            accessToken = await Module.apiModule.token(env.monkitest[3], env.testpwd2); // 엑세스 토큰을 변수에 저장
+        }),
+    );
+    it(
+        '테스트',
+        run(async () => {
+            // 추가 작업: 주문 취소 프로세스
+            const Check = await driver.$(utils.android('완료'));
+
+            if (!(await Check.isDisplayed())) {
+                await utils.touchTap(driver, 0.33, 0.18); // 이전 좌표
+                try {
+                    // View를 먼저 시도
+                    await utils.click(driver, utils.android('1\n1,000원'));
+                } catch (error) {
+                    // View가 없으면 ImageView로 시도
+                    await utils.click(driver, utils.android('1\n1,000원'));
+                }
+            } else {
+                await utils.click(driver, utils.android('완료'));
+            }
         }),
     );
 
@@ -57,7 +78,7 @@ describe('Appium Test Suite', function () {
             TestFails,
             describeTitle: this.test.parent.title,
             EmailTitle: `[${env.TableorderEmailTitle}]`,
-            TestRange: `후불_테이블오더 주문\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
+            TestRange: `테스트\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
             Screenshots,
         });
     });

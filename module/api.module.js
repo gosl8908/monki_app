@@ -45,16 +45,22 @@ async function order(accessToken) {
             params,
         });
 
+        // 첫 번째 주문 결과만 추출
+        const firstOrder = orderResponse.data[0];
+        if (firstOrder.orderItemStatusName === '취소' && orderResponse.data.length > 1) {
+            firstOrder = orderResponse.data[1];
+        }
+
         // 응답 데이터 출력
         console.log('주문 API 호출 성공');
-        console.log('주문 API 응답 데이터:', orderResponse.data);
+        // console.log('주문 API 응답 데이터:', firstOrder.data);
+        return firstOrder;
     } catch (error) {
         console.error('주문 API 호출 실패:', error.message);
         throw error; // 테스트 실패 처리
     }
 }
 async function staff(accessToken) {
-    // 4. 주문 API 호출
     const apiUrl = `${BaseUrl}/tableorders/employee-calls/${storeNo}/employeecallitem`;
     try {
         const staffResponse = await axios.get(apiUrl, {

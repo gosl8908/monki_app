@@ -137,11 +137,25 @@ async function orderCancel(driver, tableNo, prise, formattedOptionPrice = undefi
         }
 
         // 추가 작업: 주문 취소 프로세스
-        await utils.click(driver, utils.android('완료'));
+        const Check = await driver.$(utils.android('완료'));
+
+        if (!(await Check.isDisplayed())) {
+            await utils.touchTap(driver, 0.05, 0.15);
+            try {
+                // View를 먼저 시도
+                await utils.click(driver, utils.android('1\n1,000원'));
+            } catch (error) {
+                // View가 없으면 ImageView로 시도
+                await utils.click(driver, utils.android('1\n1,000원'));
+            }
+        } else {
+            await utils.click(driver, utils.android('완료'));
+        }
+
         await utils.wait(1000); // 1초 대기
         await utils.click(driver, utils.android('주문취소')); // '주문취소' 버튼 클릭
         await utils.wait(3000); // 3초 대기
-        await utils.touchTap(driver, 0.33, 0.18); // 특정 좌표 클릭
+        await utils.touchTap(driver, 0.33, 0.18); // 이전 좌표
         await utils.wait(3000); // 3초 대기
         await utils.click(driver, utils.android('취소')); // '취소' 버튼 클릭
         await utils.wait(1000); // 1초 대기
