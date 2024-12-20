@@ -24,7 +24,34 @@ App의 주요 기능을 효율적으로 검증하기 위해 Appium을 사용한 
 ---
 ## ⚙️ 디렉토리 구조  
 ```
-
+project-directory/  
+├── .github/workflows/       # GitHub Actions 설정 파일  
+├── .idea/                   # IntelliJ IDEA 설정
+├── .vscode/                 # VSCode 설정
+├── apk/                     # 애플리케이션 APK 파일
+├── externals/               # 외부 모듈
+├── module/                  # 테스트 모듈 코드
+├── project/                 # 프로젝트 관련 코드
+├── scheduled/               # 스케줄 테스트 관련 코드
+├── .credentials/            # 인증 관련 파일
+├── .credentials_rsaparams/  # RSA 파라미터 파일
+├── .eslintignore            # ESLint 제외 파일 설정
+├── .eslintrc.js             # ESLint 설정
+├── .gitattributes           # Git 속성 파일
+├── .gitignore               # Git 제외 파일 설정
+├── .prettierignore          # Prettier 제외 파일 설정
+├── .prettierrc              # Prettier 설정
+├── .runner/                 # Runner 설정 파일
+├── README.md                # 프로젝트 문서
+├── config.cmd               # 설정 스크립트 (CMD)
+├── config.js                # Appium 설정 파일
+├── package-lock.json        # NPM 종속성 잠금 파일
+├── package.json             # 프로젝트 메타데이터 및 의존성
+├── run-helper.cmd           # 실행 헬퍼 스크립트 (CMD)
+├── run-helper.cmd.template  # 실행 헬퍼 템플릿 (CMD)
+├── run-helper.sh.template   # 실행 헬퍼 템플릿 (Shell)
+├── run.cmd                  # 실행 스크립트 (CMD)
+├── yarn.lock                # Yarn 종속성 잠금 파일
 
 ```
 ---
