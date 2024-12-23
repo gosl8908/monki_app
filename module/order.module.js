@@ -1,8 +1,16 @@
 const utils = require('../module/utils'); // utils 모듈을 가져옵니다.
 async function order(driver, category, menu, prise, priseOption = undefined, credit = undefined) {
     try {
-        await utils.click(driver, utils.android(category));
-        await utils.wait(1 * 1000);
+        const categoryNm = await driver.$(utils.android(category, true, { timeout: 5 * 1000 }));
+        if (await categoryNm.isDisplayed()) {
+            await utils.click(driver, utils.android(category));
+            await utils.wait(1 * 1000);
+        } else {
+            await utils.scroll(driver, 0.1, 0.6, 0.1, 0.0);
+            await utils.click(driver, utils.android(category));
+            await utils.wait(1 * 1000);
+        }
+
         try {
             // 먼저 ImageView를 찾고 클릭 시도
             await utils.click(driver, utils.android(`${menu}\n${prise}원`));
