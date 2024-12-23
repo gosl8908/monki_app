@@ -22,9 +22,9 @@ describe('Appium Test Suite', function () {
             }
         };
     }
-
-    beforeEach(
-        run(async function () {
+    before(
+        'remote',
+        run(async () => {
             driver = await remote(
                 tableorder(
                     4724,
@@ -51,6 +51,7 @@ describe('Appium Test Suite', function () {
         '로그인',
         run(async () => {
             await utils.scroll(driver, 0.1, 0.6, 0.1, 0.0);
+            await utils.click(driver, utils.android('사이드메뉴'));
         }),
     );
     afterEach('Status Check', async function () {
@@ -58,9 +59,8 @@ describe('Appium Test Suite', function () {
     });
 
     after('send Email', async function () {
-        await utils.finish(driver, tableorder());
+        // await utils.finish(driver, tableorder());
         const { title: describeTitle, tests: allTests } = this.test.parent;
-        // 실패한 테스트만 필터링
         await Module.emailModule.email2({
             TestFails,
             describeTitle,
