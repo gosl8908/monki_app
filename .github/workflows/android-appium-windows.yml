@@ -99,10 +99,11 @@ jobs:
                   start /B appium --port 4727
                   echo "Running Tableorder tests on a real device..."
                   yarn mocha scheduled/tableorder/order_후불.js
-              shell: cmd
+                  shell: cmd
 
             - name: Run Appium Test
               run: |
+                  start /B appium --port 4727
                   echo "Running Tableorder tests on a real device..."
                   yarn mocha scheduled/tableorder/order_선불.js
               shell: cmd
