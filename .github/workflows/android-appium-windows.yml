@@ -101,6 +101,7 @@ jobs:
                   yarn mocha scheduled/tableorder/order_후불.js
               shell: cmd
               continue-on-error: true
+
             - name: Run Appium Test
               run: |
                   start /B appium --port 4727
