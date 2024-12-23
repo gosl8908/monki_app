@@ -202,6 +202,8 @@ module.exports = {
         testpwd2: 'test1234',
         testpwd3: '0000',
         testphone: '01052012705',
+        storeNo: 658, // NICE 매장
+        storeNo2: 644, // 교촌 매장
         phone: Phone,
         cardPassword: ['9', '4', '0', '5', '1', '3'],
         /* content */
@@ -245,7 +247,7 @@ module.exports = {
         GalaxyTabA8: {
             deviceName: 'Galaxy Tab A8',
             udid: 'R9YTB03PNMP',
-            port: '10.10.239.105',
+            port: '10.10.239.72:',
             platformVersion: '14',
         },
         GalaxyTabS7FE: {

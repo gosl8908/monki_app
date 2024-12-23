@@ -7,6 +7,8 @@ const { allure } = require('allure-mocha/runtime');
 describe('Appium Test Suite', function () {
     this.timeout(360 * 1000);
     let driver;
+    let accessToken;
+    let formattedPrice;
     let Screenshots = []; // 스크린샷을 저장할 배열
     let TestFails = []; // 실패 원인을 저장할 변수
     let FailureObj = { Failure: false };
@@ -27,46 +29,22 @@ describe('Appium Test Suite', function () {
                 tableorder(
                     4724,
                     env.GalaxyTabA8.deviceName,
-                    env.GalaxyTabA8.port + ':42067',
+                    `${env.GalaxyTabA8.port}${'34705'}`,
                     env.GalaxyTabA8.platformVersion,
                 ),
             );
-
             await utils.wait(10 * 1000);
             const currentPackage = await driver.getCurrentPackage();
             const currentActivity = await driver.getCurrentActivity();
             console.log('Current app package:', currentPackage);
             console.log('Current app activity:', currentActivity);
-
-            await Module.loginModule.TOlogin(driver, env.testid2, env.testpwd2);
         }),
     );
     it(
-        'Fail1',
-        run(async function () {
-            await utils.wait(3000);
-            await utils.contains(driver, utils.android('Fail1', true));
-        }),
-    );
-    it(
-        'Fail2',
-        run(async function () {
-            await utils.wait(3000);
-            await utils.contains(driver, utils.android('Fail2', true));
-        }),
-    );
-    it(
-        'Pass1',
-        run(async function () {
-            await utils.wait(3000);
-            await utils.contains(driver, utils.android('로그인', true));
-        }),
-    );
-    it(
-        'Pass2',
-        run(async function () {
-            await utils.wait(3000);
-            await utils.contains(driver, utils.android('로그인', true));
+        '로그인',
+        run(async () => {
+            await Module.loginModule.TOlogin(driver, env.monkitest[1], env.testpwd2);
+            accessToken = await Module.apiModule.token(env.monkitest[1], env.testpwd2); // 엑세스 토큰을 변수에 저장
         }),
     );
     afterEach('Status Check', async function () {

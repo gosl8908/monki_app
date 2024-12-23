@@ -3,7 +3,6 @@ const crypto = require('crypto'); // Node.js crypto 모듈
 const assert = require('assert'); // 필요에 따라 API 응답 검증용
 const { env } = require('../config.js');
 const BaseUrl = 'http://staging-to-api.monthlykitchen.kr';
-const storeNo = 658;
 
 async function token(userId, userPass) {
     // 3. 엑세스 토큰 발급
@@ -28,7 +27,7 @@ async function token(userId, userPass) {
     }
 }
 
-async function order(accessToken) {
+async function order(accessToken, storeNo) {
     // 4. 주문 API 호출
     const apiUrl = `${BaseUrl}/common/orders/${storeNo}`;
     const params = {
@@ -60,7 +59,7 @@ async function order(accessToken) {
         throw error; // 테스트 실패 처리
     }
 }
-async function staff(accessToken) {
+async function staff(accessToken, storeNo) {
     const apiUrl = `${BaseUrl}/tableorders/employee-calls/${storeNo}/employeecallitem`;
     try {
         const staffResponse = await axios.get(apiUrl, {
@@ -84,7 +83,7 @@ async function staff(accessToken) {
 }
 
 // Products 호출 함수
-async function products(accessToken) {
+async function products(accessToken, storeNo) {
     const url = `${BaseUrl}/common/products/${storeNo}`;
     const appType = 'tableorder_app';
 

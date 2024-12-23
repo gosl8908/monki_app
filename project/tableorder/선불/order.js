@@ -20,31 +20,57 @@ describe('Appium Test Suite', function () {
             }
         };
     }
-
-    beforeEach(
-        run(async function () {
+    before(
+        'remote',
+        run(async () => {
             driver = await remote(
                 tableorder(
                     4724,
                     env.GalaxyTabA8.deviceName,
-                    env.GalaxyTabA8.port + ':42067',
+                    `${env.GalaxyTabA8.port}${'34705'}`,
                     env.GalaxyTabA8.platformVersion,
                 ),
             );
-
             await utils.wait(10 * 1000);
             const currentPackage = await driver.getCurrentPackage();
             const currentActivity = await driver.getCurrentActivity();
             console.log('Current app package:', currentPackage);
             console.log('Current app activity:', currentActivity);
-
-            await Module.loginModule.TOlogin(driver, env.testid2, env.testpwd2);
         }),
     );
     it(
-        '주문',
-        run(async function () {
-            await Module.orderModule.order(driver, '음료', '코카콜라', '2,500', '선불', 'Y');
+        '로그인',
+        run(async () => {
+            await Module.loginModule.TOlogin(driver, env.monkitest[1], env.testpwd2);
+            accessToken = await Module.apiModule.token(env.monkitest[1], env.testpwd2); // 엑세스 토큰을 변수에 저장
+        }),
+    );
+    it(
+        '후불매장 테이블 주문',
+        run(async () => {
+            const products = await Module.apiModule.products(accessToken, env.storeNo2); // 첫 번째 상품명 반환
+            if (products && products.length > 0) {
+                const { categoryNm, menuNm, formattedPrice: price, formattedOptionPrice } = products[0];
+                formattedPrice = price;
+                await Module.orderModule.order(driver, categoryNm, menuNm, formattedPrice, formattedOptionPrice); // 저장된 엑세스 토큰을 사용하여 주문 API 호출
+                await Module.apiModule.order(accessToken, env.storeNo2);
+            } else {
+                console.log('상품이 존재하지 않습니다.');
+            }
+        }),
+    );
+    it(
+        '직원 호출',
+        run(async () => {
+            const firstItemName = await Module.apiModule.staff(accessToken, env.storeNo2);
+            await Module.orderModule.staffCall(driver, firstItemName);
+        }),
+    );
+    it(
+        '주문취소',
+        run(async () => {
+            await Module.orderModule.adminMode(driver);
+            await Module.orderModule.orderCancel(driver, '1-3', formattedPrice, formattedPrice);
         }),
     );
     afterEach('Status Check', async function () {

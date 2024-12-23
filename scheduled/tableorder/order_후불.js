@@ -50,12 +50,12 @@ describe('Appium Test Suite', function () {
     it(
         '후불매장 테이블 주문',
         run(async () => {
-            const products = await Module.apiModule.products(accessToken); // 첫 번째 상품명 반환
+            const products = await Module.apiModule.products(accessToken, env.storeNo); // 첫 번째 상품명 반환
             if (products && products.length > 0) {
                 const { categoryNm, menuNm, formattedPrice: price, formattedOptionPrice } = products[0];
                 formattedPrice = price;
                 await Module.orderModule.order(driver, categoryNm, menuNm, formattedPrice, formattedOptionPrice); // 저장된 엑세스 토큰을 사용하여 주문 API 호출
-                await Module.apiModule.order(accessToken);
+                await Module.apiModule.order(accessToken, env.storeNo);
             } else {
                 console.log('상품이 존재하지 않습니다.');
             }
@@ -64,7 +64,7 @@ describe('Appium Test Suite', function () {
     it(
         '직원 호출',
         run(async () => {
-            const firstItemName = await Module.apiModule.staff(accessToken);
+            const firstItemName = await Module.apiModule.staff(accessToken, env.storeNo);
             await Module.orderModule.staffCall(driver, firstItemName);
         }),
     );
@@ -78,12 +78,12 @@ describe('Appium Test Suite', function () {
     // it(
     //     '후불매장 테이블 주문',
     //     run(async () => {
-    //         const products = await Module.apiModule.products(accessToken); // 첫 번째 상품명 반환
+    //         const products = await Module.apiModule.products(accessToken, env.storeNo); // 첫 번째 상품명 반환
     //         if (products && products.length > 0) {
     //             const { categoryNm, menuNm, formattedPrice: price, formattedOptionPrice } = products[0];
     //             formattedPrice = price;
     //             await Module.orderModule.order(driver, categoryNm, menuNm, formattedPrice, formattedOptionPrice); // 저장된 엑세스 토큰을 사용하여 주문 API 호출
-    //             await Module.apiModule.order(accessToken);
+    //             await Module.apiModule.order(accessToken, env.storeNo);
     //         } else {
     //             console.log('상품이 존재하지 않습니다.');
     //         }
@@ -92,7 +92,7 @@ describe('Appium Test Suite', function () {
     // it(
     //     '직원 호출',
     //     run(async () => {
-    //         const firstItemName = await Module.apiModule.staff(accessToken);
+    //         const firstItemName = await Module.apiModule.staff(accessToken, env.storeNo);
     //         await Module.orderModule.staffCall(driver, firstItemName);
     //     }),
     // );
