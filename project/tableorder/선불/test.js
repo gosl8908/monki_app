@@ -12,8 +12,8 @@ describe('Appium Test Suite', function () {
     let Screenshots = []; // 스크린샷을 저장할 배열
     let TestFails = []; // 실패 원인을 저장할 변수
     let FailureObj = { Failure: false };
-    function run(testFunc) {
-        return async function () {
+    const run = testFunc =>
+        async function () {
             try {
                 await testFunc();
                 console.log(`Test Passed: ${this.test.title}`);
@@ -21,7 +21,6 @@ describe('Appium Test Suite', function () {
                 error(TestFails, FailureObj, err, this.test.title);
             }
         };
-    }
     before(
         'remote',
         run(async () => {

@@ -41,7 +41,7 @@ const Tableordercapabilities = (deviceName, udid, platformVersion) => ({
     'appium:appPackage': 'net.monki.tableorder.staging',
     'appium:appActivity': 'net.monki.tableorder.MainActivity',
     'appium:appWaitActivity': 'net.monki.tableorder.MainActivity, net.monki.tableorder.*',
-    'appium:app': './apk/tableorder/app-staging-release-1.0.85+231.apk', // 앱 파일 경로
+    'appium:app': './apk/tableorder/app-staging-release-1.3.1+314.apk', // 앱 파일 경로
     'appium:noReset': true, // 앱 상태를 초기화하지 않고 유지
     'appium:fullReset': false, // 앱을 삭제하지 않고 유지
     'appium:autoGrantPermissions': true, // 권한 자동 부여

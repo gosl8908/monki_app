@@ -99,7 +99,7 @@ describe('Appium Test Suite', function () {
         '후불 결제',
         run(async () => {
             await Module.orderModule.adminMode(driver);
-            await Module.orderModule.orderPay(driver, '1', formattedPrice, formattedPrice);
+            await Module.orderModule.orderPay(driver, '1-3', formattedPrice, formattedPrice);
         }),
     );
     afterEach('Status Check', async function () {
@@ -112,7 +112,7 @@ describe('Appium Test Suite', function () {
             TestFails,
             describeTitle: this.test.parent.title,
             EmailTitle: `[${env.TableorderEmailTitle}]`,
-            TestRange: `후불_테이블오더 주문\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
+            TestRange: `선불_테이블오더 주문\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
             Screenshots,
         });
     });

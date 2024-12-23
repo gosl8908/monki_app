@@ -33,7 +33,6 @@ describe('Appium Test Suite', function () {
                 ),
             );
             await utils.wait(10 * 1000);
-
             const currentPackage = await driver.getCurrentPackage();
             const currentActivity = await driver.getCurrentActivity();
             console.log('Current app package:', currentPackage);
