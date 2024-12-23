@@ -100,3 +100,9 @@ jobs:
                   echo "Running Tableorder tests on a real device..."
                   yarn mocha scheduled/tableorder/order_후불.js
               shell: cmd
+
+            - name: Run Appium Test
+              run: |
+                  echo "Running Tableorder tests on a real device..."
+                  yarn mocha scheduled/tableorder/order_선불.js
+              shell: cmd
