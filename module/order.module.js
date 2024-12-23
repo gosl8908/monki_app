@@ -143,41 +143,25 @@ async function orderCancel(driver, tableNo, prise, formattedOptionPrice = undefi
             // View가 없으면 ImageView로 시도
             await utils.click(driver, utils.android(targetText));
         }
-
-        // 추가 작업: 주문 취소 프로세스
-        const Check = await driver.$(utils.android('완료'));
-
-        if (!(await Check.isDisplayed())) {
-            await utils.touchTap(driver, 0.05, 0.15);
-            try {
-                // View를 먼저 시도
-                await utils.click(driver, utils.android('1\n1,000원'));
-            } catch (error) {
-                // View가 없으면 ImageView로 시도
-                await utils.click(driver, utils.android('1\n1,000원'));
-            }
-        } else {
-            await utils.click(driver, utils.android('완료'));
-        }
-
-        await utils.wait(1000); // 1초 대기
+        await utils.click(driver, utils.android('완료'));
+        await utils.wait(1000);
         await utils.click(driver, utils.android('주문취소')); // '주문취소' 버튼 클릭
-        await utils.wait(3000); // 3초 대기
-        await utils.touchTap(driver, 0.33, 0.18); // 이전 좌표
-        await utils.wait(3000); // 3초 대기
+        await utils.wait(3000);
+        await utils.touchTap(driver, 0.33, 0.18); // 전체 선택
+        await utils.wait(3000);
         await utils.click(driver, utils.android('취소')); // '취소' 버튼 클릭
-        await utils.wait(1000); // 1초 대기
+        await utils.wait(1000);
 
-        await utils.touchTap(driver, 0.05, 0.15);
-        await utils.wait(1000); // 1초 대기
+        await utils.touchTap(driver, 0.05, 0.15); // 이전
+        await utils.wait(1000);
 
         console.log('주문취소 완료');
 
         /* 메인 화면 진입 */
         await utils.click(driver, utils.android('설정\n탭 5개 중 5번째'));
-        await utils.wait(1000); // 1초 대기
+        await utils.wait(1000);
         await utils.click(driver, utils.android('테이블 모드 전환'));
-        await utils.wait(1000); // 1초 대기
+        await utils.wait(1000);
 
         const Prepaid = await driver.$(utils.view('안녕하세요 :)\n저희는 선불로 운영되는 매장이에요'));
         const Postpaid = await driver.$(utils.view('안녕하세요 :)\n메뉴 확인 후 바로 주문해 주세요'));
@@ -195,7 +179,7 @@ async function orderCancel(driver, tableNo, prise, formattedOptionPrice = undefi
     }
 }
 
-async function orderPay(driver, tableNo, prise, formattedOptionPrice = undefined) {
+async function orderCashPay(driver, tableNo, prise, formattedOptionPrice = undefined) {
     try {
         const targetText = formattedOptionPrice ? `${tableNo}\n${formattedOptionPrice}원` : `${tableNo}\n${prise}원`;
 
@@ -243,5 +227,5 @@ module.exports = {
     adminMode,
     orderCancel,
     staffCall,
-    orderPay,
+    orderCashPay,
 };

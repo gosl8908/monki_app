@@ -99,7 +99,7 @@ describe('Appium Test Suite', function () {
         '후불 결제',
         run(async () => {
             await Module.orderModule.adminMode(driver);
-            await Module.orderModule.orderPay(driver, '1', formattedPrice, formattedPrice);
+            await Module.orderModule.orderCashPay(driver, '1', formattedPrice, formattedPrice);
         }),
     );
     afterEach('Status Check', async function () {
