@@ -2,7 +2,8 @@ name: Android Appium Tests
 
 on:
     schedule:
-        - cron: '0 23 * * 0-4' # UTC 기준 매주 일요일 ~ 수요일 23:00 (11:00 PM)에 실행 (KCT: 8:00 AM)
+        - cron: '0 23 * * 0-4' # UTC 기준 매주 일요일 ~ 목요일 23:00 (KST: 8:00 AM)
+        - cron: '0 4 * * 1-5' # UTC 기준 매주 월요일 ~ 금요일 04:00 (KST: 1:00 PM)
     push:
         branches:
             - main
