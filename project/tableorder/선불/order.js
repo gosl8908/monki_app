@@ -26,7 +26,7 @@ describe('Appium Test Suite', function () {
         run(async () => {
             driver = await remote(
                 tableorder(
-                    4724,
+                    4723,
                     env.GalaxyTabA8.deviceName,
                     `${env.GalaxyTabA8.port}${'35763'}`,
                     env.GalaxyTabA8.platformVersion,
@@ -46,34 +46,34 @@ describe('Appium Test Suite', function () {
             accessToken = await Module.apiModule.token(env.monkitest[1], env.testpwd2); // 엑세스 토큰을 변수에 저장
         }),
     );
-    it(
-        '후불매장 테이블 주문',
-        run(async () => {
-            const products = await Module.apiModule.products(accessToken, env.storeNo2); // 첫 번째 상품명 반환
-            if (products && products.length > 0) {
-                const { categoryNm, menuNm, formattedPrice: price, formattedOptionPrice } = products[0];
-                formattedPrice = price;
-                await Module.orderModule.order(driver, categoryNm, menuNm, formattedPrice, formattedOptionPrice); // 저장된 엑세스 토큰을 사용하여 주문 API 호출
-                await Module.apiModule.order(accessToken, env.storeNo2);
-            } else {
-                console.log('상품이 존재하지 않습니다.');
-            }
-        }),
-    );
-    it(
-        '직원 호출',
-        run(async () => {
-            const firstItemName = await Module.apiModule.staff(accessToken, env.storeNo2);
-            await Module.orderModule.staffCall(driver, firstItemName);
-        }),
-    );
-    it(
-        '주문취소',
-        run(async () => {
-            await Module.orderModule.adminMode(driver);
-            await Module.orderModule.orderCancel(driver, '1-3', formattedPrice, formattedPrice);
-        }),
-    );
+    // it(
+    //     '후불매장 테이블 주문',
+    //     run(async () => {
+    //         const products = await Module.apiModule.products(accessToken, env.storeNo2); // 첫 번째 상품명 반환
+    //         if (products && products.length > 0) {
+    //             const { categoryNm, menuNm, formattedPrice: price, formattedOptionPrice } = products[0];
+    //             formattedPrice = price;
+    //             await Module.orderModule.order(driver, categoryNm, menuNm, formattedPrice, formattedOptionPrice); // 저장된 엑세스 토큰을 사용하여 주문 API 호출
+    //             await Module.apiModule.order(accessToken, env.storeNo2);
+    //         } else {
+    //             console.log('상품이 존재하지 않습니다.');
+    //         }
+    //     }),
+    // );
+    // it(
+    //     '직원 호출',
+    //     run(async () => {
+    //         const firstItemName = await Module.apiModule.staff(accessToken, env.storeNo2);
+    //         await Module.orderModule.staffCall(driver, firstItemName);
+    //     }),
+    // );
+    // it(
+    //     '주문취소',
+    //     run(async () => {
+    //         await Module.orderModule.adminMode(driver);
+    //         await Module.orderModule.orderCancel(driver, '1-3', formattedPrice, formattedPrice);
+    //     }),
+    // );
     it(
         '후불매장 테이블 주문',
         run(async () => {

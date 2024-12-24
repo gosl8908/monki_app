@@ -3,6 +3,7 @@ const { tableorder, env, error } = require('../../../config.js');
 const utils = require('../../../module/utils.js');
 const Module = require('../../../module/manager.module.js');
 const { allure } = require('allure-mocha/runtime');
+const { adminMode } = require('../../../module/order.module.js');
 
 describe('Appium Test Suite', function () {
     this.timeout(360 * 1000);
@@ -26,9 +27,9 @@ describe('Appium Test Suite', function () {
         run(async () => {
             driver = await remote(
                 tableorder(
-                    4724,
+                    4723,
                     env.GalaxyTabA8.deviceName,
-                    `${env.GalaxyTabA8.port}${'34705'}`,
+                    `${env.GalaxyTabA8.port}${'35763'}`,
                     env.GalaxyTabA8.platformVersion,
                 ),
             );
@@ -47,10 +48,10 @@ describe('Appium Test Suite', function () {
         }),
     );
     it(
-        '로그인',
+        '테스트',
         run(async () => {
-            await utils.scroll(driver, 0.1, 0.6, 0.1, 0.0);
-            await utils.click(driver, utils.android('사이드메뉴'));
+            await Module.orderModule.adminMode(driver);
+            await Module.orderModule.orderCashPay(driver, '1-3', formattedPrice, formattedPrice);
         }),
     );
     afterEach('Status Check', async function () {
