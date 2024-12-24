@@ -65,6 +65,14 @@ async function signout(driver) {
 }
 async function TOlogin(driver, email, password) {
     try {
+        const update = await driver.$(
+            utils.android('최신 버전으로 앱 업데이트 진행 중 입니다.', true, { timeout: 10 * 1000 }),
+        );
+        if (await update.isDisplayed()) {
+            await utils.wait(10 * 1000);
+            await utils.click('열기');
+        }
+
         const login = await driver.$(`//android.widget.Button[@content-desc="로그인"]`);
         if (await login.isDisplayed()) {
             const ID = await driver.$(`android=new UiSelector().className("android.widget.EditText")`);

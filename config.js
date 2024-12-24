@@ -52,7 +52,8 @@ const Tableordercapabilities = (deviceName, udid, platformVersion) => ({
     'appium:skipServerInstallation': false,
 });
 
-function ensureAdbConnection(deviceId, udid) {
+/* adb connect 명령어 */
+function AdbConnection(deviceId, udid) {
     try {
         const devicesOutput = execSync(`${adbPath} devices`).toString();
         const connected = devicesOutput.includes(`${deviceId}:${udid}`);
@@ -71,7 +72,7 @@ function ensureAdbConnection(deviceId, udid) {
 }
 
 const app = (port, deviceName, udid, platformVersion) => {
-    ensureAdbConnection(deviceName, udid);
+    AdbConnection(deviceName, udid);
 
     return {
         hostname: '127.0.0.1',
@@ -81,7 +82,7 @@ const app = (port, deviceName, udid, platformVersion) => {
     };
 };
 const tableorder = (port, deviceName, udid, platformVersion) => {
-    ensureAdbConnection(deviceName, udid);
+    AdbConnection(deviceName, udid);
 
     return {
         hostname: '127.0.0.1',
@@ -95,10 +96,10 @@ function getFormattedTime() {
     const daysOfWeek = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
     const dayOfWeek = daysOfWeek[now.getDay()]; // 요일을 얻어옵니다.
 
-    // 한국 표준시(Asia/Seoul)로 시간대를 설정합니다.
+    // 한국 표준시(Asia/Seoul)로 시간대를 설정
     const options = { timeZone: 'Asia/Seoul' };
 
-    // 지정된 시간대로 날짜와 시간을 형식화합니다.
+    // 지정된 시간대로 날짜와 시간을 형식화
     const formattedDate = now.toLocaleString('ko-KR', options);
 
     const year = now.getFullYear();
@@ -131,7 +132,7 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
     }
 
     // 두레이 메일용 transporter
-    const dooraytransporter = nodemailer.createTransport({
+    const dooray = nodemailer.createTransport({
         host: 'smtp.dooray.com',
         port: 465,
         secure: true, // STARTTLS
@@ -147,7 +148,7 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
         text: body,
         attachments: attachments,
     };
-    return dooraytransporter
+    return dooray
         .sendMail(dooraymailOptions)
         .then(info => {
             console.log('이메일 성공적으로 전송됨: ' + info.response);
@@ -157,7 +158,7 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
             console.error('이메일 전송 실패: ' + error);
             return false;
         });
-    // const gmailtransporter = nodemailer.createTransport({
+    // const gmail = nodemailer.createTransport({
     //     host: 'smtp.gmail.com',
     //     port: 587,
     //     secure: false,
@@ -175,7 +176,7 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
     //     attachments: attachments,
     // };
 
-    // return gmailtransporter
+    // return gmail
     //     .sendMail(gmailmailOptions)
     //     .then(info => {
     //         console.log('이메일 성공적으로 전송됨: ' + info.response);
@@ -192,7 +193,6 @@ module.exports = {
     tableorder,
     getFormattedTime,
     sendEmail,
-    ensureAdbConnection,
     env: {
         email: doorayEmailId,
         testemail: 'monki@monki.net',
@@ -218,43 +218,36 @@ module.exports = {
             deviceName: 'Galaxy Note 20 5G',
             udid: 'R3CN80AK2MV',
             port: '10.10.239.',
-            platformVersion: '12.0',
         },
         GalaxyNote10plus5G: {
             deviceName: 'Galaxy Note 10+ 5G',
             udid: 'R3CM80LQS6V',
             port: '10.10.239.101:5555',
-            platformVersion: '12.0',
         },
         GalaxyA24: {
             deviceName: 'Galaxy A24',
             udid: 'R59W800DBFD',
             port: '10.10.239.9:',
-            platformVersion: '13.0',
         },
         GalaxyS10: {
             deviceName: 'Galaxy S10',
             udid: 'R39M10EAHFH',
             port: '10.10.239.',
-            platformVersion: '12.0',
         },
         GalaxyZFlip: {
             deviceName: 'Galaxy Z Flip',
             udid: 'R39N301S8SV',
             port: '10.10.239.',
-            platformVersion: '13',
         },
         GalaxyTabA8: {
             deviceName: 'Galaxy Tab A8',
             udid: 'R9YTB03PNMP',
             port: '10.10.239.72:',
-            platformVersion: '14',
         },
         GalaxyTabS7FE: {
             deviceName: 'Galaxy Tab S7 FE',
             udid: 'R54W201LPYZ',
             port: '10.10.239.13:',
-            platformVersion: '14',
         },
     },
 
