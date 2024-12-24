@@ -125,10 +125,9 @@ async function adminMode(driver) {
         await utils.click(driver, utils.android('확인'));
 
         const issue = await driver.$(utils.android('테이블 점검안내', true, { timeout: 5 * 1000 }));
-        if (issue.isDisplayed()) {
+        if (await issue.isDisplayed()) {
             await utils.click(driver, utils.android('닫기', true));
         }
-
         console.log('관리자모드 진입 완료');
     } catch (error) {
         console.error(`관리자모드 진입 중 오류 발생: ${error.message}`);
