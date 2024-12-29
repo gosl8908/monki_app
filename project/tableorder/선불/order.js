@@ -28,7 +28,7 @@ describe('Appium Test Suite', function () {
                 tableorder(
                     4723,
                     env.GalaxyTabA8.deviceName,
-                    `${env.GalaxyTabA8.port}${'35763'}`,
+                    `${env.GalaxyTabA8.port}${'46033'}`,
                     env.GalaxyTabA8.platformVersion,
                 ),
             );

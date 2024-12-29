@@ -65,12 +65,21 @@ async function signout(driver) {
 }
 async function TOlogin(driver, email, password) {
     try {
-        const update = await driver.$(
-            utils.android('최신 버전으로 앱 업데이트 진행 중 입니다.', true, { timeout: 10 * 1000 }),
-        );
+        const update = await driver.$(utils.android('최신 버전으로 앱 업데이트 진행 중 입니다.', true));
         if (await update.isDisplayed()) {
             await utils.wait(10 * 1000);
-            await utils.click('열기');
+            await utils.click(driver, utils.android('설정'));
+            await utils.wait(10 * 1000);
+            await utils.click(driver, utils.android('권한 허용'));
+            await utils.wait(10 * 1000);
+            await utils.click(driver, utils.android('업데이트'));
+            await utils.wait(10 * 1000);
+            await utils.click(driver, utils.android('세부정보 더보기'));
+            await utils.wait(10 * 1000);
+            await utils.click(driver, utils.android('검사 없이 설치'));
+            await utils.wait(10 * 1000);
+            await utils.click(driver, utils.android('열기'));
+            await utils.wait(10 * 1000);
         }
 
         const login = await driver.$(`//android.widget.Button[@content-desc="로그인"]`);
