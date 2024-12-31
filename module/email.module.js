@@ -76,7 +76,6 @@ function message({ TestFails, describeTitle, TestRange, Screenshots }) {
 테스트 실패 원인 :\n${TestFails.map(fail => `- ${fail.title}: ${fail.error}`).join('\n')}\n`
                 : ''
         }`;
-    console.log('테스트가 성공적으로 완료되었습니다.');
 
     const payload = {
         text: message,

@@ -3,8 +3,8 @@ const { defineConfig } = require('webdriverio'); // 필요한 경우 추가
 const nodemailer = require('nodemailer');
 const { application } = require('express');
 const { execSync } = require('child_process');
-// const fetch = require('node-fetch'); // Node.js 환경에서 fetch 사용 (npm 설치 필요)
 require('dotenv').config();
+const fs = require('fs');
 
 const gmailEmailId = process.env.GMAIL_EMAIL_ID;
 const gmailEmailPwd = process.env.GMAIL_EMAIL_PWD;
@@ -13,42 +13,40 @@ const doorayEmailId2 = process.env.DOORAY_EMAIL_ID2;
 const doorayEmailPwd = process.env.DOORAY_EMAIL_PWD;
 const Phone = process.env.PHONE;
 const adbPath = 'C:/Users/monthlykitchen/Documents/platform-tools/adb'; // full path to adb
+const webhookUrl = process.env.DOORAY_WEB_HOOK_URL;
+const webhookUrl2 =
+    'https://monthlykitchen.dooray.com/services/3315312916791878371/3891554475937185755/HF9xgmQ0RpSAio9fFfr0WA';
 
-const Appcapabilities = (deviceName, udid) => ({
+const commonCapabilities = {
     'appium:platformName': 'Android',
     'appium:automationName': 'Uiautomator2',
+    'appium:noReset': true, // 앱 상태를 초기화하지 않고 유지
+    'appium:fullReset': false, // 앱을 삭제하지 않고 유지
+    'appium:autoGrantPermissions': true, // 권한 자동 부여
+    'appium:ignoreHiddenApiPolicyError': true, // 숨겨진 API 오류 무시
+    'appium:disableWindowAnimation': true, // UI 애니메이션 비활성화
+    'appium:enablePerformanceLogging': true, // 성능 로그 활성화
+    'appium:ignoreUnimportantViews': true, // UIAutomator가 중요하지 않은 뷰를 무시하도록 설정
+    'appium:skipServerInstallation': false,
+};
+
+const Appcapabilities = (deviceName, udid) => ({
+    ...commonCapabilities,
     'appium:deviceName': deviceName, // 장치 이름
     'appium:udid': udid, // 장치 고유 ID
     'appium:appPackage': 'com.svcorps.mkitchen',
     'appium:appWaitActivity': 'com.svcorps.mkitchen.MainActivity, com.svcorps.mkitchen.*',
     'appium:appActivity': 'com.svcorps.mkitchen.MainActivity',
     'appium:app': './apk/app/monki-431_20240731_staging.apk', // 앱 파일 경로
-    'appium:noReset': true, // 앱 상태를 초기화하지 않고 유지
-    'appium:fullReset': false, // 앱을 삭제하지 않고 유지
-    'appium:autoGrantPermissions': true, // 권한 자동 부여
-    'appium:ignoreHiddenApiPolicyError': true, // 숨겨진 API 오류 무시
-    'appium:disableWindowAnimation': true, // UI 애니메이션 비활성화
-    'appium:enablePerformanceLogging': true, // 성능 로그 활성화
-    'appium:ignoreUnimportantViews': true, // UIAutomator가 중요하지 않은 뷰를 무시하도록 설정
-    'appium:skipServerInstallation': false,
 });
 const Tableordercapabilities = (deviceName, udid) => ({
-    'appium:platformName': 'Android',
-    'appium:automationName': 'Uiautomator2',
+    ...commonCapabilities,
     'appium:deviceName': deviceName, // 장치 이름
     'appium:udid': udid, // 장치 고유 ID
     'appium:appPackage': 'net.monki.tableorder.staging',
     'appium:appActivity': 'net.monki.tableorder.MainActivity',
     'appium:appWaitActivity': 'net.monki.tableorder.MainActivity, net.monki.tableorder.*',
-    'appium:app': './apk/tableorder/app-staging-release-1.3.1+316.apk', // 앱 파일 경로
-    'appium:noReset': true, // 앱 상태를 초기화하지 않고 유지
-    'appium:fullReset': false, // 앱을 삭제하지 않고 유지
-    'appium:autoGrantPermissions': true, // 권한 자동 부여
-    'appium:ignoreHiddenApiPolicyError': true, // 숨겨진 API 오류 무시
-    'appium:disableWindowAnimation': true, // UI 애니메이션 비활성화
-    'appium:enablePerformanceLogging': true, // 성능 로그 활성화
-    'appium:ignoreUnimportantViews': true, // UIAutomator가 중요하지 않은 뷰를 무시하도록 설정
-    'appium:skipServerInstallation': false,
+    'appium:app': './apk/tableorder/app-staging-release-1.3.5+323.apk', // 앱 파일 경로
 });
 
 /* adb connect 명령어 */
@@ -188,8 +186,6 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
 }
 
 async function sendMessage(message, screenshotFileNames) {
-    const webhookUrl =
-        'https://monthlykitchen.dooray.com/services/3315312916791878371/3970334285072507007/Y6BHhyaxSb6EPxHarF4HTA';
     const attachments = [];
     if (screenshotFileNames && screenshotFileNames.length > 0) {
         screenshotFileNames.forEach(screenshotFileName => {
@@ -202,15 +198,10 @@ async function sendMessage(message, screenshotFileNames) {
         });
     }
     const payload = {
-        botName: 'Test Bot', // 봇 이름 설정
-        text: message || '', // 메시지 내용이 비어있으면 빈 문자열로 설정
-        attachments: message ? attachments : attachments, // message가 있으면 첨부파일 포함, 없으면 첨부파일만 전송
+        botName: 'Automation Bot', // 봇 이름 설정
+        text: message, // 메시지 내용
+        attachments: attachments,
     };
-    // const payload = {
-    //     botName: 'Test Bot', // 봇 이름 설정
-    //     text: message, // 메시지 내용
-    //     attachments: attachments,
-    // };
     const response = await fetch(webhookUrl, {
         method: 'POST',
         headers: {
