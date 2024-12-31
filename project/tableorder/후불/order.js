@@ -25,12 +25,7 @@ describe('Appium Test Suite', function () {
         'remote',
         run(async () => {
             driver = await remote(
-                tableorder(
-                    4723,
-                    env.GalaxyTabS7FE.deviceName,
-                    `${env.GalaxyTabS7FE.port}${'46729'}`,
-                    env.GalaxyTabS7FE.platformVersion,
-                ),
+                tableorder(4723, env.GalaxyTabS7FE.deviceName, `${env.GalaxyTabS7FE.port}${'46729'}`),
             );
             await utils.wait(10 * 1000);
             const currentPackage = await driver.getCurrentPackage();
@@ -80,6 +75,12 @@ describe('Appium Test Suite', function () {
 
     after('Send Email', async function () {
         // await utils.finish(driver, tableorder());
+        await Module.emailModule.message({
+            TestFails,
+            describeTitle: this.test.parent.title,
+            TestRange: `테스트\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
+            Screenshots,
+        });
         await Module.emailModule.email2({
             TestFails,
             describeTitle: this.test.parent.title,

@@ -3,6 +3,7 @@ const { defineConfig } = require('webdriverio'); // 필요한 경우 추가
 const nodemailer = require('nodemailer');
 const { application } = require('express');
 const { execSync } = require('child_process');
+// const fetch = require('node-fetch'); // Node.js 환경에서 fetch 사용 (npm 설치 필요)
 require('dotenv').config();
 
 const gmailEmailId = process.env.GMAIL_EMAIL_ID;
@@ -13,12 +14,11 @@ const doorayEmailPwd = process.env.DOORAY_EMAIL_PWD;
 const Phone = process.env.PHONE;
 const adbPath = 'C:/Users/monthlykitchen/Documents/platform-tools/adb'; // full path to adb
 
-const Appcapabilities = (deviceName, udid, platformVersion) => ({
+const Appcapabilities = (deviceName, udid) => ({
     'appium:platformName': 'Android',
     'appium:automationName': 'Uiautomator2',
     'appium:deviceName': deviceName, // 장치 이름
     'appium:udid': udid, // 장치 고유 ID
-    'appium:platformVersion': platformVersion, // 플랫폼 버전
     'appium:appPackage': 'com.svcorps.mkitchen',
     'appium:appWaitActivity': 'com.svcorps.mkitchen.MainActivity, com.svcorps.mkitchen.*',
     'appium:appActivity': 'com.svcorps.mkitchen.MainActivity',
@@ -32,12 +32,11 @@ const Appcapabilities = (deviceName, udid, platformVersion) => ({
     'appium:ignoreUnimportantViews': true, // UIAutomator가 중요하지 않은 뷰를 무시하도록 설정
     'appium:skipServerInstallation': false,
 });
-const Tableordercapabilities = (deviceName, udid, platformVersion) => ({
+const Tableordercapabilities = (deviceName, udid) => ({
     'appium:platformName': 'Android',
     'appium:automationName': 'Uiautomator2',
     'appium:deviceName': deviceName, // 장치 이름
     'appium:udid': udid, // 장치 고유 ID
-    'appium:platformVersion': platformVersion, // 플랫폼 버전
     'appium:appPackage': 'net.monki.tableorder.staging',
     'appium:appActivity': 'net.monki.tableorder.MainActivity',
     'appium:appWaitActivity': 'net.monki.tableorder.MainActivity, net.monki.tableorder.*',
@@ -71,24 +70,24 @@ function AdbConnection(deviceId, udid) {
     }
 }
 
-const app = (port, deviceName, udid, platformVersion) => {
+const app = (port, deviceName, udid) => {
     AdbConnection(deviceName, udid);
 
     return {
         hostname: '127.0.0.1',
         port: port,
         path: '/',
-        capabilities: Appcapabilities(deviceName, udid, platformVersion),
+        capabilities: Appcapabilities(deviceName, udid),
     };
 };
-const tableorder = (port, deviceName, udid, platformVersion) => {
+const tableorder = (port, deviceName, udid) => {
     AdbConnection(deviceName, udid);
 
     return {
         hostname: '127.0.0.1',
         port: port,
         path: '/',
-        capabilities: Tableordercapabilities(deviceName, udid, platformVersion),
+        capabilities: Tableordercapabilities(deviceName, udid),
     };
 };
 function getFormattedTime() {
@@ -187,12 +186,55 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
     //         return false;
     //     }); dnvmfpeh
 }
+
+async function sendMessage(message, screenshotFileNames) {
+    const webhookUrl =
+        'https://monthlykitchen.dooray.com/services/3315312916791878371/3970334285072507007/Y6BHhyaxSb6EPxHarF4HTA';
+    const attachments = [];
+    if (screenshotFileNames && screenshotFileNames.length > 0) {
+        screenshotFileNames.forEach(screenshotFileName => {
+            const path = `./screenshot/${screenshotFileName}`;
+            attachments.push({
+                filename: screenshotFileName,
+                encoding: 'base64',
+                path: path,
+            });
+        });
+    }
+    const payload = {
+        botName: 'Test Bot', // 봇 이름 설정
+        text: message || '', // 메시지 내용이 비어있으면 빈 문자열로 설정
+        attachments: message ? attachments : attachments, // message가 있으면 첨부파일 포함, 없으면 첨부파일만 전송
+    };
+    // const payload = {
+    //     botName: 'Test Bot', // 봇 이름 설정
+    //     text: message, // 메시지 내용
+    //     attachments: attachments,
+    // };
+    const response = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+    });
+
+    if (response.ok) {
+        console.log('메시지가 성공적으로 전송되었습니다!');
+        return true;
+    } else {
+        console.error('메시지 전송 실패:', response.status, response.statusText);
+        return false;
+    }
+}
+
 module.exports = {
     app,
     application,
     tableorder,
     getFormattedTime,
     sendEmail,
+    sendMessage,
     env: {
         email: doorayEmailId,
         testemail: 'monki@monki.net',

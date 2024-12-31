@@ -24,14 +24,7 @@ describe('Appium Test Suite', function () {
     before(
         'remote',
         run(async () => {
-            driver = await remote(
-                tableorder(
-                    4727,
-                    env.GalaxyTabA8.deviceName,
-                    `${env.GalaxyTabA8.port}${'46033'}`,
-                    env.GalaxyTabA8.platformVersion,
-                ),
-            );
+            driver = await remote(tableorder(4727, env.GalaxyTabA8.deviceName, `${env.GalaxyTabA8.port}${'46033'}`));
             await utils.wait(10 * 1000);
             const currentPackage = await driver.getCurrentPackage();
             const currentActivity = await driver.getCurrentActivity();
@@ -108,6 +101,12 @@ describe('Appium Test Suite', function () {
 
     after('Send Email', async function () {
         await utils.finish(driver, tableorder());
+        await Module.emailModule.message({
+            TestFails,
+            describeTitle: this.test.parent.title,
+            TestRange: `테스트\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
+            Screenshots,
+        });
         await Module.emailModule.email2({
             TestFails,
             describeTitle: this.test.parent.title,
