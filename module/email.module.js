@@ -66,32 +66,6 @@ function screenshot2(driver, FailureObj, Screenshots, currentTest) {
     return Promise.resolve(Screenshots); // Failure가 false인 경우 기존 스크린샷 배열 반환
 }
 
-// function message({ TestFails, describeTitle, TestRange, Screenshots }) {
-//     const IsTestFailed = TestFails.length > 0;
-//     const message = `${describeTitle} 자동화 테스트가 ${IsTestFailed ? '실패' : '성공'}하였습니다.\n
-//         테스트 실행 시간 : ${env.DateLabelWeek}\n
-//         테스트 범위 : ${TestRange}\n
-//         ${
-//             IsTestFailed
-//                 ? `
-//         테스트 실패 원인 :\n${TestFails.map(fail => `- ${fail.title}: ${fail.error}`).join('\n')}\n`
-//                 : ''
-//         }`;
-//     console.log('테스트가 성공적으로 완료되었습니다.');
-
-//     const payload = {
-//         text: message,
-//         screenshotFileNames: Screenshots.map(name => name + '.png'), // 스크린샷 파일 이름들을 추가
-//     };
-
-//     sendMessage(payload.text, payload.screenshotFileNames).then(success => {
-//         if (success) {
-//             console.log('메세지 전송 성공.');
-//         } else {
-//             console.log('메세지 전송 실패.');
-//         }
-//     });
-// }
 function message({ TestFails, describeTitle, TestRange, Screenshots }) {
     const IsTestFailed = TestFails.length > 0;
     const message = `${describeTitle} 자동화 테스트가 ${IsTestFailed ? '실패' : '성공'}하였습니다.\n
@@ -99,55 +73,24 @@ function message({ TestFails, describeTitle, TestRange, Screenshots }) {
         테스트 범위 : ${TestRange}\n
         ${
             IsTestFailed
-                ? `테스트 실패 원인 :\n${TestFails.map(fail => `- ${fail.title}: ${fail.error}`).join('\n')}\n`
+                ? `
+        테스트 실패 원인 :\n${TestFails.map(fail => `- ${fail.title}: ${fail.error}`).join('\n')}\n`
                 : ''
         }`;
+    console.log('테스트가 성공적으로 완료되었습니다.');
 
-    // 실패한 경우 메시지와 스크린샷을 따로 전송
-    if (IsTestFailed) {
-        console.log('테스트가 실패하였습니다. 메시지 전송 중...');
+    const payload = {
+        text: message,
+        screenshotFileNames: Screenshots.map(name => name + '.png'), // 스크린샷 파일 이름들을 추가
+    };
 
-        // 메시지 전송
-        const messagePayload = {
-            text: message,
-            screenshotFileNames: [], // 메시지만 전송
-        };
-        sendMessage(messagePayload.text, messagePayload.screenshotFileNames).then(success => {
-            if (success) {
-                console.log('메시지 전송 성공.');
-            } else {
-                console.log('메시지 전송 실패.');
-            }
-        });
-
-        // 스크린샷 전송
-        const screenshotPayload = {
-            text: '',
-            screenshotFileNames: Screenshots.map(name => name + '.png'), // 스크린샷만 전송
-        };
-        sendMessage(screenshotPayload.text, screenshotPayload.screenshotFileNames).then(success => {
-            if (success) {
-                console.log('스크린샷 전송 성공.');
-            } else {
-                console.log('스크린샷 전송 실패.');
-            }
-        });
-    } else {
-        console.log('테스트가 성공적으로 완료되었습니다.');
-
-        // 성공한 경우는 메시지만 전송
-        const payload = {
-            text: message,
-            screenshotFileNames: [], // 스크린샷 없이 메시지만 전송
-        };
-        sendMessage(payload.text, payload.screenshotFileNames).then(success => {
-            if (success) {
-                console.log('메시지 전송 성공.');
-            } else {
-                console.log('메시지 전송 실패.');
-            }
-        });
-    }
+    sendMessage(payload.text, payload.screenshotFileNames).then(success => {
+        if (success) {
+            console.log('메세지 전송 성공.');
+        } else {
+            console.log('메세지 전송 실패.');
+        }
+    });
 }
 
 module.exports = {

@@ -24,7 +24,7 @@ describe('Appium Test Suite', function () {
     before(
         'remote',
         run(async () => {
-            driver = await remote(tableorder(4723, env.GalaxyTabA8.deviceName, `${env.GalaxyTabA8.port}${'46033'}`));
+            driver = await remote(tableorder(4723, env.GalaxyTabA8.deviceName, `${env.GalaxyTabA8.port}${'39187'}`));
             await utils.wait(10 * 1000);
             const currentPackage = await driver.getCurrentPackage();
             const currentActivity = await driver.getCurrentActivity();
