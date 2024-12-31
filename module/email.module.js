@@ -69,12 +69,12 @@ function screenshot2(driver, FailureObj, Screenshots, currentTest) {
 function message({ TestFails, describeTitle, TestRange, Screenshots }) {
     const IsTestFailed = TestFails.length > 0;
     const message = `${describeTitle} 자동화 테스트가 ${IsTestFailed ? '실패' : '성공'}하였습니다.\n
-        테스트 실행 시간 : ${env.DateLabelWeek}\n
-        테스트 범위 : ${TestRange}\n
+    테스트 실행 시간 : ${env.DateLabelWeek}\n
+    테스트 범위 : ${TestRange}\n
         ${
             IsTestFailed
                 ? `
-        테스트 실패 원인 :\n${TestFails.map(fail => `- ${fail.title}: ${fail.error}`).join('\n')}\n`
+    테스트 실패 원인 :\n${TestFails.map(fail => `- ${fail.title}: ${fail.error}`).join('\n')}\n`
                 : ''
         }`;
     console.log('테스트가 성공적으로 완료되었습니다.');

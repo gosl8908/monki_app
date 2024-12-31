@@ -4,7 +4,7 @@ const utils = require('../../module/utils.js');
 const Module = require('../../module/manager.module.js');
 const { allure } = require('allure-mocha/runtime');
 
-describe('Appium Test Suite', function () {
+describe('TableOrder Full Test', function () {
     this.timeout(360 * 1000);
     let driver;
     let accessToken;
@@ -35,14 +35,14 @@ describe('Appium Test Suite', function () {
         }),
     );
     it(
-        '로그인',
+        'Login',
         run(async () => {
             await Module.loginModule.TOlogin(driver, env.monkitest[3], env.testpwd2);
             accessToken = await Module.apiModule.token(env.monkitest[3], env.testpwd2); // 엑세스 토큰을 변수에 저장
         }),
     );
     it(
-        '후불매장 테이블 주문',
+        'Table Order',
         run(async () => {
             const products = await Module.apiModule.products(accessToken, env.storeNo); // 첫 번째 상품명 반환
             if (products && products.length > 0) {
@@ -56,14 +56,14 @@ describe('Appium Test Suite', function () {
         }),
     );
     it(
-        '직원 호출',
+        'Steff Call',
         run(async () => {
             const firstItemName = await Module.apiModule.staff(accessToken, env.storeNo);
             await Module.orderModule.staffCall(driver, firstItemName);
         }),
     );
     it(
-        '주문취소',
+        'Order Cancel',
         run(async () => {
             await Module.orderModule.adminMode(driver);
             await Module.orderModule.orderCancel(driver, '1', formattedPrice, formattedPrice);
