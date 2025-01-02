@@ -204,7 +204,7 @@ async function sendMessage(message, messageTitle, screenshotFileNames) {
         // text: message, // 메시지 내용
         attachments: attachments,
     };
-    const response = await fetch(webhookUrl2, {
+    const response = await fetch(webhookUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
