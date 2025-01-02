@@ -185,24 +185,26 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
     //     }); dnvmfpeh
 }
 
-async function sendMessage(message, screenshotFileNames) {
+async function sendMessage(message, messageTitle, screenshotFileNames) {
     const attachments = [];
     if (screenshotFileNames && screenshotFileNames.length > 0) {
-        screenshotFileNames.forEach(screenshotFileName => {
+        screenshotFileNames.forEach((screenshotFileName, index) => {
             const path = `./screenshot/${screenshotFileName}`;
             attachments.push({
-                filename: screenshotFileName,
-                encoding: 'base64',
-                path: path,
+                callbackId: `screenshot-${index + 1}`,
+                authorName: 'Automation Bot',
+                title: messageTitle,
+                text: message,
+                imageUrl: path, // 서버 URL에 맞게 수정
             });
         });
     }
     const payload = {
         botName: 'Automation Bot', // 봇 이름 설정
-        text: message, // 메시지 내용
+        // text: message, // 메시지 내용
         attachments: attachments,
     };
-    const response = await fetch(webhookUrl, {
+    const response = await fetch(webhookUrl2, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -239,7 +241,6 @@ module.exports = {
         storeNo2: 644, // 교촌 매장
         phone: Phone,
         cardPassword: ['9', '4', '0', '5', '1', '3'],
-        /* content */
         EmailBody: `App 자동화 테스트가 성공적으로 완료되었습니다`,
         Date: getFormattedTime().Date,
         Time: getFormattedTime().Time,

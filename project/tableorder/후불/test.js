@@ -1,5 +1,5 @@
 const { remote } = require('webdriverio');
-const { tableorder, env, error, sendMessage } = require('../../../config.js');
+const { tableorder, env, error } = require('../../../config.js');
 const utils = require('../../../module/utils.js');
 const Module = require('../../../module/manager.module.js');
 const { allure } = require('allure-mocha/runtime');
@@ -26,14 +26,14 @@ describe('후불-Test', function () {
         'remote',
         run(async () => {
             driver = await remote(
-                tableorder(4723, env.GalaxyTabS7FE.deviceName, `${env.GalaxyTabS7FE.port}${'46729'}`),
+                tableorder(4723, env.GalaxyTabS7FE.deviceName, `${env.GalaxyTabS7FE.port}${'35331'}`),
             );
-            await utils.wait(10 * 1000);
-
             const currentPackage = await driver.getCurrentPackage();
-            const currentActivity = await driver.getCurrentActivity();
             console.log('Current app package:', currentPackage);
+
+            const currentActivity = await driver.getCurrentActivity();
             console.log('Current app activity:', currentActivity);
+            await utils.wait(10 * 1000);
         }),
     );
     it(
@@ -45,26 +45,28 @@ describe('후불-Test', function () {
     );
     it(
         'Fail',
-        run(async () => {}),
+        run(async () => {
+            await utils.contains(driver, utils.android('asdasd', true));
+        }),
     );
     afterEach('Status Check', async function () {
         await Module.emailModule.screenshot2(driver, FailureObj, Screenshots, this.currentTest);
     });
 
-    // after('Send Email', async function () {
-    //     // await utils.finish(driver, tableorder());
-    //     await Module.emailModule.message({
-    //         TestFails,
-    //         describeTitle: this.test.parent.title,
-    //         TestRange: `테스트\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
-    //         Screenshots,
-    //     });
-    //     await Module.emailModule.email2({
-    //         TestFails,
-    //         describeTitle: this.test.parent.title,
-    //         EmailTitle: `[${env.TableorderEmailTitle}]`,
-    //         TestRange: `테스트\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
-    //         Screenshots,
-    //     });
-    // });
+    after('Send Email', async function () {
+        //     // await utils.finish(driver, tableorder());
+        await Module.emailModule.message({
+            TestFails,
+            describeTitle: this.test.parent.title,
+            TestRange: `테스트\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
+            Screenshots,
+        });
+        // await Module.emailModule.email2({
+        //     TestFails,
+        //     describeTitle: this.test.parent.title,
+        //     EmailTitle: `[${env.TableorderEmailTitle}]`,
+        //     TestRange: `테스트\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
+        //     Screenshots,
+        // });
+    });
 });

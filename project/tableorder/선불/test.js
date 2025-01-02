@@ -27,10 +27,12 @@ describe('Appium Test Suite', function () {
         run(async () => {
             driver = await remote(tableorder(4723, env.GalaxyTabA8.deviceName, `${env.GalaxyTabA8.port}${'39187'}`));
             await utils.wait(10 * 1000);
-            const currentPackage = await driver.getCurrentPackage();
-            const currentActivity = await driver.getCurrentActivity();
-            console.log('Current app package:', currentPackage);
-            console.log('Current app activity:', currentActivity);
+            const currentPackage = await driver
+                .getCurrentPackage()
+                .then.console.log('Current app package:', currentPackage);
+            const currentActivity = await driver
+                .getCurrentActivity()
+                .then.console.log('Current app activity:', currentActivity);
         }),
     );
     it(
@@ -50,18 +52,18 @@ describe('Appium Test Suite', function () {
 
     after('send Email', async function () {
         // await utils.finish(driver, tableorder());
-        await Module.emailModule.message({
-            TestFails,
-            describeTitle: this.test.parent.title,
-            TestRange: `테스트\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
-            Screenshots,
-        });
-        await Module.emailModule.email2({
-            TestFails,
-            describeTitle: this.test.parent.title,
-            EmailTitle: `[${env.TableorderEmailTitle}]`,
-            TestRange: `선불_테이블오더 주문\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
-            Screenshots,
-        });
+        // await Module.emailModule.message({
+        //     TestFails,
+        //     describeTitle: this.test.parent.title,
+        //     TestRange: `테스트\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
+        //     Screenshots,
+        // });
+        // await Module.emailModule.email2({
+        //     TestFails,
+        //     describeTitle: this.test.parent.title,
+        //     EmailTitle: `[${env.TableorderEmailTitle}]`,
+        //     TestRange: `선불_테이블오더 주문\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
+        //     Screenshots,
+        // });
     });
 });

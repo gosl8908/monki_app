@@ -25,7 +25,7 @@ describe('TableOrder 후불 Test', function () {
         'remote',
         run(async () => {
             driver = await remote(
-                tableorder(4727, env.GalaxyTabS7FE.deviceName, `${env.GalaxyTabS7FE.port}${'46729'}`),
+                tableorder(4727, env.GalaxyTabS7FE.deviceName, `${env.GalaxyTabS7FE.port}${'35331'}`),
             );
             await utils.wait(10 * 1000);
             const currentPackage = await driver.getCurrentPackage();
