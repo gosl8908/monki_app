@@ -75,18 +75,18 @@ describe('Appium Test Suite', function () {
 
     after('Send Email', async function () {
         // await utils.finish(driver, tableorder());
-        await Module.emailModule.message({
-            TestFails,
-            describeTitle: this.test.parent.title,
-            TestRange: `테스트\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
-            Screenshots,
-        });
-        await Module.emailModule.email2({
-            TestFails,
-            describeTitle: this.test.parent.title,
-            EmailTitle: `[${env.TableorderEmailTitle}]`,
-            TestRange: `후불_테이블오더 주문\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
-            Screenshots,
-        });
+        // await Module.emailModule.message({
+        //     TestFails,
+        //     describeTitle: this.test.parent.title,
+        //     TestRange: `테스트\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
+        //     Screenshots,
+        // });
+        // await Module.emailModule.email2({
+        //     TestFails,
+        //     describeTitle: this.test.parent.title,
+        //     EmailTitle: `[${env.TableorderEmailTitle}]`,
+        //     TestRange: `후불_테이블오더 주문\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
+        //     Screenshots,
+        // });
     });
 });

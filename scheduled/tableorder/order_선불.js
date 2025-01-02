@@ -24,7 +24,7 @@ describe('TableOrder 선불 Test', function () {
     before(
         'remote',
         run(async () => {
-            driver = await remote(tableorder(4727, env.GalaxyTabA8.deviceName, `${env.GalaxyTabA8.port}${'39187'}`));
+            driver = await remote(tableorder(4727, env.GalaxyTabA8.deviceName, `${env.GalaxyTabA8.port}${'34259'}`));
             await utils.wait(10 * 1000);
             const currentPackage = await driver.getCurrentPackage();
             const currentActivity = await driver.getCurrentActivity();

@@ -45,28 +45,26 @@ describe('후불-Test', function () {
     );
     it(
         'Fail',
-        run(async () => {
-            await utils.contains(driver, utils.android('ㅁㄴㅇㅁㄴㅇ', true));
-        }),
+        run(async () => {}),
     );
     afterEach('Status Check', async function () {
         await Module.emailModule.screenshot2(driver, FailureObj, Screenshots, this.currentTest);
     });
 
-    after('Send Email', async function () {
-        // await utils.finish(driver, tableorder());
-        await Module.emailModule.message({
-            TestFails,
-            describeTitle: this.test.parent.title,
-            TestRange: `테스트\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
-            Screenshots,
-        });
-        await Module.emailModule.email2({
-            TestFails,
-            describeTitle: this.test.parent.title,
-            EmailTitle: `[${env.TableorderEmailTitle}]`,
-            TestRange: `테스트\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
-            Screenshots,
-        });
-    });
+    // after('Send Email', async function () {
+    //     // await utils.finish(driver, tableorder());
+    //     await Module.emailModule.message({
+    //         TestFails,
+    //         describeTitle: this.test.parent.title,
+    //         TestRange: `테스트\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
+    //         Screenshots,
+    //     });
+    //     await Module.emailModule.email2({
+    //         TestFails,
+    //         describeTitle: this.test.parent.title,
+    //         EmailTitle: `[${env.TableorderEmailTitle}]`,
+    //         TestRange: `테스트\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
+    //         Screenshots,
+    //     });
+    // });
 });
