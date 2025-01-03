@@ -42,7 +42,13 @@ describe('후불-Test', function () {
         }),
     );
     it(
-        'Fail',
+        'Fail-1',
+        run(async () => {
+            await utils.contains(driver, utils.android('asdasd', true));
+        }),
+    );
+    it(
+        'Fail-2',
         run(async () => {
             await utils.contains(driver, utils.android('asdasd', true));
         }),

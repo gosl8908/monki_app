@@ -40,12 +40,18 @@ describe('Appium Test Suite', function () {
             accessToken = await Module.apiModule.token(env.monkitest[1], env.testpwd2); // 엑세스 토큰을 변수에 저장
         }),
     );
-    // it(
-    //     'Fail',
-    //     run(async () => {
-    //         await utils.contains(driver, utils.android('asdasd', true));
-    //     }),
-    // );
+    it(
+        'Fail-1',
+        run(async () => {
+            await utils.contains(driver, utils.android('asdasd', true));
+        }),
+    );
+    it(
+        'Fail-2',
+        run(async () => {
+            await utils.contains(driver, utils.android('asdasd', true));
+        }),
+    );
     afterEach('Status Check', async function () {
         await Module.emailModule.screenshot2(driver, FailureObj, Screenshots, this.currentTest);
     });

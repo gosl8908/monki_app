@@ -186,35 +186,32 @@ function sendEmail({ recipient, subject, body, screenshotFileNames }) {
 }
 
 async function sendMessage(message, messageTitle, screenshotFileNames) {
-    const attachments =
-        screenshotFileNames.length > 0
-            ? screenshotFileNames.map((screenshotFileName, index) => {
-                  const attachment = {
-                      callbackId: `screenshot-${index + 1}`,
-                      authorName: 'Automation Bot',
-                      title: messageTitle,
-                      text: message,
-                  };
-                  // 스크린샷 파일 이름이 1글자 이상인 경우에만 imageUrl 추가
-                  if (screenshotFileName && screenshotFileName.length > 0) {
-                      attachment.imageUrl = `./screenshot/${screenshotFileName}`; // 서버 URL에 맞게 수정
-                  }
-                  return attachment;
-              })
-            : [
-                  {
-                      callbackId: `screenshot-1`,
-                      authorName: 'Automation Bot',
-                      title: messageTitle,
-                      text: message,
-                  },
-              ]; // 기본 attachment 추가
+    const attachments = [];
+
+    if (screenshotFileNames && screenshotFileNames.length > 0) {
+        screenshotFileNames.forEach(screenshotFileName => {
+            if (screenshotFileName.length > 0) {
+                const path = `./screenshot/${screenshotFileName}`;
+                // attachments.push({
+                //     imageUrl: path,
+                // });
+            }
+        });
+    }
     const payload = {
         botName: 'Automation Bot', // 봇 이름 설정
         // text: message, // 메시지 내용
-        attachments: attachments,
+        attachments: [
+            {
+                callbackId: `screenshot-1`,
+                authorName: 'Automation Bot',
+                title: messageTitle,
+                text: message,
+            },
+            ...attachments, // 스크린샷 어태치먼트를 여기에 추가
+        ],
     };
-    const response = await fetch(webhookUrl2, {
+    const response = await fetch(webhookUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
