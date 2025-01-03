@@ -2,8 +2,6 @@ const { remote } = require('webdriverio');
 const { tableorder, env, error } = require('../../../config.js');
 const utils = require('../../../module/utils.js');
 const Module = require('../../../module/manager.module.js');
-const { allure } = require('allure-mocha/runtime');
-const { element } = require('wd/lib/commands.js');
 
 describe('후불-Test', function () {
     this.timeout(360 * 1000);

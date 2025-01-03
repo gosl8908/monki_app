@@ -28,10 +28,6 @@ describe('TableOrder 후불 Test', function () {
                 tableorder(4727, env.GalaxyTabS7FE.deviceName, `${env.GalaxyTabS7FE.port}${'35331'}`),
             );
             await utils.wait(10 * 1000);
-            const currentPackage = await driver.getCurrentPackage();
-            const currentActivity = await driver.getCurrentActivity();
-            console.log('Current app package:', currentPackage);
-            console.log('Current app activity:', currentActivity);
         }),
     );
     it(

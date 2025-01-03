@@ -25,14 +25,12 @@ describe('Appium Test Suite', function () {
     before(
         'remote',
         run(async () => {
-            driver = await remote(tableorder(4723, env.GalaxyTabA8.deviceName, `${env.GalaxyTabA8.port}${'39187'}`));
+            driver = await remote(tableorder(4723, env.GalaxyTabA8.deviceName, `${env.GalaxyTabA8.port}${'40011'}`));
             await utils.wait(10 * 1000);
-            const currentPackage = await driver
-                .getCurrentPackage()
-                .then.console.log('Current app package:', currentPackage);
-            const currentActivity = await driver
-                .getCurrentActivity()
-                .then.console.log('Current app activity:', currentActivity);
+            const currentPackage = await driver.getCurrentPackage();
+            console.log('Current app package:', currentPackage);
+            const currentActivity = await driver.getCurrentActivity();
+            console.log('Current app activity:', currentActivity);
         }),
     );
     it(
@@ -42,22 +40,24 @@ describe('Appium Test Suite', function () {
             accessToken = await Module.apiModule.token(env.monkitest[1], env.testpwd2); // 엑세스 토큰을 변수에 저장
         }),
     );
-    it(
-        '테스트',
-        run(async () => {}),
-    );
+    // it(
+    //     'Fail',
+    //     run(async () => {
+    //         await utils.contains(driver, utils.android('asdasd', true));
+    //     }),
+    // );
     afterEach('Status Check', async function () {
         await Module.emailModule.screenshot2(driver, FailureObj, Screenshots, this.currentTest);
     });
 
     after('send Email', async function () {
         // await utils.finish(driver, tableorder());
-        // await Module.emailModule.message({
-        //     TestFails,
-        //     describeTitle: this.test.parent.title,
-        //     TestRange: `테스트\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
-        //     Screenshots,
-        // });
+        await Module.emailModule.message({
+            TestFails,
+            describeTitle: this.test.parent.title,
+            TestRange: `테스트\n${this.test.parent.tests.map((test, index) => `${index + 1}. ${test.title}`).join('\n')}`,
+            Screenshots,
+        });
         // await Module.emailModule.email2({
         //     TestFails,
         //     describeTitle: this.test.parent.title,
